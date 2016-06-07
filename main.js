@@ -471,7 +471,7 @@
             \
             <div class=\"plr-collection-container\">\
                 <div class=\"plr-header\">\
-                    <h2>Reccomended By</h2>\
+                    <h2>Recommended By</h2>\
                     <div class=\"plr-img-wrapper\">\
                         <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2000px-Logo_NIKE.svg.png') no-repeat center center;\"></div>\
                     </div>\
