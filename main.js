@@ -67,7 +67,7 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
-        location: "body > div > div:nth-child(1) > p:nth-child(5)",
+        location: "body > div > div:nth-child(1) > p:nth-child(7)",
         infoText: "",
         infoButtonText: "",
         template: verticalStack,
@@ -78,16 +78,18 @@
 
     q().push(["injectCSS", "", "head"]);
 
+
+
     //
     //
-    // ----- crsl ------------------------------------------------------------
+    // ----- carousel --------------------------------------------------------
     //
     //
 
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(13)";
         $(selector).after("\
-            <div class=\"plr-crsl-outer\">\
+            <div class=\"plr-crsl-outer plr-crsl--1\">\
                 <div class=\"plr-crsl-inner\">\
                     <div class=\"plr-crsl-slot\">\
                         <div class=\"plr-slot--1\"></div>\
@@ -109,7 +111,84 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
-        location: ".plr-slot--1",
+        location: ".plr-crsl--1 .plr-slot--1",
+        infoText: "",
+        infoButtonText: "",
+        template: verticalStack,
+        onRender: function($element) {},
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" },
+        location: ".plr-crsl--1 .plr-slot--2",
+        infoText: "",
+        infoButtonText: "",
+        template: verticalStack,
+        onRender: function($element) {},
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" },
+        location: ".plr-crsl--1 .plr-slot--3",
+        infoText: "",
+        infoButtonText: "",
+        template: verticalStack,
+        onRender: function($element) {},
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" },
+        location: ".plr-crsl--1 .plr-slot--4",
+        infoText: "",
+        infoButtonText: "",
+        template: verticalStack,
+        onRender: function($element) {},
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+
+    q().push(function() {
+        var selector = "body > div > div:nth-child(1) > p:nth-child(18)";
+        $(selector).after("\
+            <div class=\"plr-crsl-outer plr-crsl--2\">\
+                <div class=\"plr-crsl-inner\">\
+                    <div class=\"plr-crsl-slot\">\
+                        <div class=\"plr-slot--1\"></div>\
+                    </div>\
+                    <div class=\"plr-crsl-slot\">\
+                        <div class=\"plr-slot--2\"></div>\
+                    </div>\
+                    <div class=\"plr-crsl-slot\">\
+                        <div class=\"plr-slot--3\"></div>\
+                    </div>\
+                </div>\
+            </div>\
+        ")
+    })
+
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "0fa9a978808b4ad4b027fa82f1d16646" },
+        location: ".plr-crsl--2 .plr-slot--1",
+        infoText: "",
+        infoButtonText: "",
+        template: verticalStack,
+        onRender: function($element) {
+            $element.find(".plr-sponsored-disclosure").text("sponsored by nike")
+        },
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "2e965d6d2d084775b598ac4dee7b7743" },
+        location: ".plr-crsl--2 .plr-slot--2",
         infoText: "",
         infoButtonText: "",
         template: verticalStack,
@@ -120,29 +199,7 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
-        location: ".plr-slot--2",
-        infoText: "",
-        infoButtonText: "",
-        template: verticalStack,
-        onRender: function($element) {},
-        onFill: function(data) {},
-        onError: function(error) {}
-    }]);
-    q().push(["insertPreview", {
-        label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
-        location: ".plr-slot--3",
-        infoText: "",
-        infoButtonText: "",
-        template: verticalStack,
-        onRender: function($element) {},
-        onFill: function(data) {},
-        onError: function(error) {}
-    }]);
-    q().push(["insertPreview", {
-        label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
-        location: ".plr-slot--4",
+        location: ".plr-crsl--2 .plr-slot--3",
         infoText: "",
         infoButtonText: "",
         template: verticalStack,
@@ -156,8 +213,6 @@
     // ----- inbetween article -----------------------------------------------------
     //
     //
-
-
 
     q().push(["insertPreview", {
         label: "Landing Page",
@@ -173,7 +228,6 @@
                 "overflow": "hidden",
                 "padding-bottom": 0,
                 "padding-top": 10+"px",
-                "border-top": "1px solid #808080"
             });
 
             /* DRAWER CODE */
@@ -185,7 +239,7 @@
                 start_y;
 
             function get_total_height($e, except) {
-                var rules = ["height", "padding-top", "padding-bottom", "margin-bottom", "margin-top"];
+                var rules = ["height", "padding-top", "padding-bottom", "margin-bottom", "margin-top", "border-bottom-width", "border-top-width"];
                 var sum = 0;
                 for (var i in rules) {
                     sum += parseFloat($e.css(rules[i]))
@@ -196,11 +250,13 @@
             function onresize() {
                 $element.css({ "height": "initial" })
 
-                default_h = 0 //get_total_height($element.find("h1")) + get_total_height($element.find(".plr-sponsor"));
+                default_h = get_total_height($element.find("h1")) 
+                          + get_total_height($element.find(".plr-sponsor"))
+                          + parseFloat($element.find(".topic").css("height"));
                 initial_h = get_total_height($element);
 
                 // Make it open up earlier on mobile
-                start_y = (window.innerWidth < 426) ? (window.innerHeight - 100) : (2 * window.innerHeight / 3);
+                start_y = (window.innerWidth < 426) ? (window.innerHeight - 300) : (2 * window.innerHeight / 3);
             }
             window.addEventListener("resize", onresize);
 
@@ -254,7 +310,7 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
-        location: "body > div > div:nth-child(1) > p:nth-child(10)",
+        location: "body > div > div:nth-child(1) > p:nth-child(13)",
         infoText: "",
         infoButtonText: "",
         template: imageHero,
@@ -266,7 +322,7 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
-        location: "body > div > div:nth-child(1) > p:nth-child(12)",
+        location: ".article:last p:eq(3)",
         infoText: "",
         infoButtonText: "",
         template: imageHero,
@@ -420,6 +476,7 @@
                         <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2000px-Logo_NIKE.svg.png') no-repeat center center;\"></div>\
                     </div>\
                 </div>\
+                <div class=\"plr-collection-anchor--hardcoded\"></div>\
                 <div class=\"plr-collection-anchor\"></div>\
             </div>\
         ");
@@ -428,6 +485,17 @@
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
+        location: ".plr-collection-anchor--hardcoded",
+        infoText: "",
+        infoButtonText: "",
+        template: collection_item,
+        onRender: function($element) {},
+        onFill: function(data) {},
+        onError: function(error) {}
+    }]);
+    q().push(["insertPreview", {
+        label: "Landing Page",
+        unit: { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" },
         location: ".plr-collection-anchor",
         infoText: "",
         infoButtonText: "",
@@ -438,18 +506,7 @@
     }]);
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
-        location: ".plr-collection-anchor",
-        infoText: "",
-        infoButtonText: "",
-        template: collection_item,
-        onRender: function($element) {},
-        onFill: function(data) {},
-        onError: function(error) {}
-    }]);
-    q().push(["insertPreview", {
-        label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
+        unit: { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" },
         location: ".plr-collection-anchor",
         infoText: "",
         infoButtonText: "",
@@ -558,10 +615,10 @@
         <div class="plr-halfw">
             <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
                 <div class="plr-img-wrapper">
-                    <div style="background: url('{{getThumbHref}}') no-repeat center center;"></div>
+                    <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
                 </div>
                 <div class="plr-sponsored-disclosure">sponsor content</div>
-                <h2 style="margin: 0 0 10px 0;">{{title}}</h2>
+                <h2>{{title}}</h2>
                 <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
             </a>
         </div>
@@ -595,7 +652,7 @@
                 stack1 = depth0.getThumbHref;
                 stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
             }
-            buffer += escapeExpression(stack1) + "') no-repeat center center;\"></div>\n                </div>\n                <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n                <h2 style=\"margin: 0 0 10px 0;\">";
+            buffer += escapeExpression(stack1) + "') no-repeat center center;\"></div>\n                </div>\n                <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n                <h2>";
             if (stack1 = helpers.title) {
                 stack1 = stack1.call(depth0, {
                     hash: {},
@@ -629,6 +686,7 @@
            Note that this code has been generated from the following markup:
 
         <div class="plr-btwn-art">
+            <div class="topic">sponsored</div>
             <a href="{{link}}"><h1>{{title}}</h1></a>
             <div class="plr-sponsor">Presented by <b>{{sponsor.name}}</b></div>
             <div class="plr-img-wrapper">
@@ -649,7 +707,7 @@
             var buffer = "",
                 stack1, stack2, functionType = "function",
                 escapeExpression = this.escapeExpression;
-            buffer += "<div class=\"plr-btwn-art\">\n    <a href=\"";
+            buffer += "<div class=\"plr-btwn-art\">\n  <div class=\"topic\">sponsored</div>\n  <a href=\"";
             if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
                 stack1 = depth0.link;
                 stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
