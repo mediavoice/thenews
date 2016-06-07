@@ -42,8 +42,6 @@
     padding-top: 0;
     color: white;
     background-color: #1877ab; }
-  .plr-halfw:hover h2 {
-    text-decoration: underline; }
 
 @media only screen and (max-width: 800px) {
   .plr-halfw {
