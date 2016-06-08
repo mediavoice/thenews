@@ -17,53 +17,53 @@
         return window.NATIVEADS_QUEUE;
     };
     q().push(["setPropertyID", "NA-DANITEST-11237996"]);
-    var nike = "3c59b16ceaa549ec90c25bee127a97ae"
+    var nike = "3c59b16ceaa549ec90c25bee127a97ae";
 
     /*===========================================
     =            Auxiallry Functions            =
     ===========================================*/
 
     function add_play_icon($element) {
-        $element.find(".plr-img-wrapper > div").append("\
-            <div style=\"height: 100%;\">\
-                <img src=\"play_icon.png\" style=\"\
-                    width: 50%; \
-                    top: 50%; \
-                    position: \
-                    relative; \
-                    transform: translateY(-50%);\
-                    opacity: 0.75;\">\
-            </div>\
-        ");
+        $element.find(".plr-img-wrapper > div").append("" +
+            "    <div style=\"height: 100%;\">           " +
+            "        <img src=\"play_icon.png\" style=\" " +
+            "            width: 50%;                     " +
+            "            top: 50%;                       " +
+            "            position:                       " +
+            "            relative;                       " +
+            "            transform: translateY(-50%);    " +
+            "            opacity: 0.75;\">               " +
+            "    </div>                                  " +
+            "");
     }
 
     function add_play_banner($element) {
-        $element.find(".plr-img-wrapper > div").append("\
-            <div style=\"\
-                color: white;\
-                background-color: #3C3C3C;\
-                display: inline-block;\
-                line-height: 12px;\
-                position: absolute;\
-                left: 0;\
-                bottom: 0px;\
-            \">\
-              <div style=\"\
-                color: #1877AB;\
-                background-color: white;\
-                display: inline-block;\
-                position: relative;\
-                padding: 5px 4px;\
-                top: 0px;\
-                height: 23px;\
-            \">&#9654;</div><div style=\"\
-                display: inline-block;\
-                padding: 4px;\
-                font-size: 12px;\
-                position: relative;\
-                top: -2px;\
-            \"> 00:21 </div></div>\
-        ");
+        $element.find(".plr-img-wrapper > div").append("" +
+            "    <div style=\"                  " +
+            "        color: white;              " +
+            "        background-color: #3C3C3C; " +
+            "        display: inline-block;     " +
+            "        line-height: 12px;         " +
+            "        position: absolute;        " +
+            "        left: 0;                   " +
+            "        bottom: 0px;               " +
+            "    \">                            " +
+            "      <div style=\"                " +
+            "        color: #1877AB;            " +
+            "        background-color: white;   " +
+            "        display: inline-block;     " +
+            "        position: relative;        " +
+            "        padding: 5px 4px;          " +
+            "        top: 0px;                  " +
+            "        height: 23px;              " +
+            "    \">&#9654;</div><div style=\"  " +
+            "        display: inline-block;     " +
+            "        padding: 4px;              " +
+            "        font-size: 12px;           " +
+            "        position: relative;        " +
+            "        top: -2px;                 " +
+            "    \"> 00:21 </div></div>         " +
+            "");
     }
 
     /*=====  End of Auxiallry Functions  ======*/
@@ -77,13 +77,28 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": "3006a7eb8b124a0199abb5bac910c06f" },
+        unit: { "server": "mvdirect", "id": "51a1174a5ea44bab823527e407bc9c72" },
         location: "body > div > div:nth-child(1) > p:nth-child(7)",
         infoText: "",
         infoButtonText: "",
         template: verticalStack,
         onRender: function($element) {
-            add_play_icon($element)
+            add_play_icon($element);
+
+            $element.click(function() {
+                setTimeout(function() {
+                    $(".polar-deck-body").css({
+                        height: "538",
+                        "background-color": "black"
+                    });
+                    $(".polar-deck-frame").css({
+                        height: "210px",
+                        top: "50%",
+                        position: "relative",
+                        transform: "translateY(-50%)"
+                    });
+                }, 1000);
+            });
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -95,23 +110,24 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": "3006a7eb8b124a0199abb5bac910c06f" },
+        unit: { "server": "mvdirect", "id": "d56273f226844406aa0551fe7ac26e91" },
         location: "body > div > div:nth-child(1) > p:nth-child(13)",
         infoText: "",
         infoButtonText: "",
         template: imageHero,
         onRender: function($element) {
-            $element.find(".plr-contents").after("\
-                <div class=\"plr-sponsored\" style=\"\
-                    right: inherit;\
-                    bottom: inherit;\
-                    left: 5px;\
-                    top: 5px;\
-                    padding: 5px;\
-                    background-color: rgba(0,0,0,0.6);\
-                    border-radius: 2px;\
-                \">&#9654; PLAY VIDEO &nbsp; | &nbsp;  1:35</div>\
-            ");
+            $element.find(".plr-contents").after("" +
+                "<div class=\"plr-sponsored\" style=\"                 " +
+                "        right: inherit;                               " +
+                "        bottom: inherit;                              " +
+                "        left: 5px;                                    " +
+                "        top: 5px;                                     " +
+                "        padding: 5px;                                 " +
+                "        background-color: rgba(0,0,0,0.6);            " +
+                "        border-radius: 2px;                           " +
+                "    \">&#9654; PLAY VIDEO &nbsp; | &nbsp;  1:35</div> " +
+                "");
+
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -122,25 +138,25 @@
 
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(13)";
-        $(selector).after("\
-            <div class=\"plr-crsl-outer plr-crsl--1\">\
-                <div class=\"plr-crsl-inner\">\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--1\"></div>\
-                    </div>\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--2\"></div>\
-                    </div>\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--3\"></div>\
-                    </div>\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--4\"></div>\
-                    </div>\
-                </div>\
-            </div>\
-        ")
-    })
+        $(selector).after("" +
+            "    <div class=\"plr-crsl-outer plr-crsl--1\">    " +
+            "        <div class=\"plr-crsl-inner\">            " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--1\"></div> " +
+            "            </div>                                " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--2\"></div> " +
+            "            </div>                                " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--3\"></div> " +
+            "            </div>                                " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--4\"></div> " +
+            "            </div>                                " +
+            "        </div>                                    " +
+            "    </div>                                        " +
+            "");
+    });
 
     q().push(["insertPreview", {
         label: "Landing Page",
@@ -165,10 +181,10 @@
         onRender: function($element) {
             add_play_banner($element);
 
-            $element.click(function(){
-                setTimeout(function(){
+            $element.click(function() {
+                setTimeout(function() {
                     $(".polar-deck-body").css({
-                        height:"538",
+                        height: "538",
                         "background-color": "black"
                     });
                     $(".polar-deck-frame").css({
@@ -176,9 +192,9 @@
                         top: "50%",
                         position: "relative",
                         transform: "translateY(-50%)"
-                    })
-                },1000)
-            })
+                    });
+                }, 1000);
+            });
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -214,26 +230,27 @@
 
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(18)";
-        $(selector).after("\
-            <div class=\"plr-crsl-outer plr-crsl--2\">\
-                <div class=\"plr-crsl-inner\">\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--1\"></div>\
-                    </div>\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--2\"></div>\
-                    </div>\
-                    <div class=\"plr-crsl-slot\">\
-                        <div class=\"plr-slot--3\"></div>\
-                    </div>\
-                </div>\
-            </div>\
-        ")
-    })
+        $(selector).after("" +
+            "    <div class=\"plr-crsl-outer plr-crsl--2\">    " +
+            "        <div class=\"plr-crsl-inner\">            " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--1\"></div> " +
+            "            </div>                                " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--2\"></div> " +
+            "            </div>                                " +
+            "            <div class=\"plr-crsl-slot\">         " +
+            "                <div class=\"plr-slot--3\"></div> " +
+            "            </div>                                " +
+            "        </div>                                    " +
+            "    </div>                                        " +
+            "                                                  " +
+            "");
+    });
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": "3006a7eb8b124a0199abb5bac910c06f" },
+        unit: { "server": "mvdirect", "id": "6b5a14b11515463bba769237d0f10b10" },
         location: ".plr-crsl--2 .plr-slot--1",
         infoText: "",
         infoButtonText: "",
@@ -241,16 +258,16 @@
         onRender: function($element) {
             $element.find(".plr-sponsored-disclosure").text("sponsored by nike");
 
-            $element.find(".plr-img-wrapper > div").append("\
-                <div style=\"color: white;background-color: #1877AB;display: inline-block;position: absolute;left: 0;bottom: 0px;height: 50px;width: 100px;\">                  <div style=\"color: #FFFFFF;top: 50%;position: relative;transform: translateY(-50%) scale(2);\">    &#9654;</div></div>\
-            ");
+            $element.find(".plr-img-wrapper > div").append("" +
+                "<div style=\"color: white;background-color: #1877AB;display: inline-block;position: absolute;left: 0;bottom: 0px;height: 50px;width: 100px;\">                  <div style=\"color: #FFFFFF;top: 50%;position: relative;transform: translateY(-50%) scale(2);\">    &#9654;</div></div>" +
+                "");
         },
         onFill: function(data) {},
         onError: function(error) {}
     }]);
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": "2e965d6d2d084775b598ac4dee7b7743" },
+        unit: { "server": "mvdirect", "id": "bcdc3f9eacc4458d84d54ec956969cef" },
         location: ".plr-crsl--2 .plr-slot--2",
         infoText: "",
         infoButtonText: "",
@@ -263,7 +280,7 @@
     }]);
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
+        unit: { "server": "mvdirect", "id": "2095a143a0254b7081e7bb6f1b04db17" },
         location: ".plr-crsl--2 .plr-slot--3",
         infoText: "",
         infoButtonText: "",
@@ -288,8 +305,8 @@
         onRender: function($element) {
             // $element.find("p").first().html("\"Innovation at Nike is not about dreaming of tomorrow. It's about accelerating toward it,\" says Tinker Hatfield. \"We're able to anticipate the needs of athletes because we know them better than anybody. Sometimes, we deliver a reality before others have even begun to imagine it.\"")
 
-            
-            
+
+
             $element.css({
                 "overflow": "hidden",
                 "padding-bottom": 0,
@@ -298,7 +315,7 @@
 
             /* DRAWER CODE */
 
-            $element.css({ "overflow": "hidden" })
+            $element.css({ "overflow": "hidden" });
 
             var initial_h,
                 default_h,
@@ -308,13 +325,13 @@
                 var rules = ["height", "padding-top", "padding-bottom", "margin-bottom", "margin-top", "border-bottom-width", "border-top-width"];
                 var sum = 0;
                 for (var i in rules) {
-                    sum += parseFloat($e.css(rules[i]))
+                    sum += parseFloat($e.css(rules[i]));
                 }
                 return sum;
             }
 
             function onresize() {
-                $element.css({ "height": "initial" })
+                $element.css({ "height": "initial" });
 
                 default_h = get_total_height($element.find("h1")) + get_total_height($element.find(".plr-sponsor")) + parseFloat($element.find(".topic").css("height"));
                 initial_h = get_total_height($element);
@@ -341,7 +358,7 @@
                     $element.css({ "height": default_h + "px" });
                 }
 
-                requestAnimationFrame(open_sashimi)
+                requestAnimationFrame(open_sashimi);
             }
             open_sashimi();
         },
@@ -359,8 +376,8 @@
         onRender: function($element) {
             // $element.find("p").first().html("\"Innovation at Nike is not about dreaming of tomorrow. It's about accelerating toward it,\" says Tinker Hatfield. \"We're able to anticipate the needs of athletes because we know them better than anybody. Sometimes, we deliver a reality before others have even begun to imagine it.\"")
 
-            
-            
+
+
             $element.css({
                 "overflow": "hidden",
                 "padding-bottom": 0,
@@ -369,7 +386,7 @@
 
             /* DRAWER CODE */
 
-            $element.css({ "overflow": "hidden" })
+            $element.css({ "overflow": "hidden" });
 
             var initial_h,
                 default_h,
@@ -379,13 +396,13 @@
                 var rules = ["height", "padding-top", "padding-bottom", "margin-bottom", "margin-top", "border-bottom-width", "border-top-width"];
                 var sum = 0;
                 for (var i in rules) {
-                    sum += parseFloat($e.css(rules[i]))
+                    sum += parseFloat($e.css(rules[i]));
                 }
                 return sum;
             }
 
             function onresize() {
-                $element.css({ "height": "initial" })
+                $element.css({ "height": "initial" });
 
                 default_h = get_total_height($element.find("h1")) + get_total_height($element.find(".plr-sponsor")) + parseFloat($element.find(".topic").css("height"));
                 initial_h = get_total_height($element);
@@ -412,7 +429,7 @@
                     $element.css({ "height": default_h + "px" });
                 }
 
-                requestAnimationFrame(open_sashimi)
+                requestAnimationFrame(open_sashimi);
             }
             open_sashimi();
         },
@@ -434,174 +451,74 @@
         onError: function(error) {}
     }]);
 
-    /*----------  Parallax Hero  ----------*/
-
-    q().push(["insertPreview", {
-        label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
-        location: ".article:last p:eq(3)",
-        infoText: "",
-        infoButtonText: "",
-        template: imageHero,
-        onRender: function($element) {
-            (function($element, img_selector) {
-                var w = window,
-                    a = {},
-                    e = $element.find(img_selector)[0].style;
-
-                e.position = "relative";
-
-                e.left = "initial";
-                e.bottom = "initial";
-                e.right = 0;
-                e.top = 0;
-
-                e.transform = "scale(2)"
-
-                function round(x, d) {
-                    d = Math.pow(10, d);
-                    return (x * d | 0) / d
-                };
-
-                function parallax() {
-                    // Get previous position
-                    var p = {
-                        x: parseFloat(e.right),
-                        y: parseFloat(e.top)
-                    }
-
-                    // Calculate new offset such that it gradually moves into place, and apply
-                    e.top = round(p.y + (a.y - p.y) / 10, 2) + "px";
-                    e.right = round(p.x - (a.x + p.x) / 10, 2) + "px";
-
-                    requestAnimationFrame(parallax);
-                }
-
-                function handler(b) {
-                    // truncate to 1 decimal place
-                    a.x = round(b[0], 1);
-                    a.y = round(b[1], 1);
-
-                    a.x = Math.abs(a.x) < 5 ? 0 : a.x;
-                    a.y = Math.abs(a.y) < 5 ? 0 : a.y;
-
-
-                    // Flip variables depending on orientation
-                    switch (w.orientation) {
-                        // Upright
-                        case 0:
-                            a.y += 45;
-                            break;
-                            // Left 
-                        case 90:
-                            var t = a.y;
-                            a.y = -a.x;
-                            a.x = t;
-                            break;
-                            // Right
-                        case -90:
-                            var t = a.y;
-                            a.y = a.x;
-                            a.x = -t;
-                            break;
-                        default:
-                            a.y += 45;
-                    }
-                }
-
-                if (w.DeviceOrientationEvent) {
-                    console.log("a");
-                    w.addEventListener("deviceorientation", function(e) {
-                        // console.log(a);
-                        handler([-e.gamma, -e.beta]);
-                    });
-                } else if (w.DeviceMotionEvent) {
-                    w.addEventListener('devicemotion', function(e) {
-                        handler([e.acceleration.x * 2, e.acceleration.y * 2]);
-                    });
-                } else {
-                    w.addEventListener("MozOrientation", function(e) {
-                        handler([orientation.x * 50, orientation.y * 50]);
-                    });
-                }
-
-                requestAnimationFrame(parallax);
-            })($element, ".plr-img-wrapper")
-        },
-        onFill: function(data) {},
-        onError: function(error) {}
-    }]);
-
-    q().push(["injectCSS", "", "head"]);
-
     /*----------  Collection  ----------*/
 
     q().push(function() {
         var selector = ".article:last";
 
-        $(selector).after("\
-            <style type=\"text/css\">\
-            .plr-collection-container {\
-                margin-bottom: 20px;\
-                padding-bottom: 15px;\
-            }\
-            \
-            .plr-header h2 {\
-                margin: 0;\
-                text-transform: initial;\
-                display: inline-block;\
-                font-size: 26px;\
-            }\
-            \
-            .plr-header .plr-img-wrapper {\
-                padding-bottom: 24px;\
-                width: 13%;\
-                left: 12px;\
-                top: 3px;\
-                position: relative;\
-                display: inline-block;\
-                overflow: hidden;\
-            }\
-            \
-            .plr-header .plr-img-wrapper div {\
-                position: absolute;\
-                top: 0px;\
-                bottom: 0px;\
-                left: 0px;\
-                right: 0px;\
-                background-size: contain !important;\
-            }\
-            \
-            .plr-header {\
-                border-bottom: 3px solid #1879A9;\
-                padding-bottom: 10px;\
-            }\
-            </style>\
-            \
-            <div class=\"plr-collection-container\">\
-                <div class=\"plr-header\">\
-                    <h2>Reccomended By</h2>\
-                    <div class=\"plr-img-wrapper\">\
-                        <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2000px-Logo_NIKE.svg.png') no-repeat center center;\"></div>\
-                    </div>\
-                </div>\
-                <div class=\"plr-collection-anchor--hardcoded\"></div>\
-                <div class=\"plr-collection-anchor\"></div>\
-            </div>\
-        ");
-    })
+        $(selector).after("" +
+            "    <style type=\"text/css\">                                                                                                                                                      " +
+            "    .plr-collection-container {                                                                                                                                                    " +
+            "        margin-bottom: 20px;                                                                                                                                                       " +
+            "        padding-bottom: 15px;                                                                                                                                                      " +
+            "    }                                                                                                                                                                              " +
+            "                                                                                                                                                                                   " +
+            "    .plr-header h2 {                                                                                                                                                               " +
+            "        margin: 0;                                                                                                                                                                 " +
+            "        text-transform: initial;                                                                                                                                                   " +
+            "        display: inline-block;                                                                                                                                                     " +
+            "        font-size: 26px;                                                                                                                                                           " +
+            "    }                                                                                                                                                                              " +
+            "                                                                                                                                                                                   " +
+            "    .plr-header .plr-img-wrapper {                                                                                                                                                 " +
+            "        padding-bottom: 24px;                                                                                                                                                      " +
+            "        width: 30px;                                                                                                                                                                " +
+            "        left:0px;                                                                                                                                                                " +
+            "        top: 3px;                                                                                                                                                                  " +
+            "        position: relative;                                                                                                                                                        " +
+            "        display: inline-block;                                                                                                                                                     " +
+            "        overflow: hidden;                                                                                                                                                          " +
+            "    }                                                                                                                                                                              " +
+            "                                                                                                                                                                                   " +
+            "    .plr-header .plr-img-wrapper div {                                                                                                                                             " +
+            "        position: absolute;                                                                                                                                                        " +
+            "        top: 0px;                                                                                                                                                                  " +
+            "        bottom: 0px;                                                                                                                                                               " +
+            "        left: 0px;                                                                                                                                                                 " +
+            "        right: 0px;                                                                                                                                                                " +
+            "        background-size: contain !important;                                                                                                                                       " +
+            "    }                                                                                                                                                                              " +
+            "                                                                                                                                                                                   " +
+            "    .plr-header {                                                                                                                                                                  " +
+            "        border-bottom: 3px solid #1879A9;                                                                                                                                          " +
+            "        padding-bottom: 10px;                                                                                                                                                      " +
+            "    }                                                                                                                                                                              " +
+            "    </style>                                                                                                                                                                       " +
+            "                                                                                                                                                                                   " +
+            "    <div class=\"plr-collection-container\">                                                                                                                                       " +
+            "        <div class=\"plr-header\">                                                                                                                                                 " +
+            "            <h2>Reccomended By</h2>                                                                                                                                                " +
+            "            <div class=\"plr-img-wrapper\">                                                                                                                                        " +
+            "                <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Purina-logo.svg/2000px-Purina-logo.svg.png') no-repeat center center;\"></div> " +
+            "            </div>                                                                                                                                                                 " +
+            "        </div>                                                                                                                                                                     " +
+            "        <div class=\"plr-collection-anchor--hardcoded\"></div>                                                                                                                     " +
+            "        <div class=\"plr-collection-anchor\"></div>                                                                                                                                " +
+            "    </div>                                                                                                                                                                         " +
+            "");
+    });
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": nike },
+        unit: { "server": "mvdirect", "id": "6b5a14b11515463bba769237d0f10b10" },
         location: ".plr-collection-anchor--hardcoded",
         infoText: "",
         infoButtonText: "",
         template: collection_item,
         onRender: function($element) {
-            $element.find(".plr-img-wrapper > div").append("\
-                <div style=\"color: white;background-color: rgba(60, 60, 60, 0);display: inline-block;line-height: 12px;position: absolute;left: 10px;bottom: 10px;border: 2px solid white;padding: 10px;border-radius: 100px;\">                  <div style=\"color: rgba(255, 255, 255, 0);background-color: rgba(255, 255, 255, 0);display: inline-block;-webkit-text-stroke: white 1px;margin-right: 9px;\">   &#9654;</div><div style=\"display: inline-block;position: relative;font-size: 15px;top: -1px;\">WATCH</div></div>\
-            ");
+            $element.find(".plr-img-wrapper > div").append(""+
+                "<div style=\"color: white;background-color: rgba(60, 60, 60, 0);display: inline-block;line-height: 12px;position: absolute;left: 10px;bottom: 10px;border: 2px solid white;padding: 10px;border-radius: 100px;\">                  <div style=\"color: rgba(255, 255, 255, 0);background-color: rgba(255, 255, 255, 0);display: inline-block;-webkit-text-stroke: white 1px;margin-right: 9px;\">   &#9654;</div><div style=\"display: inline-block;position: relative;font-size: 15px;top: -1px;\">WATCH</div></div>"+
+            "");
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -663,6 +580,7 @@
     =            Templates            =
     =================================*/
 
+    /* jshint ignore:start */
     function templates() {
         /*
 
@@ -874,26 +792,36 @@
 
         */
 
-        btwn_video = function(Handlebars, depth0, helpers, partials, data) { this.compilerInfo = [4, '>= 1.0.0'];
+        btwn_video = function(Handlebars, depth0, helpers, partials, data) {
+            this.compilerInfo = [4, '>= 1.0.0'];
             helpers = this.merge(helpers, Handlebars.helpers);
             data = data || {};
             var buffer = "",
                 stack1, stack2, functionType = "function",
                 escapeExpression = this.escapeExpression;
             buffer += "<div class=\"plr-btwn-art\">\n    <div class=\"topic\">sponsored</div>\n    <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else { stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
+                stack1 = depth0.link;
+                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+            }
             buffer += escapeExpression(stack1) + "\"><h1>";
-            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else { stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
+                stack1 = depth0.title;
+                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+            }
             buffer += escapeExpression(stack1) + "</h1></a>\n    <div class=\"plr-sponsor\">Presented by <b>" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</b></div>\n    <div style=\"display: block; position: relative; max-width: 100%;\">\n        <div style=\"padding-top: 56.25%;overflow: hidden;\">\n            <iframe src=\"";
-            if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else { stack2 = depth0.link;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+            if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
+                stack2 = depth0.link;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
             buffer += escapeExpression(stack2) + "\" allowfullscreen=\"\" webkitallowfullscreen=\"\" mozallowfullscreen=\"\" style=\"width: 100%;height: 103%;position: absolute;top: 0px;bottom: 0px;right: 0px;left: 0px;border: none;\"></iframe>\n        </div>\n    </div>\n    <p>";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else { stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
+                stack2 = depth0.summary;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
             buffer += escapeExpression(stack2) + "</p>\n</div>";
-            return buffer; };
+            return buffer;
+        };
 
 
         /*
@@ -956,10 +884,13 @@
             return buffer;
         };
 
-        /*=====  End of Templates  ======*/
     }
+    /*=====  End of Templates  ======*/
+
+    /* jshint ignore:end */
 
 })();
+
 
 
 (function(d, s, id) {
@@ -981,3 +912,8 @@
     document.getElementsByTagName('head')[0].appendChild(jq);
 
 })(document, "script", "nativeads-plugin");
+
+
+
+
+
