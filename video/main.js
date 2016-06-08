@@ -88,7 +88,7 @@
             $element.click(function() {
                 setTimeout(function() {
                     $(".polar-deck-body").css({
-                        height: "538",
+                        height: "500",
                         "background-color": "black"
                     });
                     $(".polar-deck-frame").css({
@@ -184,7 +184,7 @@
             $element.click(function() {
                 setTimeout(function() {
                     $(".polar-deck-body").css({
-                        height: "538",
+                        height: "500",
                         "background-color": "black"
                     });
                     $(".polar-deck-frame").css({
