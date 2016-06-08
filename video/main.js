@@ -256,7 +256,7 @@
         infoButtonText: "",
         template: verticalStack,
         onRender: function($element) {
-            $element.find(".plr-sponsored-disclosure").text("sponsored by nike");
+            $element.find(".plr-sponsored-disclosure").text("sponsored by purina");
 
             $element.find(".plr-img-wrapper > div").append("" +
                 "<div style=\"color: white;background-color: #1877AB;display: inline-block;position: absolute;left: 0;bottom: 0px;height: 50px;width: 100px;\">                  <div style=\"color: #FFFFFF;top: 50%;position: relative;transform: translateY(-50%) scale(2);\">    &#9654;</div></div>" +
@@ -273,7 +273,9 @@
         infoButtonText: "",
         template: verticalStack,
         onRender: function($element) {
-            add_play_icon($element);
+            $element.find(".plr-img-wrapper > div").append("" +
+                "<div style=\"color: white;background-color: #1877AB;display: inline-block;position: absolute;left: 0;bottom: 0px;height: 50px;width: 100px;\">                  <div style=\"color: #FFFFFF;top: 50%;position: relative;transform: translateY(-50%) scale(2);\">    &#9654;</div></div>" +
+                "");
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -286,7 +288,9 @@
         infoButtonText: "",
         template: verticalStack,
         onRender: function($element) {
-            add_play_icon($element);
+            $element.find(".plr-img-wrapper > div").append("" +
+                "<div style=\"color: white;background-color: #1877AB;display: inline-block;position: absolute;left: 0;bottom: 0px;height: 50px;width: 100px;\">                  <div style=\"color: #FFFFFF;top: 50%;position: relative;transform: translateY(-50%) scale(2);\">    &#9654;</div></div>" +
+                "");
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -472,7 +476,7 @@
             "                                                                                                                                                                                   " +
             "    .plr-header .plr-img-wrapper {                                                                                                                                                 " +
             "        padding-bottom: 24px;                                                                                                                                                      " +
-            "        width: 30px;                                                                                                                                                                " +
+            "        width: 30%;                                                                                                                                                                " +
             "        left:0px;                                                                                                                                                                " +
             "        top: 3px;                                                                                                                                                                  " +
             "        position: relative;                                                                                                                                                        " +
@@ -516,9 +520,9 @@
         infoButtonText: "",
         template: collection_item,
         onRender: function($element) {
-            $element.find(".plr-img-wrapper > div").append(""+
-                "<div style=\"color: white;background-color: rgba(60, 60, 60, 0);display: inline-block;line-height: 12px;position: absolute;left: 10px;bottom: 10px;border: 2px solid white;padding: 10px;border-radius: 100px;\">                  <div style=\"color: rgba(255, 255, 255, 0);background-color: rgba(255, 255, 255, 0);display: inline-block;-webkit-text-stroke: white 1px;margin-right: 9px;\">   &#9654;</div><div style=\"display: inline-block;position: relative;font-size: 15px;top: -1px;\">WATCH</div></div>"+
-            "");
+            $element.find(".plr-img-wrapper > div").append("" +
+                "<div style=\"color: white;background-color: rgba(60, 60, 60, 0);display: inline-block;line-height: 12px;position: absolute;left: 10px;bottom: 10px;border: 2px solid white;padding: 10px;border-radius: 100px;\">                  <div style=\"color: rgba(255, 255, 255, 0);background-color: rgba(255, 255, 255, 0);display: inline-block;-webkit-text-stroke: white 1px;margin-right: 9px;\">   &#9654;</div><div style=\"display: inline-block;position: relative;font-size: 15px;top: -1px;\">WATCH</div></div>" +
+                "");
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -912,8 +916,3 @@
     document.getElementsByTagName('head')[0].appendChild(jq);
 
 })(document, "script", "nativeads-plugin");
-
-
-
-
-
