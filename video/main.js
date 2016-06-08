@@ -198,13 +198,13 @@
     }]);
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" },
+        unit: { "server": "mvdirect", "id": "b953a00e34454ca396c0427236747555" },
         location: ".plr-crsl--1 .plr-slot--4",
         infoText: "",
         infoButtonText: "",
         template: verticalStack,
         onRender: function($element) {
-            add_play_icon($element);
+            add_play_banner($element);
         },
         onFill: function(data) {},
         onError: function(error) {}
