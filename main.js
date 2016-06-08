@@ -1,4 +1,3 @@
-//----------Templates---------------------------------------------------------
 (function() {
     var verticalStack = "";
     var imageHero = "";
@@ -20,49 +19,11 @@
     q().push(["setPropertyID", "NA-DANITEST-11237996"]);
     var nike = "3c59b16ceaa549ec90c25bee127a97ae"
 
+    /*=======================================
+    =            Insert Previews            =
+    =======================================*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //
-    //
-    //---- Vertical Stack ----------------------------------------------------
-    //
-    //
+    /*----------  Vertical Stack  ----------*/
 
     q().push(["insertPreview", {
         label: "Landing Page",
@@ -78,13 +39,8 @@
 
     q().push(["injectCSS", "", "head"]);
 
-
-
-    //
-    //
-    // ----- carousel --------------------------------------------------------
-    //
-    //
+    /*----------  Carousel 1  ----------*/
+    
 
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(13)";
@@ -153,6 +109,9 @@
         onError: function(error) {}
     }]);
 
+    /*----------  Carousel 2  ----------*/
+    
+
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(18)";
         $(selector).after("\
@@ -208,11 +167,8 @@
         onError: function(error) {}
     }]);
 
-    //
-    //
-    // ----- inbetween article -----------------------------------------------------
-    //
-    //
+    /*----------  In-Article Pullout  ----------*/
+    
 
     q().push(["insertPreview", {
         label: "Landing Page",
@@ -285,6 +241,9 @@
         onError: function(error) {}
     }]);
 
+    /*----------  In Between Article  ----------*/
+    
+
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
@@ -299,13 +258,7 @@
         onError: function(error) {}
     }]);
 
-    //
-    //
-    // ----- imageHero ------------------------------------------------------------
-    //
-    //
-
-
+    /*----------  Hero  ----------*/
 
     q().push(["insertPreview", {
         label: "Landing Page",
@@ -319,6 +272,8 @@
         onError: function(error) {}
     }]);
 
+    /*----------  Parallax Hero  ----------*/
+    
     q().push(["insertPreview", {
         label: "Landing Page",
         unit: { "server": "mvdirect", "id": nike },
@@ -417,15 +372,7 @@
 
     q().push(["injectCSS", "", "head"]);
 
-
-
-    //
-    //
-    // ---- COLLECTION --------------------------------------------------------------
-    //
-    //
-
-
+    /*----------  Collection  ----------*/
 
     q().push(function() {
         var selector = ".article:last";
@@ -471,7 +418,7 @@
             \
             <div class=\"plr-collection-container\">\
                 <div class=\"plr-header\">\
-                    <h2>Recommended By</h2>\
+                    <h2>Reccomended By</h2>\
                     <div class=\"plr-img-wrapper\">\
                         <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Logo_NIKE.svg/2000px-Logo_NIKE.svg.png') no-repeat center center;\"></div>\
                     </div>\
@@ -516,6 +463,8 @@
         onError: function(error) {}
     }]);
 
+    /*=====  End of Insert Previews  ======*/
+    
 
 
 
@@ -544,9 +493,9 @@
 
 
 
-
-
-    // TEMPLATE CODE
+    /*=================================
+    =            Templates            =
+    =================================*/
 
     function templates() {
         /*
@@ -796,7 +745,7 @@
             return buffer;
         };
 
-
+        /*=====  End of Templates  ======*/
     }
 
 })();
@@ -815,7 +764,9 @@
     js.src = ((p == "https:") ? p : "http:") + "//plugin.mediavoice.com/plugin.js";
     fjs.parentNode.insertBefore(js, fjs);
 
+    // Inject jQuery
     var jq = document.createElement('script');
     jq.src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js";
     document.getElementsByTagName('head')[0].appendChild(jq);
+    
 })(document, "script", "nativeads-plugin");
