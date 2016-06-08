@@ -125,7 +125,7 @@
                 "        padding: 5px;                                 " +
                 "        background-color: rgba(0,0,0,0.6);            " +
                 "        border-radius: 2px;                           " +
-                "    \">&#9654; PLAY VIDEO &nbsp; | &nbsp;  1:35</div> " +
+                "    \">&#9654;&#xFE0E; PLAY VIDEO &nbsp; | &nbsp;  1:35</div> " +
                 "");
 
         },
