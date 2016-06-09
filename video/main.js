@@ -25,44 +25,44 @@
 
     function add_play_icon($element) {
         $element.find(".plr-img-wrapper > div").append("" +
-            "    <div style=\"height: 100%;\">           " +
+            "    <div style=\"height: 100%;\">" +
             "        <img src=\"play_icon.png\" style=\" " +
-            "            width: 50%;                     " +
-            "            top: 50%;                       " +
-            "            position:                       " +
-            "            relative;                       " +
-            "            transform: translateY(-50%);    " +
-            "            opacity: 0.75;\">               " +
-            "    </div>                                  " +
+            "            width: 50%;" +
+            "            top: 50%;" +
+            "            position:" +
+            "            relative;" +
+            "            transform: translateY(-50%);" +
+            "            opacity: 0.75;\">" +
+            "    </div>" +
             "");
     }
 
     function add_play_banner($element) {
         $element.find(".plr-img-wrapper > div").append("" +
-            "    <div style=\"                  " +
-            "        color: white;              " +
-            "        background-color: #3C3C3C; " +
-            "        display: inline-block;     " +
-            "        line-height: 12px;         " +
-            "        position: absolute;        " +
-            "        left: 0;                   " +
-            "        bottom: 0px;               " +
-            "    \">                            " +
-            "      <div style=\"                " +
-            "        color: #1877AB;            " +
-            "        background-color: white;   " +
-            "        display: inline-block;     " +
-            "        position: relative;        " +
-            "        padding: 5px 4px;          " +
-            "        top: 0px;                  " +
-            "        height: 23px;              " +
-            "    \">&#9654;&#xFE0E;</div><div style=\"  " +
-            "        display: inline-block;     " +
-            "        padding: 4px;              " +
-            "        font-size: 12px;           " +
-            "        position: relative;        " +
-            "        top: -2px;                 " +
-            "    \"> 00:21 </div></div>         " +
+            "    <div style=\"" +
+            "        color: white;" +
+            "        background-color: #3C3C3C;" +
+            "        display: inline-block;" +
+            "        line-height: 12px;" +
+            "        position: absolute;" +
+            "        left: 0;" +
+            "        bottom: 0px;" +
+            "    \">" +
+            "      <div style=\"" +
+            "        color: #1877AB;" +
+            "        background-color: white;" +
+            "        display: inline-block;" +
+            "        position: relative;" +
+            "        padding: 5px 4px;" +
+            "        top: 0px;" +
+            "        height: 23px;" +
+            "    \">&#9654;&#xFE0E;</div><div style=\"" +
+            "        display: inline-block;" +
+            "        padding: 4px;" +
+            "        font-size: 12px;" +
+            "        position: relative;" +
+            "        top: -2px;" +
+            "    \"> 00:21 </div></div>" +
             "");
     }
 
@@ -117,14 +117,14 @@
         template: imageHero,
         onRender: function($element) {
             $element.find(".plr-contents").after("" +
-                "<div class=\"plr-sponsored\" style=\"                 " +
-                "        right: inherit;                               " +
-                "        bottom: inherit;                              " +
-                "        left: 5px;                                    " +
-                "        top: 5px;                                     " +
-                "        padding: 5px;                                 " +
-                "        background-color: rgba(0,0,0,0.6);            " +
-                "        border-radius: 2px;                           " +
+                "<div class=\"plr-sponsored\" style=\"" +
+                "        right: inherit;" +
+                "        bottom: inherit;" +
+                "        left: 5px;" +
+                "        top: 5px;" +
+                "        padding: 5px;" +
+                "        background-color: rgba(0,0,0,0.6);" +
+                "        border-radius: 2px;" +
                 "    \">&#9654;&#xFE0E; PLAY VIDEO &nbsp; | &nbsp;  1:35</div> " +
                 "");
 
@@ -139,22 +139,22 @@
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(13)";
         $(selector).after("" +
-            "    <div class=\"plr-crsl-outer plr-crsl--1\">    " +
-            "        <div class=\"plr-crsl-inner\">            " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "    <div class=\"plr-crsl-outer plr-crsl--1\">" +
+            "        <div class=\"plr-crsl-inner\">" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--1\"></div> " +
-            "            </div>                                " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "            </div>" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--2\"></div> " +
-            "            </div>                                " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "            </div>" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--3\"></div> " +
-            "            </div>                                " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "            </div>" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--4\"></div> " +
-            "            </div>                                " +
-            "        </div>                                    " +
-            "    </div>                                        " +
+            "            </div>" +
+            "        </div>" +
+            "    </div>" +
             "");
     });
 
@@ -231,19 +231,19 @@
     q().push(function() {
         var selector = "body > div > div:nth-child(1) > p:nth-child(18)";
         $(selector).after("" +
-            "    <div class=\"plr-crsl-outer plr-crsl--2\">    " +
-            "        <div class=\"plr-crsl-inner\">            " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "    <div class=\"plr-crsl-outer plr-crsl--2\">" +
+            "        <div class=\"plr-crsl-inner\">" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--1\"></div> " +
-            "            </div>                                " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "            </div>" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--2\"></div> " +
-            "            </div>                                " +
-            "            <div class=\"plr-crsl-slot\">         " +
+            "            </div>" +
+            "            <div class=\"plr-crsl-slot\">" +
             "                <div class=\"plr-slot--3\"></div> " +
-            "            </div>                                " +
-            "        </div>                                    " +
-            "    </div>                                        " +
+            "            </div>" +
+            "        </div>" +
+            "    </div>" +
             "                                                  " +
             "");
     });
@@ -461,54 +461,54 @@
         var selector = ".article:last";
 
         $(selector).after("" +
-            "    <style type=\"text/css\">                                                                                                                                                      " +
-            "    .plr-collection-container {                                                                                                                                                    " +
-            "        margin-bottom: 20px;                                                                                                                                                       " +
-            "        padding-bottom: 15px;                                                                                                                                                      " +
-            "    }                                                                                                                                                                              " +
-            "                                                                                                                                                                                   " +
-            "    .plr-header h2 {                                                                                                                                                               " +
-            "        margin: 0;                                                                                                                                                                 " +
-            "        text-transform: initial;                                                                                                                                                   " +
-            "        display: inline-block;                                                                                                                                                     " +
-            "        font-size: 26px;                                                                                                                                                           " +
-            "    }                                                                                                                                                                              " +
-            "                                                                                                                                                                                   " +
-            "    .plr-header .plr-img-wrapper {                                                                                                                                                 " +
-            "        padding-bottom: 24px;                                                                                                                                                      " +
-            "        width: 30%;                                                                                                                                                                " +
-            "        left:0px;                                                                                                                                                                " +
-            "        top: 3px;                                                                                                                                                                  " +
-            "        position: relative;                                                                                                                                                        " +
-            "        display: inline-block;                                                                                                                                                     " +
-            "        overflow: hidden;                                                                                                                                                          " +
-            "    }                                                                                                                                                                              " +
-            "                                                                                                                                                                                   " +
-            "    .plr-header .plr-img-wrapper div {                                                                                                                                             " +
-            "        position: absolute;                                                                                                                                                        " +
-            "        top: 0px;                                                                                                                                                                  " +
-            "        bottom: 0px;                                                                                                                                                               " +
-            "        left: 0px;                                                                                                                                                                 " +
-            "        right: 0px;                                                                                                                                                                " +
-            "        background-size: contain !important;                                                                                                                                       " +
-            "    }                                                                                                                                                                              " +
-            "                                                                                                                                                                                   " +
-            "    .plr-header {                                                                                                                                                                  " +
-            "        border-bottom: 3px solid #1879A9;                                                                                                                                          " +
-            "        padding-bottom: 10px;                                                                                                                                                      " +
-            "    }                                                                                                                                                                              " +
-            "    </style>                                                                                                                                                                       " +
-            "                                                                                                                                                                                   " +
-            "    <div class=\"plr-collection-container\">                                                                                                                                       " +
-            "        <div class=\"plr-header\">                                                                                                                                                 " +
-            "            <h2>Reccomended By</h2>                                                                                                                                                " +
-            "            <div class=\"plr-img-wrapper\">                                                                                                                                        " +
-            "                <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Purina-logo.svg/2000px-Purina-logo.svg.png') no-repeat center center;\"></div> " +
-            "            </div>                                                                                                                                                                 " +
-            "        </div>                                                                                                                                                                     " +
-            "        <div class=\"plr-collection-anchor--hardcoded\"></div>                                                                                                                     " +
-            "        <div class=\"plr-collection-anchor\"></div>                                                                                                                                " +
-            "    </div>                                                                                                                                                                         " +
+            "    <style type=\"text/css\">" +
+            "    .plr-collection-container {" +
+            "        margin-bottom: 20px;" +
+            "        padding-bottom: 15px;" +
+            "    }" +
+            "" +
+            "    .plr-header h2 {" +
+            "        margin: 0;" +
+            "        text-transform: initial;" +
+            "        display: inline-block;" +
+            "        font-size: 26px;" +
+            "    }" +
+            "" +
+            "    .plr-header .plr-img-wrapper {" +
+            "        padding-bottom: 24px;" +
+            "        width: 30%;" +
+            "        left:0px;" +
+            "        top: 3px;" +
+            "        position: relative;" +
+            "        display: inline-block;" +
+            "        overflow: hidden;" +
+            "    }" +
+            "" +
+            "    .plr-header .plr-img-wrapper div {" +
+            "        position: absolute;" +
+            "        top: 0px;" +
+            "        bottom: 0px;" +
+            "        left: 0px;" +
+            "        right: 0px;" +
+            "        background-size: contain !important;" +
+            "    }" +
+            "" +
+            "    .plr-header {" +
+            "        border-bottom: 3px solid #1879A9;" +
+            "        padding-bottom: 10px;" +
+            "    }" +
+            "    </style>" +
+            "" +
+            "    <div class=\"plr-collection-container\">" +
+            "        <div class=\"plr-header\">" +
+            "            <h2>Reccomended By</h2>" +
+            "            <div class=\"plr-img-wrapper\">" +
+            "                <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Purina-logo.svg/2000px-Purina-logo.svg.png') no-repeat center center;\"></div>" +
+            "            </div>" +
+            "        </div>" +
+            "        <div class=\"plr-collection-anchor--hardcoded\"></div>" +
+            "        <div class=\"plr-collection-anchor\"></div>" +
+            "    </div>" +
             "");
     });
 
