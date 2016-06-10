@@ -501,7 +501,7 @@
             "" +
             "    <div class=\"plr-collection-container\">" +
             "        <div class=\"plr-header\">" +
-            "            <h2>Reccomended By</h2>" +
+            "            <h2>Recommended By</h2>" +
             "            <div class=\"plr-img-wrapper\">" +
             "                <div style=\"background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Purina-logo.svg/2000px-Purina-logo.svg.png') no-repeat center center;\"></div>" +
             "            </div>" +
