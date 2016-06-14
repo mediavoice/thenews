@@ -184,7 +184,24 @@
     var total_carousels = 0;
 
     function Carousel(props) {
-        // Inject base CSS just once
+        /*
+        
+        props = {
+            location: jQuery selector
+            ads: array of unit objects
+
+            onRender: array of onRender function corresponding to the index in ads
+            
+            hero: whether to display the items as "heroes"
+        }
+    
+        */
+
+
+        if (props.ads.length === 0) return;
+
+        /*----------  Inject Carousel Base CSS *ONCE*  ----------*/
+
         if (total_carousels === 0) {
             q().push(["injectCSS", ["",
                 ".plr-crsl-outer {",
@@ -196,7 +213,6 @@
                 "    border-bottom: 1px solid #9a9a9a;",
                 "    -webkit-overflow-scrolling: touch;",
                 "}",
-                "",
                 ".plr-crsl-slot {",
                 "    position: relative;",
                 "    display: table-cell;", // Table cell? Yep. Why? ¯\_(ツ)_/¯,
@@ -204,13 +220,36 @@
                 "    padding: 0 20px;",
                 "    border-right: 1px solid #808080;",
                 "}",
-                "",
                 ".plr-crsl-slot:last-child {",
                 "    border-right: none;",
                 "}",
                 ""
             ].join("\n"), "head"]);
         }
+
+        /*----------  Inject Carousel Container HTML  ----------*/
+
+        // Generate correct number of slots
+        var slots = "";
+        for (var i in props.ads)
+            slots += ["",
+                "<div class=\"plr-crsl-slot\">",
+                "    <div class=\"plr-slot--" + i + "\"></div>",
+                "</div>",
+                ""
+            ].join("\n");
+
+        // Actually add the container
+        var $carousel = $(props.location).after(interpolate_str(["",
+            "<div class=\"plr-crsl-outer plr-crsl--{0}\">",
+            "    <div class=\"plr-crsl-inner\">",
+            "        {1}", // slots are inserted programatically here
+            "    </div>",
+            "</div>",
+            ""
+        ].join("\n"), [total_carousels, slots])).next();
+
+        /*----------  Inject "Variable" CSS  ----------*/
 
         // Change internal width to suit no. of injected ads
         q().push(["injectCSS", interpolate_str(["",
@@ -250,30 +289,10 @@
             ].join("\n"), [total_carousels]), "head"]);
         }
 
-        // Generate correct number of slots
-        var slots = "";
-        for (var i in props.ads)
-            slots += ["",
-                "<div class=\"plr-crsl-slot\">",
-                "    <div class=\"plr-slot--" + i + "\"></div>",
-                "</div>",
-                ""
-            ].join("\n");
+        /*----------  Insert the Carousel Items  ----------*/
 
-        // Actually add the container
-        var container = "";
-        container += interpolate_str(["",
-            "<div class=\"plr-crsl-outer plr-crsl--{0}\">",
-            "    <div class=\"plr-crsl-inner\">",
-            "        {1}", // slots are inserted programatically here
-            "    </div>",
-            "</div>",
-            ""
-        ].join("\n"), [total_carousels, slots]);
-
-
-
-        $(props.location).after(container);
+        var faliures = 0,
+            incfaliure = function() { faliures++; };
 
         for (var j in props.ads) {
             q().push(["insertPreview", {
@@ -285,11 +304,13 @@
                 template: carousel_item,
                 onRender: ((props.onRender && props.onRender[j]) ? props.onRender[j] : null),
                 onFill: function(data) {},
-                onError: function(error) {}
+                onError: incfaliure
             }]);
         }
 
-        total_carousels++;
+        // Make sure that if all the ads failed, don't even show the carousel
+        if (faliures == props.ads.length) $carousel.remove();
+        else total_carousels++;
     }
 
     /*----------  Collection  ----------*/
@@ -300,14 +321,18 @@
         /* 
         props = {
             location: jQuery selector
-            ads: array of ad ids
+            ads: array of unit objects
+            onRender: array of onRender function corresponding to the index in ads
+
             display:    "hero"
                      OR "noThumb"
                      OR "bigThumb"
         }
         */
 
-        // I inject base CSS just once
+
+        /*----------  Inject Base Container CSS *ONCE*  ----------*/
+
         if (total_collections === 0) {
             q().push(["injectCSS", ["",
                 ".plr-collection-container {",
@@ -327,65 +352,72 @@
             ].join("\n"), "head"]);
         }
 
-        q().push(function() {
-            $(props.location).after(["",
-                "<div class=\"plr-collection-container plr-collection--" + total_collections + "\">",
-                "    <div class=\"plr-header\">",
-                "        <h2>Sponsored Stories</h2>",
-                "    </div>",
-                "    <div class=\"plr-collection-anchor--top\"></div>",
-                "    <div class=\"plr-collection-anchor\"></div>",
-                "</div>",
-                ""
-            ].join("\n"));
-        });
+        /*----------  Inject Container HTML  ----------*/
 
+        var $collection = $(props.location).after(["",
+            "<div class=\"plr-collection-container plr-collection--" + total_collections + "\">",
+            "    <div class=\"plr-header\">",
+            "        <h2>Sponsored Stories</h2>",
+            "    </div>",
+            "    <div class=\"plr-collection-anchor--top\"></div>",
+            "    <div class=\"plr-collection-anchor\"></div>",
+            "</div>",
+            ""
+        ].join("\n")).next();
+
+        /*----------  Inject CSS  ----------*/
+        // Varies depending on what style collection the user wants
+
+        // These are the base properties that never change, so we inject them *ONCE*
+        if (total_collections === 0) {
+            q().push(["injectCSS", ["",
+                "  .plr-collection p:last-child {", /* hide read more by default */
+                "    display: none; }",
+                /* On Mobile */
+                "@media only screen and (max-width: 426px) {",
+                "  .plr-collection p:not(:nth-child(1)) {", // hide the summary
+                "    display: none; }",
+                "  .plr-collection h2 {", // make font smaller on mobile
+                "    font-size: 18px; }",
+                "  .plr-collection .plr-img-wrapper {", // make images big on mobile
+                "    width: 100%;",
+                "    padding-bottom: 50%;",
+                "    margin-bottom: 10px;",
+                "  }",
+                "}"
+            ].join("\n"), "head"]);
+        }
+
+        // Now we inject the "variable" CSS
         var style = "";
-
-        // Some base properties
-        style += interpolate_str(["",
-            "  .plr-collection--{0} .plr-collection p:last-child {", /* hide read more by default */
-            "    display: none; }",
-            /* On Mobile */
-            "@media only screen and (max-width: 426px) {",
-            "  .plr-collection--{0} .plr-collection p:not(:nth-child(1)) {", // hide the summary
-            "    display: none; }",
-            "  .plr-collection--{0} .plr-collection h2 {", // make font smaller on mobile
-            "    font-size: 18px; }",
-            "  .plr-collection--{0} .plr-collection .plr-img-wrapper {", // make images big on mobile
-            "    width: 100%;",
-            "    padding-bottom: 50%;",
-            "    margin-bottom: 10px;",
-            "  }",
-            "}"
-        ].join("\n"), [total_collections]);
-
         if (props.display === "hero") {
             style += interpolate_str(["",
                 /* On all elements but the first */
-                "  .plr-collection--{0} .plr-collection:not(:nth-child(2)) .plr-img-wrapper {", // hide the image
-                "    display: none; }",
+                ".plr-collection--{0} .plr-collection:not(:nth-child(2)) .plr-img-wrapper", // hide the image
+                "{ display: none; }",
                 /* For the first element */
-                "  .plr-collection--{0} .plr-collection:nth-child(2) p:last-child {", // show the read more
-                "    display: block; }",
+                ".plr-collection--{0} .plr-collection:nth-child(2) p:last-child", // show the read more
+                "{ display: block; }",
                 /* Mobile */
                 "@media only screen and (max-width: 426px) {",
-                /* For the first */
-                "    .plr-collection--{0} .plr-collection:nth-child(2) p:not(:nth-child(1)) {", // show the summary
-                "      display: block; }",
+                "    .plr-collection--{0} .plr-collection:nth-child(2) p:not(:nth-child(1))", /* For the first */
+                "    { display: block; }", // show the summary
                 "}"
             ].join("\n"), [total_collections]);
         } else if (props.display === "noThumb") {
             style += interpolate_str(["",
-                "  .plr-collection--{0} .plr-collection .plr-img-wrapper {", // hide the image
-                "    display: none; }"
+                ".plr-collection--{0} .plr-collection .plr-img-wrapper", // hide the image
+                "{ display: none; }"
             ].join("\n"), [total_collections]);
         }
-
         // bigThumb is implied
 
-
         q().push(["injectCSS", style, "head"]);
+
+        /*----------  Insert the Collection Items  ----------*/
+
+        var faliures = 0,
+            incfaliure = function() { faliures++; };
 
         for (var i = 0; i < props.ads.length; i++) {
             var location = ".plr-collection--" + total_collections + " ";
@@ -398,11 +430,15 @@
                 infoText: "",
                 infoButtonText: "",
                 template: collection_item,
-                onRender: function($element) {},
+                onRender: ((props.onRender && props.onRender[j]) ? props.onRender[j] : null),
                 onFill: function(data) {},
-                onError: function(error) {}
+                onError: faliures
             }]);
         }
+
+        // Make sure that if all the ads failed, don't even show the carousel
+        if (faliures == props.ads.length) $collection.remove();
+        else total_collections++;
 
         total_collections++;
     }
@@ -500,7 +536,8 @@
             location: "body > div > div:nth-child(1) > p:nth-child(7)",
             ad: standard_ad,
             display: {
-                thumb: "circle", /* OR "square" OR "none" OR "rectangle" */
+                thumb: "circle",
+                /* OR "square" OR "none" OR "rectangle" */
                 summary: true
             }
         });
@@ -547,8 +584,9 @@
                 standard_ad
             ],
             onRender: [function($element) {
-                $element.first().find(".plr-sponsored-disclosure").text("sponsored by standard_ad");
-            }]
+                $element.first().find(".plr-sponsored-disclosure").text("sponsored by slate");
+            }],
+            hero: true
         });
     });
 
