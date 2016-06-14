@@ -9,7 +9,7 @@
     };
     q().push(["setPropertyID", "NA-DANITEST-11237996"]);
 
-    var nike = { "server": "mvdirect", "id": "3c59b16ceaa549ec90c25bee127a97ae" };
+    var standard_ad = { "server": "mvdirect", "id": "f278c44c9f11494ca9c57714599054c6" };
 
     /*=========================================
     =            Utility Functions            =
@@ -26,24 +26,15 @@
         );
     }
 
-
-
-
-
-
-
-
-
-
     /*=======================================
     =            Spooky JS Magic            =
     =======================================*/
 
     /*----------  Kenny Burns  ----------*/
 
-    function ken_burns_effect($element, img_selector) {
+    function ken_burns_effect($element) {
         var a = {},
-            e = $element.find(img_selector)[0].style;
+            e = $element.find(".plr-img-wrapper")[0].style;
 
         e.position = "relative";
 
@@ -52,7 +43,7 @@
         e.right = 0;
         e.top = 0;
 
-        e.transform = "scale(2)";
+        e.transform = "scale(1)";
 
         // Helper
         function trunc(x, d) {
@@ -101,7 +92,7 @@
                     a.x = -temp;
                     break;
                 default:
-                    a.y += 45;
+                    a.y += 0;
             }
         }
 
@@ -475,18 +466,41 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*=======================================
     =            Insert Previews            =
     =======================================*/
 
     /*----------  Vertical Stack  ----------*/
-
     q().push(function() {
         new VerticalStack({
             location: "body > div > div:nth-child(1) > p:nth-child(7)",
-            ad: nike,
+            ad: standard_ad,
             display: {
-                thumb: "circle",
+                thumb: "circle", /* OR "square" OR "none" OR "rectangle" */
                 summary: true
             }
         });
@@ -496,7 +510,7 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: nike,
+        unit: standard_ad,
         location: "body > div > div:nth-child(1) > p:nth-child(13)",
         infoText: "",
         infoButtonText: "",
@@ -512,12 +526,12 @@
         new Carousel({
             location: "body > div > div:nth-child(1) > p:nth-child(13)",
             ads: [
-                nike,
-                { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" },
-                { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" },
-                { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" },
-                { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" },
-                { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" }
+                standard_ad,
+                standard_ad,
+                standard_ad,
+                standard_ad,
+                standard_ad,
+                standard_ad
             ]
         });
     });
@@ -528,12 +542,12 @@
         new Carousel({
             location: "body > div > div:nth-child(1) > p:nth-child(18)",
             ads: [
-                { "server": "mvdirect", "id": "0fa9a978808b4ad4b027fa82f1d16646" },
-                { "server": "mvdirect", "id": "2e965d6d2d084775b598ac4dee7b7743" },
-                nike
+                standard_ad,
+                standard_ad,
+                standard_ad
             ],
             onRender: [function($element) {
-                $element.first().find(".plr-sponsored-disclosure").text("sponsored by nike");
+                $element.first().find(".plr-sponsored-disclosure").text("sponsored by standard_ad");
             }]
         });
     });
@@ -543,19 +557,12 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: nike,
+        unit: standard_ad,
         location: ".article:last",
         infoText: "",
         infoButtonText: "",
         template: inbetween_article,
-        onRender: function($element) {
-            $element.find("p").first().html("" +
-                "\"Innovation at Nike is not about dreaming of tomorrow. " +
-                "It's about accelerating toward it,\" says Tinker Hatfield." +
-                " \"We're able to anticipate the needs of athletes because " +
-                "we know them better than anybody. Sometimes, we deliver" +
-                " a reality before others have even begun to imagine it.\"");
-        },
+        onRender: function($element) {},
         onFill: function(data) {},
         onError: function(error) {}
     }]);
@@ -564,13 +571,13 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: nike,
+        unit: standard_ad,
         location: ".article:last p:eq(3)",
         infoText: "",
         infoButtonText: "",
         template: imageHero,
         onRender: function($element) {
-            ken_burns_effect($element, ".plr-img-wrapper");
+            ken_burns_effect($element);
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -580,19 +587,12 @@
 
     q().push(["insertPreview", {
         label: "Landing Page",
-        unit: nike,
+        unit: standard_ad,
         location: ".article:last p:eq(10)",
         infoText: "",
         infoButtonText: "",
         template: inbetween_article,
         onRender: function($element) {
-            $element.find("p").first().html("" +
-                "\"Innovation at Nike is not about dreaming of tomorrow. " +
-                "It's about accelerating toward it,\" says Tinker Hatfield." +
-                " \"We're able to anticipate the needs of athletes because " +
-                "we know them better than anybody. Sometimes, we deliver" +
-                " a reality before others have even begun to imagine it.\"");
-
             $element.css({
                 "padding-bottom": 0,
                 "padding-top": 10 + "px",
@@ -610,13 +610,45 @@
         new Collection({
             location: ".article:last",
             ads: [
-                nike,
-                { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" },
-                { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" }
+                standard_ad,
+                standard_ad,
+                standard_ad
             ],
-            display: "hero"
+            display: "hero" /* OR bigThumb OR noThumb */
         });
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*=================================
     =            Templates            =
