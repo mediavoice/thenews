@@ -1,3 +1,10 @@
+/**
+ *
+ * NOTE THAT THIS FILE DOES NOT CONTAIN ALL OF THE CSS THAT MAKES THE 
+ * PLACEMENTS WORK! A LOT OF CONTAINER CODE IS MISSING, AND A LOT OF 
+ * CSS IS DYNAMICALLY GENERATED WITHIN THE JS.
+ *
+ */
 /*\
 |*|
 |*|  Vertical Stack
@@ -6,7 +13,7 @@
 .plr-halfw {
   float: left;
   width: 300px;
-  margin: 50px 50px 50px -50px;
+  margin: 25px 25px 25px 0;
   padding: 15px 0;
   transition: .25s;
   text-align: center;
@@ -27,8 +34,6 @@
       left: 0;
       transition: .25s;
       background-size: cover !important; }
-  .plr-halfw a {
-    text-decoration: initial; }
   .plr-halfw .plr-img-wrapper {
     margin: auto; }
     .plr-halfw .plr-img-wrapper div {
@@ -42,21 +47,16 @@
     padding-top: 0;
     color: white;
     background-color: #1877ab; }
+  .plr-halfw a {
+    text-decoration: initial; }
+  .plr-halfw h2 {
+    margin: 10px 0; }
   .plr-halfw:hover h2 {
-    color: #1877AB; }
+    color: #1877ab; }
+  @media only screen and (max-width: 426px) {
+    .plr-halfw {
+      width: 100%; } }
 
-@media only screen and (max-width: 800px) {
-  .plr-halfw {
-    margin: 50px 50px 50px 0; } }
-@media only screen and (max-width: 426px) {
-  .plr-halfw {
-    width: 100%; }
-    .plr-halfw .plr-img-wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 40%;
-      margin: auto;
-      padding-bottom: 40%; } }
 /*\
 |*|
 |*| Hero
@@ -141,69 +141,59 @@
 |*|  Carousel
 |*|
 \*/
-.plr-crsl-outer {
-  position: relative;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling:touch;
-  width: 100%;
-  padding: 20px 0;
-  border-top: 1px solid #9a9a9a;
-  border-bottom: 1px solid #9a9a9a; }
-
-.plr-crsl-inner {
-  width: 160%; }
-
-.plr-crsl-slot {
-  position: relative;
-  display: inline-block;
-  width: 24%;
-  padding: 0 20px;
-  border-right: 1px solid #808080; }
-  .plr-crsl-slot:last-child {
-    border-right: none; }
-
-@media only screen and (max-width: 426px) {
-  .plr-crsl-inner {
-    width: 250%; } }
-/* Overriding half sylings */
-.plr-crsl-slot .plr-halfw {
+/*----------  Container Styling  ----------*/
+/*----------  Item Styling  ----------*/
+.plr-crsl-item {
   width: 100%;
   margin: 0;
+  padding: 15px 0;
+  transition: .25s;
+  text-align: center;
   border: none; }
-  .plr-crsl-slot .plr-halfw p {
+  .plr-crsl-item .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 60%;
+    padding-bottom: 60%; }
+    .plr-crsl-item .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-crsl-item .plr-img-wrapper {
+    margin: auto; }
+  .plr-crsl-item p {
     display: none; }
-  .plr-crsl-slot .plr-halfw h2 {
+  .plr-crsl-item h2 {
     font-size: 16px;
     text-transform: initial; }
-  .plr-crsl-slot .plr-halfw .plr-img-wrapper div {
-    border-radius: 0; }
+  .plr-crsl-item a {
+    text-decoration: initial; }
+  .plr-crsl-item .plr-sponsored-disclosure {
+    font-size: 12px;
+    font-variant: small-caps;
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 5px;
+    padding-top: 0;
+    color: white;
+    background-color: #1877ab; }
+  .plr-crsl-item:hover h2 {
+    color: #1877ab; }
   @media only screen and (max-width: 426px) {
-    .plr-crsl-slot .plr-halfw .plr-img-wrapper {
-      width: 75%;
-      padding-bottom: 75%; } }
-
-/* WE FUDGIN' IT */
-.plr-crsl--2 {
-  padding-bottom: 0; }
-  .plr-crsl--2 .plr-crsl-slot {
-    width: 32%;
-    padding: 0;
-    border: none; }
-    .plr-crsl--2 .plr-crsl-slot .plr-halfw .plr-sponsored-disclosure {
-      display: none; }
-    .plr-crsl--2 .plr-crsl-slot .plr-halfw .plr-img-wrapper {
+    .plr-crsl-item {
       width: 100%; }
-    .plr-crsl--2 .plr-crsl-slot .plr-halfw h2 {
-      height: 2em; }
-    .plr-crsl--2 .plr-crsl-slot:first-child .plr-sponsored-disclosure {
-      font-size: 16px;
-      position: absolute;
-      top: -26;
-      left: 0;
-      display: inherit; }
-
-.plr-crsl--1 .plr-crsl-slot .plr-halfw h2 {
-  height: 5em; }
+      .plr-crsl-item .plr-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        width: 75%;
+        margin: auto;
+        padding-bottom: 75%; } }
 
 /*\
 |*|
@@ -279,23 +269,15 @@
   .plr-collection .plr-img-wrapper {
     float: left;
     margin-right: 20px; }
-  .plr-collection:not(:nth-child(2)) .plr-img-wrapper {
-    display: none; }
   .plr-collection h2 {
     margin: 0;
     text-transform: inherit; }
   .plr-collection p {
     margin: 0;
     margin-top: 5px; }
-
-@media only screen and (max-width: 426px) {
-  .plr-collection .plr-img-wrapper {
-    width: 100%;
-    margin-bottom: 10px;
-    padding-bottom: 50%; }
-  .plr-collection:not(:nth-child(2)) p:not(:nth-child(1)) {
-    display: none; }
-  .plr-collection h2 {
-    font-size: 18px; } }
+  .plr-collection a {
+    text-decoration: initial; }
+  .plr-collection:hover a {
+    color: #1877ab; }
 
 /*# sourceMappingURL=style.css.map */
