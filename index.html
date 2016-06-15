@@ -2,9 +2,15 @@
 
 <head>
     <title>the news</title>
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
     <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
+    <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
     <style type="text/css">
     .main-contents {
         max-width: 720px;
@@ -88,15 +94,93 @@
     h2 {
         text-transform: uppercase;
     }
+    h3{
+        font-size:12px;
+        font-family: Calibre Light, Helvetica Neue, Helvetica, Arial, sans-serif;
+        color:#fff;
+        font-weight:normal;
+    }
+    .slideout-menu {
+        position: fixed;
+        left:auto;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 0;
+        width: 150px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        display: none;
+        background-color: #1D1F20;
+        background-image: linear-gradient(145deg, #2e3135, #404348);
+        padding:60px 0px 0px 0px;
+        z-index:1;
+    }
+
+    .slideout-panel {
+        position:relative;
+        z-index: 1;
+        will-change: transform;
+    }
+
+    .slideout-open,
+    .slideout-open body,
+    .slideout-open .slideout-panel {
+        overflow: hidden;
+    }
+
+    .slideout-open .slideout-menu {
+        display: block;
+    }
+    .line{
+        border:1px solid white;
+        margin-left:10px;
+        margin-right:10px;
+    }
+    .items{
+        padding:2px 15px;
+        text-decoration:none;
+    }
+    .items a{
+        text-decoration: none !important;
+    }
+    .items:hover{
+        background-color:#232520;
+    }
     </style>
 </head>
 
 <body>
+   <nav id="menu">
+    <div class="line"></div>
+    <div class="items"><a href="#all"><h3>All-In-One</h3></a></div>
+    <div class="line"></div>
+    <div class="items"><a href="#vstack"><h3>Vertical Stack</h3></a></div>
+    <div class="items"><a href="#hstack"><h3>Horizontal Stack</h3></a></div>
+    <div class="items"><a href="#hero"><h3>Hero</h3></a></div>
+    <div class="items"><a href="#carousel"><h3>Carousel</h3></a></div>
+    <div class="items"><a href="#blog"><h3>Blog</h3></a></div>
+    <div class="items"><a href="#collection"><h3>Collection</h3></a></div>
+    <div class="items"><a href="#interactive"><h3>Interactive</h3></a></div>
+    <div class="items"><a href="#expandable"><h3>Expandable</h3></a></div>
+    <div class="items"><a href="#video"><h3>Video</h3></a></div>
+    </nav>
+
+
+
+
     <h1 style="background-color:#1879A9">
         <div style="height:40px">
-            <div style="color:white;font-size:32px;float:left;width:180px;letter-spacing:-1;font-family:serif"><img src="newspaper.png" height=25px>&nbsp;the news</div>
-            <div style="display:inline-block;float:right;margin-right:10px"><img src="http://perimeterdevelopment.com/wp-content/themes/perimeter/images/mob-menu.png" height=35px>
-            </div>
+           <a href="index.html"> <div style="color:white;font-size:32px;float:left;width:180px;letter-spacing:-1;font-family:serif"><img src="newspaper.png" height=25px>&nbsp;the news</div>
+            <div style="display:inline-block;float:right;margin-right:10px"></a>
+                    <main id="panel">
+                      <header>
+                        <button class="toggle-button" style="background-color:initial;border:none;"><img src="http://perimeterdevelopment.com/wp-content/themes/perimeter/images/mob-menu.png" height=35px class="z-index:200;"></button>
+                      </header>
+                    </main>
+            </div><
+             
+            
         </div>
     </h1>
     <div class="main-contents">
@@ -274,6 +358,23 @@
         </div>
     </div>
     <script type="text/javascript" src="main.js"></script>
+     <script src="slideout.min.js"></script>
+    <script>
+      var slideout = new Slideout({
+        'panel': document.getElementById('panel'),
+        'menu': document.getElementById('menu'),
+        'padding': 90,
+        'tolerance': 70,
+        'side':'right',
+        'fx':'ease'
+      });
+
+      // Toggle button
+      document.querySelector('.toggle-button').addEventListener('click', function() {
+        slideout.toggle();
+      });
+    </script>
+
 </body>
 
 </html>
