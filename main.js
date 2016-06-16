@@ -1122,15 +1122,15 @@
     
     }
 
-    /*==========  #secret  ==========*/
-    if(location.hash=="#secret"){
+    /*==========  #lab  ==========*/
+    if(location.hash=="#lab"){
         console.log("Load - Dexter's Lab")
         
         /*----------  Tweets  ----------*/
 
         q().push(function() {
             new TwitterCarousel({
-                location: ".article:eq(0) p:eq(12)",
+                location: ".article:eq(0) p:eq(3)",
                 campaign_collection_unit: {
                     "server": "mvdirect",
                     "id": "collection_a478cfee2ce749c78c9d020ce0cce377"
