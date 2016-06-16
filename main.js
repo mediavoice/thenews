@@ -1136,6 +1136,46 @@
     }
 
 
+    /*==========  #pratik  ==========*/
+    if(location.hash=="#pratik"){
+        console.log("Load - helloPratik")
+        q().push(function() {
+            new VerticalStack({
+                location: ".article:eq(0) p:eq(2)",
+                ad: standard_ad,
+                display: {
+                    thumb: "rectangle",
+                    summary: true
+                }
+            });
+        });
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: standard_ad,
+            location: ".article:eq(0) p:eq(8)",
+            infoText: "",
+            infoButtonText: "",
+            template: imageHero,
+            onRender: function($element) {},
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: standard_ad,
+            location: ".article p:eq(13)",
+            infoText: "",
+            infoButtonText: "",
+            template: imageHero,
+            onRender: function($element) {
+                ken_burns_effect($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+
 
 
 
