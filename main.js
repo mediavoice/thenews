@@ -1165,7 +1165,7 @@
         console.log("Load - Collection");
         q().push(function() {
             new Collection({
-                location: ".article:eq(0)",
+                location: ".bottom-anchor",
                 append: true,
                 ads: [
                     standard_ad,
