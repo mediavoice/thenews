@@ -672,7 +672,7 @@
             "    }",
             "}",
             ""
-        ].join("\n"), [5 * card_width + 30]), "head"]);
+        ].join("\n"), [12 * card_width + 60]), "head"]);
 
         /*----------  Insert the Carousel Items  ----------*/
 
@@ -685,7 +685,14 @@
                 { name: "plr-tweet--2" },
                 { name: "plr-tweet--3" },
                 { name: "plr-tweet--4" },
-                { name: "plr-tweet--5" }
+                { name: "plr-tweet--5" },
+                { name: "plr-tweet--6" },
+                { name: "plr-tweet--7" },
+                { name: "plr-tweet--8" },
+                { name: "plr-tweet--9" },
+                { name: "plr-tweet--10" },
+                { name: "plr-tweet--11" },
+                { name: "plr-tweet--12" }
             ],
             infoText: "",
             infoButtonText: "",
@@ -1126,7 +1133,7 @@
     if(location.hash=="#lab"){
         console.log("Load - Dexter's Lab")
         
-        /*----------  Tweets  ----------*/
+        /*----------  Tweets Standard  ----------*/
 
         q().push(function() {
             new TwitterCarousel({
@@ -1134,6 +1141,22 @@
                 campaign_collection_unit: {
                     "server": "mvdirect",
                     "id": "collection_a478cfee2ce749c78c9d020ce0cce377"
+                },
+                show_sponsor: true
+            });
+        });
+    }    
+    if(location.hash=="#lab"){
+        console.log("Load - Dexter's Lab")
+        
+        /*----------  Tweets Text Only  ----------*/
+
+        q().push(function() {
+            new TwitterCarousel({
+                location: ".article:eq(0) p:eq(6)",
+                campaign_collection_unit: {
+                    "server": "mvdirect",
+                    "id": "collection_30d7536d97b54f37b2800ab8869fcc38"
                 },
                 show_sponsor: true
             });
