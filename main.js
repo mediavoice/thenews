@@ -875,10 +875,6 @@
     =            Insert Previews            =
     =======================================*/
 
-    $(".items").click(function() {
-        location.reload();
-    });
-
     /*==========  #all  ==========*/
 
     if (location.hash === '' || location.hash == "#all") {
