@@ -59,6 +59,67 @@
 
 /*\
 |*|
+|*|  Horizontal Stack
+|*|
+\*/
+.plr-hstack {
+  float: left;
+  width: 400px;
+  margin: 25px 25px 25px 0;
+  padding: 10px 0;
+  transition: .25s;
+  text-align: center;
+  border-top: 3px solid #1877ab;
+  border-bottom: 3px #1877ab solid; }
+  .plr-hstack .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 50% !important;
+    padding-bottom: 50%;
+    margin:0px 10px 0px 0px;
+    float:left; }
+    .plr-hstack .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+    .plr-hstack .plr-img-wrapper div {
+      border-radius: 100%; }
+  .plr-hstack .plr-sponsored-disclosure {
+    font-size: 12px;
+    font-variant: small-caps;
+    display: inline-block;
+    margin-top: 5px;
+    padding: 3px 5px;
+    padding-top: 0;
+    color: white;
+    background-color: #1877ab; }
+  .plr-hstack a {
+    text-decoration: initial; }
+  .plr-hstack h2 {
+    margin: 10px 0; }
+  .plr-hstack:hover h2 {
+    color: #1877ab; }
+  .plr-hstack p{
+    text-align:left;
+  }
+  @media only screen and (max-width: 426px) {
+    .plr-hstack {
+      width: 100%; }
+    .plr-hstack .plr-img-wrapper{
+      width:50% !important;
+      margin:0px 10px 0px 0px;
+      float:left;
+      } 
+    }      
+
+/*\
+|*|
 |*| Hero
 |*|
 \*/

@@ -616,7 +616,58 @@
             onError: function(error) {}
         }]);
     }
+ /*----------  Horizontal Stack  ----------*/
 
+    function HorizontalStack(props) {
+        /*
+        props = {
+            location: jQuery Selector | where to put the ad
+            ad: Creative ID           | which creative
+            display: {                | Options related to how it looks
+                thumb:    "circle"    |
+                       OR "square"    |     What the thumb should look like
+                       OR "none"      |
+                summary: bool         |     Show / Hide the summary
+            }
+        }
+    
+        */
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: horizontalStack,
+            onRender: function($element) {
+                /* THUMB OPTIONS */
+                var img = $element.find(".plr-img-wrapper").first();
+
+                // circle by default
+                switch (props.display.thumb) {
+                    case "rectangle":
+                        img.find("div").first().css({ "border-radius": "0" });
+                        img.css({ "width": "100%", "padding-bottom": "50%" });
+                        break;
+                    case "square":
+                        img.find("div").first().css({ "border-radius": "0" });
+                        break;
+                    case "none":
+                        img.remove();
+                        break;
+                    default: // Circle by default
+                        break;
+                }
+
+                /* SUMMARY OPTIONS */
+                if (props.display.summary === false) {
+                    $element.find("p").first().remove();
+                }
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
     /*----------  Twitter Carousel  ----------*/
 
     var total_twitter_carousels = 0;
@@ -875,9 +926,9 @@
     =            Insert Previews            =
     =======================================*/
 
-    /*==========  #all  ==========*/
+    /*==========  default  ==========*/
 
-    if (location.hash === '' || location.hash == "#all") {
+    if (location.hash === '') {
         console.log("Load - All");
 
 
@@ -894,12 +945,24 @@
                 }
             });
         });
+        /*----------  Horizontal Stack  ----------*/
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(7)",
+                ad: standard_ad,
+                display: {
+                    thumb: "rectangle",
+                    /* OR "square" OR "none" OR "rectangle" */
+                    summary: true
+                }
+            });
+        });
         /*----------  Hero  ----------*/
 
         q().push(["insertPreview", {
             label: "Landing Page",
             unit: standard_ad,
-            location: ".article:eq(0) p:eq(7)",
+            location: ".article:eq(0) p:eq(12)",
             infoText: "",
             infoButtonText: "",
             template: imageHero,
@@ -912,7 +975,7 @@
 
         q().push(function() {
             new Carousel({
-                location: ".article:eq(0) p:eq(8)",
+                location: ".article:eq(0) p:eq(13)",
                 ads: [
                     standard_ad,
                     standard_ad,
@@ -928,7 +991,7 @@
 
         q().push(function() {
             new Carousel({
-                location: ".article:eq(0) p:eq(13)",
+                location: ".article:eq(0) p:eq(15)",
                 ads: [
                     standard_ad,
                     standard_ad,
@@ -1090,7 +1153,40 @@
     /*==========  #hstack  ==========*/
     if (location.hash == "#hstack") {
         console.log("Load - Horizontal Stack");
-
+        //square
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(3)",
+                ad: standard_ad,
+                display: {
+                    thumb: "square",
+                    summary: true
+                }
+            });
+        });
+        //circle
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(8)",
+                ad: standard_ad,
+                display: {
+                    thumb: "circle",
+                    summary: true
+                }
+            });
+        });
+        
+        //none
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(16)",
+                ad: standard_ad,
+                display: {
+                    thumb: "none",
+                    summary: true
+                }
+            });
+        });
     }
 
     /*==========  #hero  ==========*/
@@ -1478,6 +1574,30 @@
             buffer += escapeExpression(stack1) + "</p>\n            </a>\n        </div>";
             return buffer;
         };
+        /*
+
+           This function represents a pre-compiled Handlebars template. Pre-compiled
+           templates are not pretty, but they provide a very significant performance
+           boost, especially on mobile devices. For more information, see
+           http://handlebarsjs.com/precompilation.html.
+
+           Note that this code has been generated from the following markup:
+
+        <div class="plr-hstack">
+                                <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
+                                                              <div class="plr-sponsored-disclosure">sponsor content</div>
+                                    <h2>{{title}}</h2>
+                                    <div class="plr-img-wrapper">
+                                        <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
+                                    </div>
+
+                                    <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
+                                </a>
+                            </div>
+
+        */
+
+          horizontalStack = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};  var buffer = "", stack1, stack2, options, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;  buffer += "        <div class=\"plr-hstack\">\n                        <a href=\"";  if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "\" style=\"border-bottom: none;box-shadow: none;\">\n                                                      <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n                            <h2>";  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "</h2>\n                            <div class=\"plr-img-wrapper\">\n                                <div style=\"background: url('";  options = {hash:{    'width': (1500),    'height': (1000)  },data:data};  buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options)))    + "') no-repeat center center;\"></div>\n                            </div>\n\n                            <p style=\"color: #666666;margin-bottom: 0;\">";  if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, {hash:{},data:data}); }  else { stack2 = depth0.summary; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }  buffer += escapeExpression(stack2)    + "</p>\n                        </a>\n                    </div>";  return buffer;  };
 
         /*
 
