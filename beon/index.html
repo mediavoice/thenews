@@ -13,21 +13,11 @@
     <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
     <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
     <style type="text/css">
-    .full-wrapper{
-        margin:auto;
-        max-width:1060px;
-    }
     .main-contents {
         max-width: 720px;
+        margin: auto;
         padding: 50px 20px 0px 20px;
         overflow: auto;
-        float:left;
-    }
-    .right-rail{
-        max-width:320px;
-        padding: 70px 10px 0px 10px;
-        overflow: auto;
-        display:inline-block;
     }
     
     body > h1 {
@@ -276,29 +266,29 @@
 <body>
     <nav id="menu" class="menu">
         <h3>
-        <!--<div class="head" style="color:white;padding:15px 10px;letter-spacing:1px;text-align:center"><a href="">View All Templates</a></div>-->
+        <div class="head" style="color:white;padding:15px 10px;letter-spacing:1px;text-align:center"><a href="">View All Templates</a></div>
         
         <div class="menu-content">
-            <!--Standard
+            <!--Standard-->
             <button class="accordion-button">+ Standard</button>
-            <div class="accordion-panel">-->
-                <!--Turnkey
-                <div class="head">Turnkey</div>-->
-                    <div class="items"><a href="/hbo-small">HBO - Small</a></div>
-                    <div class="items"><a href="/hbo-large">HBO - Large</a></div>
-                    <div class="items"><a href="/hulu-small">Hulu - Small</a></div>
-                    <div class="items"><a href="/hulu-large">Hulu - Large</a></div>
-                <!--Advanced
+            <div class="accordion-panel">
+                <!--Turnkey-->
+                <div class="head">Turnkey</div>
+                    <div class="items"><a href="#vstack" onclick="gototab('#vstack')">Vertical Stack</a></div>
+                    <div class="items"><a href="#hstack" onclick="gototab('#hstack')">Horizontal Stack</a></div>
+                    <div class="items"><a href="#hero" onclick="gototab('#hero')">Hero</a></div>
+                    <div class="items"><a href="#blog" onclick="gototab('#blog')">Blog</a></div>
+                <!--Advanced-->
                 <div class="head">Advanced</div>
                     <div class="items"><a href="#carousel" onclick="gototab('#carousel')">Carousel</a></div>
                     <div class="items"><a href="#collection" onclick="gototab('#collection')">Collection</a></div>
                     <div class="items"><a href="#expandable" onclick="gototab('#expandable')">Expandable</a></div>
                     <div class="items"><a href="#interactive" onclick="gototab('#interactive')">Interactive</a></div>
-            </div>-->
+            </div>
             
-            <!--Video
+            <!--Video-->
             <div class="s-head"><a href="http://mediavoice.github.io/thenews/video" target="_blank">+ Video</a></div>
-            <button class="accordion-button">+ Video</button>
+            <!--<button class="accordion-button">+ Video</button>
             <div class="accordion-panel">
                 Turnkey
                 <div class="head">Turnkey</div>
@@ -328,11 +318,7 @@
         <button class="toggle-button" style="background-color:initial;border:none;"><img src="http://perimeterdevelopment.com/wp-content/themes/perimeter/images/mob-menu.png" height=35px class="z-index:200;"></button>
         </div>
     </div>
-
-
     <main id="panel" class="panel">
-    <div class="full-wrapper">
-
         <div class="main-contents">
             <div class="article">
                 <div class="topic">Politics</div>
@@ -508,20 +494,8 @@
             </div>
             <div class="bottom-anchor"></div>
         </div>
-        
-
-        <div class="right-rail">
-            <div class="right_rail_flex"></div>
-
-        </div>
-    
-
-
-
-    </div>
     </main>
-    <script type="text/javascript" src="small-option2.js"></script>
-    <script type="text/javascript" src="large-option2.js"></script>
+    <script type="text/javascript" src="main.js"></script>
     <script src="slideout.min.js"></script>
     <script>
     var slideout = new Slideout({
