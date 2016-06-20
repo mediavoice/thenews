@@ -236,7 +236,7 @@
         });
 
         var sponsor_text_initial = $element.find(".plr-sponsor").first().html();
-        $element.find(".plr-sponsor").html("<em>Tap</em> to learn more - " + sponsor_text_initial);
+        $element.find(".plr-sponsor").html("<em>Tap</em> to learn more! <br> " + sponsor_text_initial);
 
         $element.find("h1").unwrap().css({ cursor: "pointer" });
 
@@ -470,16 +470,32 @@
                 "    margin-bottom: 20px;",
                 "    padding-bottom: 15px;",
                 "}",
+                ".plr-collection-container .plr-header {",
+                "    border-bottom: 3px solid #1879A9;",
+                "    padding-bottom: 10px;",
+                "}",
                 ".plr-collection-container .plr-header h2 {",
                 "    margin: 0;",
                 "    text-transform: initial;",
                 "    display: inline-block;",
                 "    font-size: 26px;",
                 "}",
-                ".plr-collection-container .plr-header {",
-                "    border-bottom: 3px solid #1879A9;",
-                "    padding-bottom: 10px;",
-                "}"
+                ".plr-collection-container .plr-header .plr-img-wrapper {",
+                "    padding-bottom: 26px;",
+                "    width: 100px;",
+                "    position:relative;",
+                "    top: 3px;",
+                "    display: inline-block;",
+                "    overflow: hidden;",
+                "}",
+                ".plr-collection-container .plr-header .plr-img-wrapper div {",
+                "    position: absolute;",
+                "    top: 0px;",
+                "    bottom: 0px;",
+                "    left: 0px;",
+                "    right: 0px;",
+                "    background-size: contain !important;",
+                "}",
             ].join("\n"), "head"]);
         }
 
@@ -490,7 +506,13 @@
             $collection = $(props.location).before(["",
                 "<div class=\"plr-collection-container plr-collection--" + total_collections + "\">",
                 "    <div class=\"plr-header\">",
-                "        <h2>Sponsored Stories</h2>",
+                "        <h2>" + props.title + "</h2>",
+                "        <div class=\"plr-disclosure\" style=\"\">",
+                "            <span style=\"position: relative;top: -4px;\">Sponsored By </span>",
+                "            <div class=\"plr-img-wrapper\">",
+                "                <div style=\"background: white\"></div>",
+                "            </div>",
+                "        </div>",
                 "    </div>",
                 "    <div class=\"plr-collection-anchor--top\"></div>",
                 "    <div class=\"plr-collection-anchor\"></div>",
@@ -505,8 +527,6 @@
         // These are the base properties that never change, so we inject them *ONCE*
         if (total_collections === 0) {
             q().push(["injectCSS", ["",
-                "  .plr-collection p:last-child {", /* hide read more by default */
-                "    display: none; }",
                 /* On Mobile */
                 "@media only screen and (max-width: 426px) {",
                 "  .plr-collection p:not(:nth-child(1)) {", // hide the summary
@@ -529,9 +549,6 @@
                 /* On all elements but the first */
                 ".plr-collection--{0} .plr-collection:not(:nth-child(2)) .plr-img-wrapper", // hide the image
                 "{ display: none; }",
-                /* For the first element */
-                ".plr-collection--{0} .plr-collection:nth-child(2) p:last-child", // show the read more
-                "{ display: block; }",
                 /* Mobile */
                 "@media only screen and (max-width: 426px) {",
                 "    .plr-collection--{0} .plr-collection:nth-child(2) p:not(:nth-child(1))", /* For the first */
@@ -547,6 +564,22 @@
         // bigThumb is implied
 
         q().push(["injectCSS", style, "head"]);
+
+        /*----------  Add some onRender code to the first fill  ----------*/
+        function onRenderFirst($element) {
+            $element.parent().find(".plr-disclosure .plr-img-wrapper div").css({
+                "background": "url('" + $element.find(".sponsor-logo-href").text() + "') no-repeat center center"
+            });
+        }
+
+        if (typeof props.onRender === "undefined") props.onRender = [onRenderFirst];
+        else {
+            var user_onRenderFirst = props.onRender[0];
+            props.onRender[0] = function($element) {
+                onRenderFirst($element);
+                user_onRenderFirst($element);
+            };
+        }
 
         /*----------  Insert the Collection Items  ----------*/
 
@@ -564,17 +597,17 @@
                 infoText: "",
                 infoButtonText: "",
                 template: collection_item,
-                onRender: ((props.onRender && props.onRender[j]) ? props.onRender[j] : null),
+                onRender: ((props.onRender && props.onRender[i]) ? props.onRender[i] : null),
                 onFill: function(data) {},
                 onError: faliures
             }]);
         }
 
         // Make sure that if all the ads failed, don't even show the carousel
-        if (faliures == props.ads.length) $collection.remove();
-        else total_collections++;
-
-        total_collections++;
+        if (faliures == props.ads.length) {
+            $collection.remove();
+            console.log("Collection Failed");
+        } else total_collections++;
     }
 
     /*----------  Vertical Stack  ----------*/
@@ -584,6 +617,7 @@
         props = {
             location: jQuery Selector | where to put the ad
             ad: Creative ID           | which creative
+            onRender: function        | onRender function
             display: {                | Options related to how it looks
                 thumb:    "circle"    |
                        OR "square"    |     What the thumb should look like
@@ -624,6 +658,8 @@
                 if (props.display.summary === false) {
                     $element.find("p").first().remove();
                 }
+
+                if (typeof props.onRender !== "undefined") props.onRender();
             },
             onFill: function(data) {},
             onError: function(error) {}
@@ -636,6 +672,7 @@
         props = {
             location: jQuery Selector | where to put the ad
             ad: Creative ID           | which creative
+            onRender: function        | onRender function
             display: {                | Options related to how it looks
                 thumb:    "circle"    |
                        OR "square"    |     What the thumb should look like
@@ -676,6 +713,8 @@
                 if (props.display.summary === false) {
                     $element.find("p").first().remove();
                 }
+
+                if (typeof props.onRender !== "undefined") props.onRender();
             },
             onFill: function(data) {},
             onError: function(error) {}
@@ -1008,9 +1047,10 @@
                     standard_ad
                 ],
                 onRender: [function($element) {
+                    /* DIRTY DIRTY FIX */
                     $element
                         .find(".plr-sponsored-disclosure")
-                        .text("sponsored by slate");
+                        .text("sponsored by honda");
                 }],
                 hero: true
             });
@@ -1100,6 +1140,7 @@
         q().push(function() {
             new Collection({
                 location: ".bottom-anchor",
+                title: "Indy racing like you’ve never seen it before!",
                 ads: [
                     standard_ad,
                     standard_ad,
@@ -1268,7 +1309,7 @@
         q().push(function() {
             new Collection({
                 location: ".bottom-anchor",
-                append: true,
+                title: "Indy racing like you’ve never seen it before!",
                 ads: [
                     standard_ad,
                     standard_ad,
@@ -1280,6 +1321,7 @@
         q().push(function() {
             new Collection({
                 location: ".article:last",
+                title: "Indy racing like you’ve never seen it before!",
                 ads: [
                     standard_ad,
                     standard_ad,
@@ -1713,9 +1755,7 @@
                 <h2>{{title}}</h2>
             </a>
             <p>{{summary}}</p>
-            <a href="{{link}}">
-                <p>Read more...</p>
-            </a>
+          <div class="sponsor-logo-href" style="display:none;">{{sponsor.logo.href}}</div>
         </div>
 
         */
@@ -1747,14 +1787,11 @@
                 stack1 = depth0.summary;
                 stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
             }
-            buffer += escapeExpression(stack1) + "</p>\n    <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\">\n        <p>Read more...</p>\n    </a>\n</div>";
+            buffer += escapeExpression(stack1) + "</p>\n    <div class=\"sponsor-logo-href\" style=\"display:none;\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n</div>";
             return buffer;
         };
+
+
 
 
         /*

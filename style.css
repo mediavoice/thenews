@@ -260,12 +260,9 @@
 \*/
 .plr-btwn-art {
   overflow: auto;
-  margin-bottom: 20px;
-  padding-top: 10px;
-  padding-right: 10px;
-  padding-bottom: 15px;
-  padding-left: 10px;
-  background-color: #e3f2fd; }
+  margin: 0 -20px;
+  padding: 10px 20px 10px 20px;
+  background-color: #f9f9f9; }
   .plr-btwn-art .plr-img-wrapper {
     position: relative;
     top: 0;
