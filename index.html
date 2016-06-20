@@ -162,7 +162,7 @@
     }
     
     .items a,
-    .head a {
+    .head a, .s-head a {
         text-decoration: none !important;
     }
     
@@ -186,6 +186,11 @@
         width:100%;
         padding-left:10px;
         letter-spacing:4px;
+        border-top:1px solid #000000;
+        border-bottom:1px solid #000000;
+        border-left:none;
+        border-right:none;
+        text-align:left;
     }
     h3 .head {
         padding: 10px 0px 5px 15px;
@@ -275,20 +280,24 @@
                     <div class="items"><a href="#expandable" onclick="gototab('#expandable')">Expandable</a></div>
                     <div class="items"><a href="#interactive" onclick="gototab('#interactive')">Interactive</a></div>
             </div>
-            <button class="accordion-button">+ Video</button>
+            
+            <!--Video-->
+            <div class="s-head"><a href="http://mediavoice.github.io/thenews/video" target="_blank">+ Video</a></div>
+            <!--<button class="accordion-button">+ Video</button>
             <div class="accordion-panel">
+                Turnkey
                 <div class="head">Turnkey</div>
                     <div class="items"><a href="/thenews/video">Vertical Stack</a></div>
                     <div class="items"><a href="/thenews/video">Horizontal Stack</a></div>
                     <div class="items"><a href="/thenews/video">Hero</a></div>
                     <div class="items"><a href="/thenews/video">Blog</a></div>
-                <!--Advanced-->
+                Advanced
                 <div class="head">Advanced</div>
                     <div class="items"><a href="/thenews/video">Carousel</a></div>
                     <div class="items"><a href="/thenews/video">Collection</a></div>
                     <div class="items"><a href="/thenews/video">Expandable</a></div>
                     <div class="items"><a href="/thenews/video">Interactive</a></div>
-            </div>
+            </div>-->
         </div>
         
 
@@ -507,10 +516,10 @@
         window.location.reload(true);
     };
 
-    $(".accordion-button").click(function(){
-        $(".accordion-button").removeClass("active");
-        $(".accordion-panel").removeClass("show");
-});
+    //$(".accordion-button").click(function(){
+    //    $(".accordion-button").removeClass("active");
+    //    $(".accordion-panel").removeClass("show");
+    //});
 
     var acc = document.getElementsByClassName("accordion-button");  
         
