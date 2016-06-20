@@ -647,7 +647,7 @@
                 switch (props.display.thumb) {
                     case "rectangle":
                         img.find("div").first().css({ "border-radius": "0" });
-                        img.css({ "width": "100%", "padding-bottom": "50%" });
+                        img.css({ "width": "50%", "padding-bottom": "50%" });
                         break;
                     case "square":
                         img.find("div").first().css({ "border-radius": "0" });
@@ -1584,16 +1584,16 @@
            Note that this code has been generated from the following markup:
 
         <div class="plr-hstack">
-                                <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
-                                                              <div class="plr-sponsored-disclosure">sponsor content</div>
-                                    <h2>{{title}}</h2>
-                                    <div class="plr-img-wrapper">
-                                        <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
-                                    </div>
+            <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
+                <div class="plr-sponsored-disclosure">sponsor content</div>
+                <h2>{{title}}</h2>
+                <div class="plr-img-wrapper">
+                    <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
+                </div>
 
-                                    <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
-                                </a>
-                            </div>
+                <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
+            </a>
+        </div>
 
         */
 

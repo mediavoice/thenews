@@ -18,6 +18,7 @@
     }
 }
 
+
 /**
  *
  * NOTE THAT THIS FILE DOES NOT CONTAIN ALL OF THE CSS THAT MAKES THE 
@@ -25,6 +26,7 @@
  * CSS IS DYNAMICALLY GENERATED WITHIN THE JS.
  *
  */
+
 
 /*\
 |*|
@@ -69,6 +71,60 @@
     }
     @media only screen and (max-width: 426px) {
         width: 100%;
+    }
+}
+
+
+/*\
+|*|
+|*|  Horizontal Stack
+|*|
+\*/
+
+.plr-hstack {
+    float: left;
+    width: 400px;
+    margin: 25px 25px 25px 0;
+    padding: 10px 0;
+    transition: .25s;
+    text-align: center;
+    border-top: 3px solid #1877ab;
+    border-bottom: 3px #1877ab solid;
+    @include plr-imgwrapper(50%, 50%);
+    .plr-img-wrapper {
+        float: left;
+        margin: 0px 10px 0px 0px;
+        div {
+            border-radius: 100%;
+        }
+    }
+    .plr-sponsored-disclosure {
+        font-size: 12px;
+        font-variant: small-caps;
+        display: inline-block;
+        margin-top: 5px;
+        padding: 3px 5px;
+        padding-top: 0;
+        color: white;
+        background-color: #1877ab;
+    }
+    a {
+        text-decoration: initial;
+    }
+    h2 {
+        margin: 10px 0;
+    }
+    &:hover h2 {
+        color: #1877ab;
+    }
+    p {
+        text-align: left;
+    }
+    @media only screen and (max-width: 426px) {
+        width: 100%;
+        .plr-img-wrapper {
+            margin: 0px 10px 0px 0px;
+        }
     }
 }
 
@@ -244,6 +300,7 @@
         }
     }
 }
+
 
 /*\
 |*|

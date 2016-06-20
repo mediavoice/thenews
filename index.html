@@ -92,8 +92,8 @@
         position: fixed;
         width: 100%;
         height: 50px;
-        display:block;
-        z-index:1000;
+        display: block;
+        z-index: 1000;
     }
     
     p {
@@ -131,7 +131,7 @@
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         display: none;
-        padding-top:40px;
+        padding-top: 40px;
     }
     
     .slideout-panel {
@@ -162,7 +162,8 @@
     }
     
     .items a,
-    .head a, .s-head a {
+    .head a,
+    .s-head a {
         text-decoration: none !important;
     }
     
@@ -177,27 +178,28 @@
         font-weight: normal;
     }
     
-     h3 .s-head {
+    h3 .s-head {
         padding: 10px 0px 10px 0px;
         text-decoration: none;
         text-transform: uppercase;
         color: white;
-        background-color:#272b2d;
-        width:100%;
-        padding-left:10px;
-        letter-spacing:4px;
-        border-top:1px solid #000000;
-        border-bottom:1px solid #000000;
-        border-left:none;
-        border-right:none;
-        text-align:left;
+        background-color: #272b2d;
+        width: 100%;
+        padding-left: 10px;
+        letter-spacing: 4px;
+        border-top: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+        border-left: none;
+        border-right: none;
+        text-align: left;
     }
+    
     h3 .head {
         padding: 10px 0px 5px 15px;
         text-decoration: none;
         text-transform: uppercase;
         color: #8c8c8c;
-        font-size:10px;
+        font-size: 10px;
     }
     
     .menu-title-div {
@@ -228,32 +230,35 @@
         margin-left: 0px;
         padding-left: 0px;
         float: left;
-        width:100%;
+        width: 100%;
     }
-    .accordion-button{
+    
+    .accordion-button {
         padding: 10px 0px 10px 0px;
         text-decoration: none;
         text-transform: uppercase;
         color: white;
-        background-color:#272b2d;
-        width:100%;
-        padding-left:10px;
-        letter-spacing:4px;
-        border-top:1px solid #000000;
-        border-bottom:1px solid #000000;
-        border-left:none;
-        border-right:none;
-        text-align:left;
+        background-color: #272b2d;
+        width: 100%;
+        padding-left: 10px;
+        letter-spacing: 4px;
+        border-top: 1px solid #000000;
+        border-bottom: 1px solid #000000;
+        border-left: none;
+        border-right: none;
+        text-align: left;
     }
-    .accordion-panel{
+    
+    .accordion-panel {
         overflow: hidden;
         transition: 0.6s ease-in-out;
         opacity: 0;
         max-height: 0;
     }
-    .accordion-panel.show{
-        opacity:1;
-        max-height:300px;
+    
+    .accordion-panel.show {
+        opacity: 1;
+        max-height: 300px;
     }
     </style>
 </head>
@@ -305,16 +310,15 @@
 
     </h3>
     </nav>
-
-        <div id="snap">
-            <a href="">
-                <div style="color:white;font-size:32px;float:left;width:180px;margin-top:5px;letter-spacing:-1px;font-family:serif"><img src="newspaper.png" height=25px>&nbsp;the news</div>
-                <div style="display:inline-block;float:right;margin-right:10px;margin-top:5px">
-            </a>
-            <button class="toggle-button" style="background-color:initial;border:none;"><img src="http://perimeterdevelopment.com/wp-content/themes/perimeter/images/mob-menu.png" height=35px class="z-index:200;"></button>
-            </div>
+    <div id="snap">
+        <a href="">
+            <div style="color:white;font-size:32px;float:left;width:180px;margin-top:5px;letter-spacing:-1px;font-family:serif"><img src="newspaper.png" height=25px>&nbsp;the news</div>
+            <div style="display:inline-block;float:right;margin-right:10px;margin-top:5px">
+        </a>
+        <button class="toggle-button" style="background-color:initial;border:none;"><img src="http://perimeterdevelopment.com/wp-content/themes/perimeter/images/mob-menu.png" height=35px class="z-index:200;"></button>
         </div>
-            <main id="panel" class="panel">
+    </div>
+    <main id="panel" class="panel">
         <div class="main-contents">
             <div class="article">
                 <div class="topic">Politics</div>
@@ -499,7 +503,7 @@
         'menu': document.getElementById('menu'),
         'padding': 150,
         'side': 'right',
-        'touch':false,
+        'touch': false,
     });
 
     // Toggle button
@@ -521,15 +525,15 @@
     //    $(".accordion-panel").removeClass("show");
     //});
 
-    var acc = document.getElementsByClassName("accordion-button");  
-        
-        var i;
-        for (i = 0; i < acc.length; i++) {
-            acc[i].onclick = function(){
-                this.classList.toggle("active");
-                this.nextElementSibling.classList.toggle("show");
-            }
+    var acc = document.getElementsByClassName("accordion-button");
+
+    var i;
+    for (i = 0; i < acc.length; i++) {
+        acc[i].onclick = function() {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
         }
+    }
     </script>
 </body>
 
