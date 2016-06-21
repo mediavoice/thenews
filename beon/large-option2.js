@@ -17,7 +17,6 @@
         label: "Home",
         unit: {"server":"dfp","id":"/7814368/NativeAdUnit","size":"2x2","targets":{"category":"news","placement":"top"}},
         location: ".right_rail_flex",
-        append:true,
         infoText: "",
         infoButtonText: "",
         template: compiledTemplate0,
@@ -25,7 +24,7 @@
         onFill: function(data) { },
         onError: function(error) { }
     }]);
-    q().push(["injectCSS", ".polar-outer { border:1px solid #2e7061; border-top:8px solid #2e7061; padding:10px; width:300px; height:500px; margin-bottom: 20px; } .polar-title { font-family: 'ProximaNovaCond-Extrabld', 'NotoKufiArabic-Bold', 'Helvetica Neue', 'Helvetica', Roboto, Arial, sans-serif; font-weight: 400; text-transform: uppercase; text-align: justify; font-family: 'ProximaNovaCond-Extrabld', 'NotoKufiArabic-Bold', 'Helvetica Neue', 'Helvetica', Roboto, Arial, sans-serif; color: black; text-decoration: none; } .polar-summary { font-family: \"NotoNashkArabic\", \"Helvetica Neue\", \"Helvetica\", Roboto, Arial, sans-serif; line-height: 27px; padding-top: 20px; text-decoration: none; color: #757575;} .polar-video { margin-top: 25px; margin-bottom: 20px; } .polar-title { font-family: oswaldmedium; font-weight: 400; text-transform: uppercase; text-align: center; } .polar-sponsorbadge { display: block; margin-top:5px; } .polar-sponsorlabel { float:left; color: #757575; font-size: small; margin-top:17px; } .polar-sponsorlogo { height: 30px; width:auto; float:right; display: block; }", "head"]);
+    q().push(["injectCSS", ".polar-headline {font-size: 22px; font-family: 'ProximaNovaCond-Extrabld', 'NotoKufiArabic-Bold', 'Helvetica Neue', 'Helvetica', Roboto, Arial, sans-serif; line-height: 1.4em; font-weight: normal;}.polar-outer { border:1px solid #2e7061; border-top:8px solid #2e7061; padding:10px; width:300px; height:500px; margin-bottom: 20px; } .polar-title { font-family: 'ProximaNovaCond-Extrabld', 'NotoKufiArabic-Bold', 'Helvetica Neue', 'Helvetica', Roboto, Arial, sans-serif; font-weight: 400; text-transform: uppercase; text-align: justify; font-family: 'ProximaNovaCond-Extrabld', 'NotoKufiArabic-Bold', 'Helvetica Neue', 'Helvetica', Roboto, Arial, sans-serif; color: black; text-decoration: none; } .polar-summary { font-family: \"NotoNashkArabic\", \"Helvetica Neue\", \"Helvetica\", Roboto, Arial, sans-serif; line-height: 27px; padding-top: 20px; text-decoration: none; color: #757575;} .polar-video { margin-top: 25px; margin-bottom: 20px; } .polar-title { font-family: oswaldmedium; font-weight: 400; text-transform: uppercase; text-align: center; } .polar-sponsorbadge { display: block; margin-top:135px; } .polar-sponsorlabel { float:left; color: #757575; font-size: small; margin-top:17px; } .polar-sponsorlogo { height: 30px; width:auto; float:right; display: block; }", "head"]);
 
     q().push(["configureSecondaryPage", {
         binding: {
@@ -53,18 +52,18 @@
 
     function templates () {
 
-        /*
+  /*
 
-          This function represents a pre-compiled Handlebars template. Pre-compiled
-          templates are not pretty, but they provide a very significant performance
-          boost, especially on mobile devices. For more information, see
-          http://handlebarsjs.com/precompilation.html.
+   This function represents a pre-compiled Handlebars template. Pre-compiled
+   templates are not pretty, but they provide a very significant performance
+   boost, especially on mobile devices. For more information, see
+   http://handlebarsjs.com/precompilation.html.
 
-          Note that this code has been generated from the following markup:
+   Note that this code has been generated from the following markup:
 
 <div class="polar-outer"><a href="http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691" rel="nofollow">
       </a><div class="follow-us__header">
-<h3>The Mindi Project on Hulu</h3>
+<div class="polar-headline">The Mindi Project on Hulu</div>
 </div>
 
   <div class="polar-video">
@@ -79,9 +78,9 @@
   </div>
   </div>
 
-        */
+*/
 
-        compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<h3>The Mindi Project on Hulu</h3>\n</div>\n\n  <div class=\"polar-video\">\n    <iframe width=\"275\"src=\"https://www.youtube.com/embed/_uwanee-lS4\" frameborder=\"0\" allowfullscreen></iframe>\n  </div>\n  \n  <a class=\"polar-summary\" href=\"http://www.hulu.com/the-mindy-project\" rel=\"nofollow\">Grab your bear claws. New episodes of #MindyOnHulu Tuesdays, only on Hulu. Start your free trial today.</a>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hulu_logo.svg/2000px-Hulu_logo.svg.png\" height=\"30px\" alt=\"Hulu\">\n    \n  </div>\n  </div>";  };
+  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">The Mindi Project on Hulu</div>\n</div>\n\n  <div class=\"polar-video\">\n    <iframe width=\"275\"src=\"https://www.youtube.com/embed/_uwanee-lS4\" frameborder=\"0\" allowfullscreen></iframe>\n  </div>\n  \n  <a class=\"polar-summary\" href=\"http://www.hulu.com/the-mindy-project\" rel=\"nofollow\">Grab your bear claws. New episodes of #MindyOnHulu Tuesdays, only on Hulu. Start your free trial today.</a>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hulu_logo.svg/2000px-Hulu_logo.svg.png\" height=\"30px\" alt=\"Hulu\">\n    \n  </div>\n  </div>";  };
 
     }
 
@@ -95,4 +94,3 @@
   js.src = ((p == "https:") ? p : "http:") + "//plugin.mediavoice.com/plugin.js";
   fjs.parentNode.insertBefore(js, fjs);
 })(document, "script", "nativeads-plugin");
-d
