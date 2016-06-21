@@ -102,7 +102,7 @@
             // if all else fails, new pos will be 0 offset
             var percent_offset = {
                 x: 0,//Math.sin(window.scrollY/window.innerHeight*2)/2,
-                y: -((window.scrollY-$element.offset().top)/window.innerHeight + 0.5)
+                y: clamp(-((window.scrollY-$element.offset().top)/window.innerHeight + 0.5),-0.5,0.5)
             };
 
             // get previous position
