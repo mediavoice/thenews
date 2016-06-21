@@ -68,7 +68,64 @@
     /*=======================================
     =            Spooky JS Magic            =
     =======================================*/
+    
+    /*----------  Scrolling Parallax  ---------- */
+    
+    function scrolling_parallax($element) {
+        // Get quick shortcut to img-wrapper element
+        var $i = $element.find(".plr-img-wrapper");
 
+        var SCALE = 1.5;
+
+        $i.css({
+            position: "relative",
+            left: "initial",
+            bottom: "initial",
+            right: 0,
+            top: 0,
+            transform: "scale(" + SCALE + ")"
+        });
+
+        var max_offset;
+
+        function calc_max_offset() {
+            max_offset = {
+                x: $i.find("div").width() * (SCALE - 1),
+                y: $i.find("div").height() * (SCALE - 1),
+            };
+        }
+        calc_max_offset();
+        window.addEventListener("resize", calc_max_offset);
+
+        /* the magical main loop */
+        (function parallax() {
+            // if all else fails, new pos will be 0 offset
+            var percent_offset = {
+                x: 0,//Math.sin(window.scrollY/window.innerHeight*2)/2,
+                y: -((window.scrollY-$element.offset().top)/window.innerHeight + 0.5)
+            };
+
+            // get previous position
+            var old_offset = {
+                right: parseFloat($i.css("right")),
+                top: parseFloat($i.css("top"))
+            };
+
+            var new_offset = {
+                right: trunc(max_offset.x * percent_offset.x, 2),
+                top: trunc(max_offset.y * percent_offset.y, 2)
+            };
+
+            $i.css({
+                top: trunc(old_offset.top + (new_offset.top - old_offset.top) / 10, 2) + "px",
+                right: trunc(old_offset.right - (new_offset.right + old_offset.right) / 10, 2) + "px"
+            });
+
+            // Execute function on each browser animation frame
+            requestAnimationFrame(parallax);
+        })();
+    }
+    
     /*----------  Kenny Burns  ----------*/
 
     function ken_burns_effect($element) {
