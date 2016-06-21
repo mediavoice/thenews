@@ -1133,7 +1133,7 @@
         q().push(["insertPreview", {
             label: "Landing Page",
             unit: static1,
-            location: ".article:eq(0) p:eq(3)",
+            location: ".article:last p:eq(13)",
             infoText: "",
             infoButtonText: "",
             template: share_1,
