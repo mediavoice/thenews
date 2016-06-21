@@ -6,7 +6,7 @@
         overflow: hidden;
         width: $width;
         padding-bottom: $padding-bottom;
-        > div {
+        div {
             position: absolute;
             top: 0;
             right: 0;
@@ -19,6 +19,15 @@
 }
 
 
+/**
+ *
+ * NOTE THAT THIS FILE DOES NOT CONTAIN ALL OF THE CSS THAT MAKES THE 
+ * PLACEMENTS WORK! A LOT OF CONTAINER CODE IS MISSING, AND A LOT OF 
+ * CSS IS DYNAMICALLY GENERATED WITHIN THE JS.
+ *
+ */
+
+
 /*\
 |*|
 |*|  Vertical Stack
@@ -28,19 +37,16 @@
 .plr-halfw {
     float: left;
     width: 300px;
-    margin: 50px 50px 50px -50px;
+    margin: 25px 25px 25px 0;
     padding: 15px 0;
     transition: .25s;
     text-align: center;
     border-top: 3px solid #1877ab;
     border-bottom: 3px #1877ab solid;
     @include plr-imgwrapper(60%, 60%);
-    a {
-        text-decoration: initial;
-    }
     .plr-img-wrapper {
         margin: auto;
-        > div {
+        div {
             border-radius: 100%;
         }
     }
@@ -54,26 +60,70 @@
         color: white;
         background-color: #1877ab;
     }
+    a {
+        text-decoration: initial;
+    }
+    h2 {
+        margin: 10px 0;
+    }
     &:hover h2 {
-        color: #1877AB;
+        color: #1877ab;
+    }
+    @media only screen and (max-width: 426px) {
+        width: 100%;
     }
 }
 
-@media only screen and (max-width: 800px) {
-    .plr-halfw {
-        margin: 50px 50px 50px 0;
-    }
-}
 
-@media only screen and (max-width: 426px) {
-    .plr-halfw {
+/*\
+|*|
+|*|  Horizontal Stack
+|*|
+\*/
+
+.plr-hstack {
+    float: left;
+    width: 400px;
+    margin: 25px 25px 25px 0;
+    padding: 10px 0;
+    transition: .25s;
+    text-align: center;
+    border-top: 3px solid #1877ab;
+    border-bottom: 3px #1877ab solid;
+    @include plr-imgwrapper(50%, 50%);
+    .plr-img-wrapper {
+        float: left;
+        margin: 0px 10px 0px 0px;
+        div {
+            border-radius: 100%;
+        }
+    }
+    .plr-sponsored-disclosure {
+        font-size: 12px;
+        font-variant: small-caps;
+        display: inline-block;
+        margin-top: 5px;
+        padding: 3px 5px;
+        padding-top: 0;
+        color: white;
+        background-color: #1877ab;
+    }
+    a {
+        text-decoration: initial;
+    }
+    h2 {
+        margin: 10px 0;
+    }
+    &:hover h2 {
+        color: #1877ab;
+    }
+    p {
+        text-align: left;
+    }
+    @media only screen and (max-width: 426px) {
         width: 100%;
         .plr-img-wrapper {
-            position: relative;
-            overflow: hidden;
-            width: 40%;
-            margin: auto;
-            padding-bottom: 40%;
+            margin: 0px 10px 0px 0px;
         }
     }
 }
@@ -127,7 +177,7 @@
         background-color: rgba(0, 0, 0, .4);
     }
     &:hover {
-        .plr-img-wrapper > div {
+        .plr-img-wrapper div {
             opacity: .8;
         }
         .plr-contents {
@@ -174,44 +224,48 @@
 |*|
 \*/
 
-.plr-crsl-outer {
-    position: relative;
-    overflow-x: scroll;
-    -webkit-overflow-scrolling:touch;
-    width: 100%;
-    padding: 20px 0;
-    border-top: 1px solid #9a9a9a;
-    border-bottom: 1px solid #9a9a9a;
-}
 
-.plr-crsl-inner {
-    width: 160%;
-}
+/*----------  Container Styling  ----------*/
 
-.plr-crsl-slot {
-    position: relative;
-    display: inline-block;
-    width: 24%;
-    padding: 0 20px;
-    border-right: 1px solid #808080;
-    &:last-child {
-        border-right: none;
-    }
-}
+// .plr-crsl-outer {
+//     position: relative;
+//     overflow-x: scroll;
+//     width: 100%;
+//     padding: 20px 0;
+//     border-top: 1px solid #9a9a9a;
+//     border-bottom: 1px solid #9a9a9a;
+//     -webkit-overflow-scrolling: touch;
+// }
+// .plr-crsl-inner {
+//     width: 160%;
+//     @media only screen and (max-width: 426px) {
+//         width: 250%;
+//     }
+// }
+// .plr-crsl-slot {
+//     position: relative;
+//     display: inline-block;
+//     width: 24%;
+//     padding: 0 20px;
+//     border-right: 1px solid #808080;
+//     &:last-child {
+//         border-right: none;
+//     }
+// }
 
-@media only screen and (max-width: 426px) {
-    .plr-crsl-inner {
-        width: 250%;
-    }
-}
+/*----------  Item Styling  ----------*/
 
-
-/* Overriding half sylings */
-
-.plr-crsl-slot .plr-halfw {
+.plr-crsl-item {
     width: 100%;
     margin: 0;
+    padding: 15px 0;
+    transition: .25s;
+    text-align: center;
     border: none;
+    @include plr-imgwrapper(60%, 60%);
+    .plr-img-wrapper {
+        margin: auto;
+    }
     p {
         display: none;
     }
@@ -219,56 +273,34 @@
         font-size: 16px;
         text-transform: initial;
     }
-    .plr-img-wrapper > div {
-        border-radius: 0;
+    a {
+        text-decoration: initial;
+    }
+    .plr-sponsored-disclosure {
+        font-size: 12px;
+        font-variant: small-caps;
+        display: inline-block;
+        margin-top: 12px;
+        padding: 3px 5px;
+        padding-top: 0;
+        color: white;
+        background-color: #1877ab;
+    }
+    &:hover h2 {
+        color: #1877ab;
     }
     @media only screen and (max-width: 426px) {
+        width: 100%;
         .plr-img-wrapper {
+            position: relative;
+            overflow: hidden;
             width: 75%;
+            margin: auto;
             padding-bottom: 75%;
         }
     }
 }
 
-
-/* WE FUDGIN' IT */
-
-.plr-crsl--2 {
-    padding-bottom: 0;
-    .plr-crsl-slot {
-        width: 32%;
-        padding: 0;
-        border: none;
-        .plr-halfw {
-            .plr-sponsored-disclosure {
-                display: none;
-            }
-            .plr-img-wrapper {
-                width: 100%;
-            }
-            h2 {
-                height: 2em;
-            }
-        }
-        &:first-child .plr-sponsored-disclosure {
-            font-size: 16px;
-            position: absolute;
-            top: -26;
-            left: 0;
-            display: inherit;
-        }
-    }
-}
-
-.plr-crsl--1 {
-    .plr-crsl-slot {
-        .plr-halfw {
-            h2 {
-                height: 5em;
-            }
-        }
-    }
-}
 
 /*\
 |*|
@@ -329,9 +361,6 @@
         float: left;
         margin-right: 20px;
     }
-    &:not(:nth-child(2)) .plr-img-wrapper {
-        display: none;
-    }
     h2 {
         margin: 0;
         text-transform: inherit;
@@ -340,20 +369,72 @@
         margin: 0;
         margin-top: 5px;
     }
+    a {
+        text-decoration: initial;
+    }
+    &:hover a {
+        color: #1877ab;
+    }
 }
 
-@media only screen and (max-width: 426px) {
-    .plr-collection {
+/*\
+|*|
+|*| Sharing
+|*|
+\*/
+
+.plr-sharing-1 {
+    background-color: whitesmoke;
+    @include plr-imgwrapper(100%, 60%);
+    a {
+        text-decoration: initial;
+    }
+    h1 {
+        margin: 10px;
+        padding-bottom: 0;
+        text-align: center;
+        border: none;
+    }
+    .plr-share-container {
+        display: flex;
+        width: 100%;
+        .plr-share-btn {
+            height: 40px;
+            cursor: pointer;
+            text-align: center;
+            border-right: 1px solid white;
+            background-color: #64b5f6;
+            flex: 1;
+            &:last-child {
+                border: none;
+            }
+        }
+        .plr-share-btn-content {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            img {
+                height: 30px;
+            }
+        }
+    }
+    .plr-disclosure {
+        text-align: center;
+        .sponsored-by {
+            font-weight: bold;
+            position: relative;
+            top: -7px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
         .plr-img-wrapper {
-            width: 100%;
-            margin-bottom: 10px;
-            padding-bottom: 50%;
-        }
-        &:not(:nth-child(2)) p:not(:nth-child(1)) {
-            display: none;
-        }
-        h2 {
-            font-size: 18px;
+            display: inline-block;
+            width: 100px;
+            padding-bottom: 26px;
+            div {
+                background-size: contain !important;
+            }
         }
     }
 }
+
