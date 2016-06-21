@@ -21,11 +21,7 @@ var theVideo = "http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea469
         infoText: "",
         infoButtonText: "",
         template: compiledTemplate0,
-        onRender: function($element) { var req = new XMLHttpRequest();
-req.open('GET', theVideo, false);
-req.send(null);
-var headers = req.getAllResponseHeaders().toLowerCase();
-if(headers.indexOf("video")<0){jQuery(".polar-video").html('<img src="http://www.thereportertimes.com/wp-content/uploads/2016/03/gameofthrones_logo.jpg" width="275px" />')}},
+        onRender: function($element) {},
         onFill: function(data) { },
         onError: function(error) { }
     }]);
