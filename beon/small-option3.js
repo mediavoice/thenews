@@ -65,9 +65,8 @@
       </a><div class="follow-us__header">
 <div class="polar-headline">Game of Thrones Surprise</div>
 </div>
-
   <div class="polar-video">
-      <iframe src="http://www.hbo.com/data/content/global/videos/embed/data/1432041.html?width=640&height=360" style="overflow:hidden" scrolling="no" allowfullscreen="false" mozallowfullscreen="false" webkitallowfullscreen="false" seamless="seamless" frameborder="0" type="text/html"></iframe>
+    <iframe style="height:163px;" src="http://www.hbo.com/data/content/global/videos/embed/data/1432041.html?width=640&height=360" style="overflow:hidden" scrolling="no" allowfullscreen="false" mozallowfullscreen="false" webkitallowfullscreen="false" seamless="seamless" frameborder="0" type="text/html"></iframe>
   </div>
   <div class="polar-sponsorbadge"> 
     <span class="polar-sponsorlabel">PROMOTED</span>
@@ -78,7 +77,7 @@
 
 */
 
-  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">Game of Thrones Surprise</div>\n</div>\n\n  <div class=\"polar-video\">\n      <iframe src=\"http://www.hbo.com/data/content/global/videos/embed/data/1432041.html?width=640&height=360\" style=\"overflow:hidden\" scrolling=\"no\" allowfullscreen=\"false\" mozallowfullscreen=\"false\" webkitallowfullscreen=\"false\" seamless=\"seamless\" frameborder=\"0\" type=\"text/html\"></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"http://logok.org/wp-content/uploads/2014/10/HBO_logo.png\" height=\"50px\" alt=\"HBO\">\n    \n  </div>\n  </div>";  };
+  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">Game of Thrones Surprise</div>\n</div>\n  <div class=\"polar-video\">\n    <iframe style=\"height:163px;\" src=\"http://www.hbo.com/data/content/global/videos/embed/data/1432041.html?width=640&height=360\" style=\"overflow:hidden\" scrolling=\"no\" allowfullscreen=\"false\" mozallowfullscreen=\"false\" webkitallowfullscreen=\"false\" seamless=\"seamless\" frameborder=\"0\" type=\"text/html\"></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"http://logok.org/wp-content/uploads/2014/10/HBO_logo.png\" height=\"50px\" alt=\"HBO\">\n    \n  </div>\n  </div>";  };
 
     }
 
