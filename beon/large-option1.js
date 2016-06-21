@@ -1,4 +1,4 @@
-var theVideo = "http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea4691_1280x720_v1.mp4?3CZHrPm68QLcikiL1rPwrxwzy-E-luTRApuJtfVYBIN2Xa4C6l6FwXpQBEjWoM_v";
+var theVideo = "http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea4691_1280x720_v1.mp4?nGBrYHhlmWl68YpFKI3RfPVL7IS5OTO02TaobV4dgCLMFyS7gjoZdDnbgkuJb1c3";
 (function(){
 
     var compiledTemplate0 = "";
