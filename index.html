@@ -8,10 +8,10 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
     <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
     <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
-    <!-- <script src="http://10.2.10.193:8000/target/target-script-min.js#anonymous"></script> -->
     <style type="text/css">
     .main-contents {
         max-width: 720px;
@@ -261,13 +261,12 @@
         max-height: 300px;
     }
     </style>
-    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
     <nav id="menu" class="menu">
         <h3>
-        <div class="head" style="color:white;padding:15px 10px;letter-spacing:1px;text-align:center"><a href="">View All Templates</a></div>
+        <div class="head" style="color:white;padding:15px 10px;letter-spacing:1px;text-align:center"><a href="">View All Standard</a></div>
         
         <div class="menu-content">
             <!--Standard-->
@@ -288,22 +287,19 @@
             </div>
             
             <!--Video-->
-            <div class="s-head"><a href="http://mediavoice.github.io/thenews/video" target="_blank">+ Video</a></div>
-            <!--<button class="accordion-button">+ Video</button>
+            <button class="accordion-button">+ Video</button>
             <div class="accordion-panel">
-                Turnkey
-                <div class="head">Turnkey</div>
-                    <div class="items"><a href="/thenews/video">Vertical Stack</a></div>
-                    <div class="items"><a href="/thenews/video">Horizontal Stack</a></div>
-                    <div class="items"><a href="/thenews/video">Hero</a></div>
-                    <div class="items"><a href="/thenews/video">Blog</a></div>
-                Advanced
-                <div class="head">Advanced</div>
-                    <div class="items"><a href="/thenews/video">Carousel</a></div>
-                    <div class="items"><a href="/thenews/video">Collection</a></div>
-                    <div class="items"><a href="/thenews/video">Expandable</a></div>
-                    <div class="items"><a href="/thenews/video">Interactive</a></div>
-            </div>-->
+                <!--Turnkey-->
+                    <div class="items"><a href="/video/#v-static" onclick="gototab('#v-static')">Static Promo</a></div>
+                    <div class="items"><a href="/video/#v-pan" onclick="gototab('#v-pan')">Auto-Pan Promo</a></div>
+                    <div class="items"><a href="/video/#v-play" onclick="gototab('#v-plan')">Animated Promo</a></div>
+                    <div class="items"><a href="/video/#v-social" onclick="gototab('#v-social')">Social Promo</a></div>
+                    <div class="items"><a href="/video/#v-interactive" onclick="gototab('#v-interactive')">Interactive Promo</a></div>
+                    <div class="items"><a href="/video/#v-deviceplayer" onclick="gototab('#v-deviceplayer')">In-Feed Player</a></div>
+                    <div class="items"><a href="/video/#v-carousel" onclick="gototab('#v-carousel')">Carousel</a></div>
+
+                
+            </div>
         </div>
         
 
