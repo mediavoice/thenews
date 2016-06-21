@@ -12,6 +12,11 @@
     var standard_ad = { "server": "mvdirect", "id": "dc2b73ff3a184cf5b4fc5ad33517a017" };
     var inofgraphic_ad = { "server": "mvdirect", "id": "dee7b01db5bc41ed8da84b4437bc37ea" };
     var panorama_ad = { "server": "mvdirect", "id": "759b77783e0a4db18fb363dd2e1aa3be" };
+    var c2 = { "server": "mvdirect", "id": "f278c44c9f11494ca9c57714599054c6" };
+    var c3 = { "server": "mvdirect", "id": "ceff856877e94c3d9b1fe825be40a650" };
+    var c4 = { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" };
+    var c5 = { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" };
+    var c6 = { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" };
 
     /*=========================================
     =            Utility Functions            =
@@ -1027,32 +1032,12 @@
                 location: ".article:eq(0) p:eq(13)",
                 ads: [
                     standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
+                    c2,
+                    c3,
+                    c4,
+                    c5,
+                    c6
                 ]
-            });
-        });
-
-        /*----------  Carousel 2  ----------*/
-
-        q().push(function() {
-            new Carousel({
-                location: ".article:eq(0) p:eq(15)",
-                ads: [
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
-                ],
-                onRender: [function($element) {
-                    /* DIRTY DIRTY FIX */
-                    $element
-                        .find(".plr-sponsored-disclosure")
-                        .text("sponsored by honda");
-                }],
-                hero: true
             });
         });
 
