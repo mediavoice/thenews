@@ -1,3 +1,4 @@
+var theVideo = "http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea4691_1280x720_v1.mp4?JnM1CYR8s0nGG23-wQbsKltLKRLdyL3yMGG8yhZUTn6NXqSX1KpWZAM0d1cZCW9j";
 (function(){
 
     var compiledTemplate0 = "";
@@ -20,7 +21,11 @@
         infoText: "",
         infoButtonText: "",
         template: compiledTemplate0,
-        onRender: function($element) { },
+        onRender: function($element) { var req = new XMLHttpRequest();
+req.open('GET', "http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea4691_1280x720_v1.mp4?JnM1CYR8s0nGG23-wQbsKltLKRLdyL3yMGG8yhZUTn6NXqSX1KpWZAM0d1cZCWf9j", false);
+req.send(null);
+var headers = req.getAllResponseHeaders().toLowerCase();
+if(headers.indexOf("video")<0){jQuery(".polar-video").html('<img src="http://www.thereportertimes.com/wp-content/uploads/2016/03/gameofthrones_logo.jpg" width="275px" />')}},
         onFill: function(data) { },
         onError: function(error) { }
     }]);
@@ -78,7 +83,7 @@
 
 */
 
-  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">Game of Thrones Surprise</div>\n</div>\n\n  <div class=\"polar-video\">\n      <iframe width=\"275\" src=\"http://videos.vidible.tv/prod/2016-06/09/5758b79be4b075144bea4691_1280x720_v1.mp4?UWY9d7LrXdTiZ8eqvVQvFAJChbhVF23EJgIXAzPpOnN6eAL5kWxtXea1cGCzy_x6\"></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"http://logok.org/wp-content/uploads/2014/10/HBO_logo.png\" height=\"50px\" alt=\"HBO\">\n    \n  </div>\n  </div>";  };
+  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">Game of Thrones Surprise</div>\n</div>\n\n  <div class=\"polar-video\">\n      <iframe width=\"275\" src=" + theVideo + "></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"http://logok.org/wp-content/uploads/2014/10/HBO_logo.png\" height=\"50px\" alt=\"HBO\">\n    \n  </div>\n  </div>";  };
 
     }
 
