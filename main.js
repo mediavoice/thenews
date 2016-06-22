@@ -68,9 +68,9 @@
     /*=======================================
     =            Spooky JS Magic            =
     =======================================*/
-    
+
     /*----------  Scrolling Parallax  ---------- */
-    
+
     function scrolling_parallax($element) {
         // Get quick shortcut to img-wrapper element
         var $i = $element.find(".plr-img-wrapper");
@@ -101,8 +101,8 @@
         (function parallax() {
             // if all else fails, new pos will be 0 offset
             var percent_offset = {
-                x: 0,//Math.sin(window.scrollY/window.innerHeight*2)/2,
-                y: clamp(-((window.scrollY-$element.offset().top)/window.innerHeight + 0.5),-0.5,0.5)
+                x: 0, //Math.sin(window.scrollY/window.innerHeight*2)/2,
+                y: clamp(-((window.scrollY - $element.offset().top) / window.innerHeight + 0.5), -0.5, 0.5)
             };
 
             // get previous position
@@ -125,7 +125,7 @@
             requestAnimationFrame(parallax);
         })();
     }
-    
+
     /*----------  Kenny Burns  ----------*/
 
     function ken_burns_effect($element) {
@@ -1006,6 +1006,57 @@
         }]);
     }
 
+    /*----------  Hero  ----------*/
+
+    function Hero(props) {
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: imageHero,
+            onRender: function($element) {
+                if (props.onRender) props.onRender($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+    function Blog(props) {
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: inbetween_article,
+            onRender: function($element) {
+                if (props.onRender) props.onRender($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+    function Infographic(props) {
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: infographic,
+            onRender: function($element) {
+                if (props.onRender) props.onRender($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+
 
 
 
@@ -1070,18 +1121,12 @@
         });
         /*----------  Hero  ----------*/
 
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:eq(0) p:eq(12)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {},
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-
+        q().push(function() {
+            new Hero({
+                location: ".article:eq(0) p:eq(12)",
+                ad: standard_ad
+            });
+        });
         /*----------  Carousel 1  ----------*/
 
         q().push(function() {
@@ -1100,82 +1145,60 @@
 
         /*----------  In Between Article  ----------*/
 
-
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:last",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {},
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Blog({
+                location: ".article:last",
+                ad: standard_ad
+            });
+        });
 
         /*----------  Parallax Hero  ----------*/
 
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:last p:eq(3)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {
-                ken_burns_effect($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Hero({
+                location: ".article:last p:eq(3)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    ken_burns_effect($element);
+                }
+            });
+        });
 
         /*----------  In-Article Pullout  ----------*/
 
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:last p:eq(10)",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {
-                scroll_to_expand($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Blog({
+                location: ".article:last p:eq(10)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    scroll_to_expand($element);
+                }
+            });
+        });
 
         /*----------  Tap To Expand Article  ----------*/
 
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:last p:eq(15)",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {
-                tap_to_expand($element, 1);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Blog({
+                location: ".article:last p:eq(15)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    tap_to_expand($element, 1);
+                }
+            });
+        });
 
         /*----------  Tap To Expand Infographic  ----------*/
 
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: inofgraphic_ad,
-            location: ".article:last p:eq(18)",
-            infoText: "",
-            infoButtonText: "",
-            template: infographic,
-            onRender: function($element) {
-                tap_to_expand($element, 2);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Infographic({
+                location: ".article:last p:eq(18)",
+                ad: inofgraphic_ad,
+                onRender: function($element) {
+                    tap_to_expand($element, 2);
+                }
+            });
+        });
 
         /*----------  Collection 1 ----------*/
 
@@ -1285,17 +1308,13 @@
     /*==========  #hero  ==========*/
     if (location.hash == "#hero") {
         console.log("Load - Hero");
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:eq(0) p:eq(2)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {},
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+
+        q().push(function() {
+            new Hero({
+                location: ".article:eq(0) p:eq(2)",
+                ad: standard_ad
+            });
+        });
     }
     /*==========  #carousel  ==========*/
     if (location.hash == "#carousel") {
@@ -1315,39 +1334,32 @@
         });
     }
     /*==========  #blog  ==========*/
-    //without image
     if (location.hash == "#blog") {
         console.log("Load - Blog");
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:eq(0) p:eq(2)",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) { $(".plr-img-wrapper").remove(); },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-    }
-    //with image
-    if (location.hash == "#blog") {
-        console.log("Load - Blog");
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:last",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {},
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+
+        //without image
+        q().push(function() {
+            new Blog({
+                location: ".article:eq(0) p:eq(2)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    $element.find(".plr-img-wrapper").remove();
+                }
+            });
+        });
+
+        //with image
+        q().push(function() {
+            new Blog({
+                location: ".article:last",
+                ad: standard_ad
+            });
+        });
     }
     /*==========  #collection  ==========*/
     if (location.hash == "#collection") {
         console.log("Load - Collection");
+
         q().push(function() {
             new Collection({
                 location: ".bottom-anchor",
@@ -1372,70 +1384,57 @@
                 display: "hero" /* OR bigThumb OR noThumb */
             });
         });
-
     }
     /*==========  #interactive  ==========*/
     if (location.hash == "#interactive") {
         console.log("Load - Interactive");
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article p:eq(3)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {
-                ken_burns_effect($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+
+        q().push(function() {
+            new Hero({
+                location: ".article p:eq(3)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    ken_burns_effect($element);
+                },
+            });
+        });
     }
     /*==========  #expandable  ==========*/
     if (location.hash == "#expandable") {
         console.log("Load - Expandable");
+
         //scroll-to-expand
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article p:eq(2)",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {
-                scroll_to_expand($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Blog({
+                location: ".article p:eq(2)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    scroll_to_expand($element);
+                }
+            });
+        });
+
         //tap-to-expand
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article p:eq(5)",
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {
-                tap_to_expand($element, 1);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Blog({
+                location: ".article p:eq(5)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    tap_to_expand($element, 1);
+                }
+            });
+        });
+
         //infographic
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: inofgraphic_ad,
-            location: ".article p:eq(8)",
-            infoText: "",
-            infoButtonText: "",
-            template: infographic,
-            onRender: function($element) {
-                tap_to_expand($element, 2);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+        q().push(function() {
+            new Infographic({
+                location: ".article p:eq(8)",
+                ad: inofgraphic_ad,
+                onRender: function($element) {
+                    tap_to_expand($element, 2);
+                }
+            });
+        });
     }
     /*==========  #video  ==========*/
     if (location.hash == "#video") {
@@ -1488,6 +1487,7 @@
     /*==========  #pratik  ==========*/
     if (location.hash == "#pratik") {
         console.log("Load - helloPratik");
+
         q().push(function() {
             new VerticalStack({
                 location: ".article:eq(0) p:eq(2)",
@@ -1498,30 +1498,21 @@
                 }
             });
         });
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article:eq(0) p:eq(8)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {},
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: standard_ad,
-            location: ".article p:eq(13)",
-            infoText: "",
-            infoButtonText: "",
-            template: imageHero,
-            onRender: function($element) {
-                ken_burns_effect($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
+
+        q().push(function() {
+            new Hero({
+                location: ".article:eq(0) p:eq(8)",
+                ad: standard_ad
+            });
+
+            new Hero({
+                location: ".article:eq(0) p:eq(13)",
+                ad: standard_ad,
+                onRender: function($element) {
+                    ken_burns_effect($element);
+                }
+            });
+        });
     }
 
 
@@ -2034,6 +2025,8 @@
             var buffer = "",
                 stack1, stack2, functionType = "function",
                 escapeExpression = this.escapeExpression;
+
+
             buffer += "<div class=\"plr-360\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"sponsor-logo\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"link\">";
             if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
                 stack2 = depth0.link;
@@ -2056,7 +2049,8 @@
             }
             buffer += escapeExpression(stack2) + "</div>\n    </div>\n</div>";
             return buffer;
-        };
+        }
+
 
 
 
