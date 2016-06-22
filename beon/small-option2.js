@@ -63,9 +63,8 @@
 
 <div class="polar-outer"><a href="http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691" rel="nofollow">
       </a><div class="follow-us__header">
-<div class="polar-headline">The Mindi Project on Hulu</div>
+<div class="polar-headline">The Mindy Project on Hulu</div>
 </div>
-
   <div class="polar-video">
       <iframe width="275"src="https://www.youtube.com/embed/_uwanee-lS4" frameborder="0" allowfullscreen></iframe>
   </div>
@@ -78,7 +77,7 @@
 
 */
 
-  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">The Mindi Project on Hulu</div>\n</div>\n\n  <div class=\"polar-video\">\n      <iframe width=\"275\"src=\"https://www.youtube.com/embed/_uwanee-lS4\" frameborder=\"0\" allowfullscreen></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hulu_logo.svg/2000px-Hulu_logo.svg.png\" height=\"30px\" alt=\"Hulu\">\n    \n  </div>\n  </div>";  };
+  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};    return "\n<div class=\"polar-outer\"><a href=\"http://on.aol.com/video/spoilers-game-of-thrones-season-six-finale-will-blow-your-mind-5758b79be4b075144bea4691\" rel=\"nofollow\">\n      </a><div class=\"follow-us__header\">\n<div class=\"polar-headline\">The Mindy Project on Hulu</div>\n</div>\n  <div class=\"polar-video\">\n      <iframe width=\"275\"src=\"https://www.youtube.com/embed/_uwanee-lS4\" frameborder=\"0\" allowfullscreen></iframe>\n  </div>\n  <div class=\"polar-sponsorbadge\"> \n    <span class=\"polar-sponsorlabel\">PROMOTED</span>\n    <img class=\"polar-sponsorlogo\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Hulu_logo.svg/2000px-Hulu_logo.svg.png\" height=\"30px\" alt=\"Hulu\">\n    \n  </div>\n  </div>";  };
 
     }
 
