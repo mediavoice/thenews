@@ -59,6 +59,7 @@
             "        font-size: 16px;",
             "        top: 50%;",
             "        transform: translate(1px,-50%);",
+            "        text-align: center;",
             custom_inner_css,
             "\">",
             "        &#9654;&#xFE0E;",
