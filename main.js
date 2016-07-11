@@ -1,5 +1,6 @@
 (function() {
-    templates();
+    var templates;
+    populate_templates();
 
     window.NATIVEADS = window.NATIVEADS || {};
     window.NATIVEADS_QUEUE = window.NATIVEADS_QUEUE || [];
@@ -9,15 +10,58 @@
     };
     q().push(["setPropertyID", "NA-DANITEST-11237996"]);
 
-    var standard_ad = { "server": "mvdirect", "id": "dc2b73ff3a184cf5b4fc5ad33517a017" };
-    var inofgraphic_ad = { "server": "mvdirect", "id": "dee7b01db5bc41ed8da84b4437bc37ea" };
-    var panorama_ad = { "server": "mvdirect", "id": "759b77783e0a4db18fb363dd2e1aa3be" };
-    var c2 = { "server": "mvdirect", "id": "f278c44c9f11494ca9c57714599054c6" };
-    var c3 = { "server": "mvdirect", "id": "ceff856877e94c3d9b1fe825be40a650" };
-    var c4 = { "server": "mvdirect", "id": "afc61bcb3d6e4995a92b632d02f4e03f" };
-    var c5 = { "server": "mvdirect", "id": "e190767536954f418c789fc19347b240" };
-    var c6 = { "server": "mvdirect", "id": "0de95dc78ab64551af129ea1a6c7bca2" };
+    /*======================================
+    =            AD Definitions            =
+    ======================================*/
 
+    var ads = {
+        "standard_ad": {
+            "server": "mvdirect",
+            "id": "dc2b73ff3a184cf5b4fc5ad33517a017"
+        },
+        "inofgraphic_ad": {
+            "server": "mvdirect",
+            "id": "dee7b01db5bc41ed8da84b4437bc37ea"
+        },
+        "panorama_ad": {
+            "server": "mvdirect",
+            "id": "759b77783e0a4db18fb363dd2e1aa3be"
+        },
+        "panorama_ad2": {
+            "server": "mvdirect",
+            "id": "2913cfc8aabb4d20a1d052c07badb450"
+        },
+        "c2": {
+            "server": "mvdirect",
+            "id": "f278c44c9f11494ca9c57714599054c6"
+        },
+        "c3": {
+            "server": "mvdirect",
+            "id": "ceff856877e94c3d9b1fe825be40a650"
+        },
+        "c4": {
+            "server": "mvdirect",
+            "id": "afc61bcb3d6e4995a92b632d02f4e03f"
+        },
+        "c5": {
+            "server": "mvdirect",
+            "id": "e190767536954f418c789fc19347b240"
+        },
+        "c6": {
+            "server": "mvdirect",
+            "id": "0de95dc78ab64551af129ea1a6c7bca2"
+        },
+        "tweets_text_only": {
+            "server": "mvdirect",
+            "id": "collection_30d7536d97b54f37b2800ab8869fcc38"
+        },
+        "tweets": {
+            "server": "mvdirect",
+            "id": "collection_a478cfee2ce749c78c9d020ce0cce377"
+        }
+    }
+
+    ;
     /*=========================================
     =            Utility Functions            =
     =========================================*/
@@ -65,11 +109,182 @@
         return num < min ? min : num > max ? max : num;
     }
 
-    /*=======================================
-    =            Spooky JS Magic            =
-    =======================================*/
 
-    /*----------  Scrolling Parallax  ---------- */
+    /*===============================
+    =            Effects            =
+    ===============================*/
+
+    function ken_burns_effect($element) {
+        // inject fulltilt
+        var fulltilt_js = document.createElement('script');
+        fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
+        document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
+
+        (function dependencywrapper() {
+            if (typeof FULLTILT === "undefined") {
+                requestAnimationFrame(dependencywrapper);
+                return;
+            }
+
+            // Get quick shortcut to img-wrapper element
+            var $i = $element.find(".plr-img-wrapper");
+
+            var SCALE = 1.25;
+
+            $i.css({
+                position: "relative",
+                left: "initial",
+                bottom: "initial",
+                right: 0,
+                top: 0,
+                transform: "scale(" + SCALE + ")"
+            });
+
+            var deviceOrientation;
+            new FULLTILT.getDeviceOrientation({
+                    'type': 'world'
+                }).then(function(controller) {
+                    deviceOrientation = controller;
+                })
+                .catch(function(message) {
+                    console.error(message);
+                });
+
+            var manual = false;
+            var mouse_pos = {
+                x: 0,
+                y: 0
+            };
+
+            var max_offset;
+
+            function calc_max_offset() {
+                max_offset = {
+                    x: $i.find("div").width() * (SCALE - 1),
+                    y: $i.find("div").height() * (SCALE - 1),
+                };
+            }
+            calc_max_offset();
+            window.addEventListener("resize", calc_max_offset);
+
+            /* the magical main loop */
+            (function parallax() {
+                // if all else fails, new pos will be 0 offset
+                var percent_offset = {
+                    x: 0,
+                    y: 0
+                };
+
+                // If no accelerometer or manual override
+                if (manual || !deviceOrientation) {
+                    var px_from_center = {
+                        x: mouse_pos.x - $element.offset().left - $element.width() / 2,
+                        y: mouse_pos.y - $element.offset().top - $element.height() / 2
+                    };
+
+                    percent_offset = {
+                        x: clamp(trunc(px_from_center.x / $element.width(), 5), -0.5, 0.5),
+                        y: clamp(trunc(px_from_center.y / $element.height(), 5), -0.5, 0.5)
+                    };
+                }
+
+                if (deviceOrientation && !manual) {
+                    var rotation = deviceOrientation.getScreenAdjustedEuler();
+
+                    // Switch to manual control if missing accelerometer
+                    if (!rotation.alpha || !rotation.beta || !rotation.gamma) {
+                        manual = true;
+
+                        // initialize mouse event handler
+                        window.addEventListener("mousemove", function(e) {
+                            mouse_pos.x = e.pageX;
+                            mouse_pos.y = e.pageY;
+                        });
+                    }
+
+                    // Calculate new offset such that it gradually moves into place
+
+                    percent_offset = {
+                        x: clamp(trunc(-(rotation.gamma) / 180, 5), -0.5, 0.5),
+                        y: clamp(trunc(-(rotation.beta - 90) / 180 * 2, 5), -0.5, 0.5) // why * 2? It just *feels* better
+                    };
+                }
+
+                // get previous position
+                var old_offset = {
+                    right: parseFloat($i.css("right")),
+                    top: parseFloat($i.css("top"))
+                };
+
+                var new_offset = {
+                    right: trunc(max_offset.x * percent_offset.x, 2),
+                    top: trunc(max_offset.y * percent_offset.y, 2)
+                };
+
+                $i.css({
+                    top: trunc(old_offset.top + (new_offset.top - old_offset.top) / 10, 2) + "px",
+                    right: trunc(old_offset.right - (new_offset.right + old_offset.right) / 10, 2) + "px"
+                });
+
+                // Execute function on each browser animation frame
+                requestAnimationFrame(parallax);
+            })();
+        })();
+    }
+
+    function scroll_to_expand($element) {
+        $element.css({
+            "padding-bottom": 0,
+            "padding-top": 10 + "px",
+            "overflow": "hidden"
+        });
+
+        var initial_h,
+            default_h,
+            start_y;
+
+        // Recalculate Height when the screen size changes
+        function onresize() {
+            $element.css({
+                "height": "initial"
+            });
+
+            default_h =
+                get_total_height($element.find("h1")) +
+                get_total_height($element.find(".plr-sponsor")) +
+                parseFloat($element.find(".topic").css("height"));
+            initial_h = get_total_height($element);
+
+            start_y = 2 * window.innerHeight / 4;
+        }
+        window.addEventListener("resize", onresize);
+        onresize();
+
+
+        // Main Loop
+        function expand() {
+            var top = $element.get(0).getBoundingClientRect().top;
+
+            if (top < start_y) {
+                var new_h = start_y - (top - default_h);
+
+                // Don't keep expanding silly!
+                if (new_h > initial_h) {
+                    new_h = initial_h;
+                }
+                $element.css({
+                    "height": new_h + "px"
+                });
+            } else {
+                $element.css({
+                    "height": default_h + "px"
+                });
+            }
+
+            requestAnimationFrame(expand);
+        }
+        expand();
+    }
 
     function scrolling_parallax($element) {
         // Get quick shortcut to img-wrapper element
@@ -126,172 +341,6 @@
         })();
     }
 
-    /*----------  Kenny Burns  ----------*/
-
-    function ken_burns_effect($element) {
-        /* beautify ignore:start */
-        /* jshint ignore:start */
-        !function(a){function b(a){return a=+a,0===a||isNaN(a)?a:a>0?1:-1}function c(a){var b=new Promise(function(b,c){var d=function(e){setTimeout(function(){a&&a.data?b():e>=20?c():d(++e)},50)};d(0)});return b}function d(){o=n?(a.screen.orientation.angle||0)*j:(a.orientation||0)*j}function e(a){l.orientation.data=a;for(var b in l.orientation.callbacks)l.orientation.callbacks[b].call(this)}function f(a){l.motion.data=a;for(var b in l.motion.callbacks)l.motion.callbacks[b].call(this)}if(void 0===a.FULLTILT||null===a.FULLTILT){var g=Math.PI,h=g/2,i=2*g,j=g/180,k=180/g,l={orientation:{active:!1,callbacks:[],data:void 0},motion:{active:!1,callbacks:[],data:void 0}},m=!1,n=a.screen&&a.screen.orientation&&void 0!==a.screen.orientation.angle&&null!==a.screen.orientation.angle?!0:!1,o=(n?a.screen.orientation.angle:a.orientation||0)*j,p=h,q=g,r=i/3,s=-h,t={};t.version="0.5.3",t.getDeviceOrientation=function(a){var b=new Promise(function(b,d){var e=new t.DeviceOrientation(a);e.start();var f=new c(l.orientation);f.then(function(){b(e)})["catch"](function(){e.stop(),d("DeviceOrientation is not supported")})});return b},t.getDeviceMotion=function(a){var b=new Promise(function(b,d){var e=new t.DeviceMotion(a);e.start();var f=new c(l.motion);f.then(function(){b(e)})["catch"](function(){e.stop(),d("DeviceMotion is not supported")})});return b},t.Quaternion=function(a,c,d,e){var f;this.set=function(a,b,c,d){this.x=a||0,this.y=b||0,this.z=c||0,this.w=d||1},this.copy=function(a){this.x=a.x,this.y=a.y,this.z=a.z,this.w=a.w},this.setFromEuler=function(){var a,b,c,d,e,f,g,h,i,k,l,m;return function(n){return n=n||{},c=(n.alpha||0)*j,a=(n.beta||0)*j,b=(n.gamma||0)*j,f=c/2,d=a/2,e=b/2,g=Math.cos(d),h=Math.cos(e),i=Math.cos(f),k=Math.sin(d),l=Math.sin(e),m=Math.sin(f),this.set(k*h*i-g*l*m,g*l*i+k*h*m,g*h*m+k*l*i,g*h*i-k*l*m),this.normalize(),this}}(),this.setFromRotationMatrix=function(){var a;return function(c){return a=c.elements,this.set(.5*Math.sqrt(1+a[0]-a[4]-a[8])*b(a[7]-a[5]),.5*Math.sqrt(1-a[0]+a[4]-a[8])*b(a[2]-a[6]),.5*Math.sqrt(1-a[0]-a[4]+a[8])*b(a[3]-a[1]),.5*Math.sqrt(1+a[0]+a[4]+a[8])),this}}(),this.multiply=function(a){return f=t.Quaternion.prototype.multiplyQuaternions(this,a),this.copy(f),this},this.rotateX=function(a){return f=t.Quaternion.prototype.rotateByAxisAngle(this,[1,0,0],a),this.copy(f),this},this.rotateY=function(a){return f=t.Quaternion.prototype.rotateByAxisAngle(this,[0,1,0],a),this.copy(f),this},this.rotateZ=function(a){return f=t.Quaternion.prototype.rotateByAxisAngle(this,[0,0,1],a),this.copy(f),this},this.normalize=function(){return t.Quaternion.prototype.normalize(this)},this.set(a,c,d,e)},t.Quaternion.prototype={constructor:t.Quaternion,multiplyQuaternions:function(){var a=new t.Quaternion;return function(b,c){var d=b.x,e=b.y,f=b.z,g=b.w,h=c.x,i=c.y,j=c.z,k=c.w;return a.set(d*k+g*h+e*j-f*i,e*k+g*i+f*h-d*j,f*k+g*j+d*i-e*h,g*k-d*h-e*i-f*j),a}}(),normalize:function(a){var b=Math.sqrt(a.x*a.x+a.y*a.y+a.z*a.z+a.w*a.w);return 0===b?(a.x=0,a.y=0,a.z=0,a.w=1):(b=1/b,a.x*=b,a.y*=b,a.z*=b,a.w*=b),a},rotateByAxisAngle:function(){var a,b,c=new t.Quaternion,d=new t.Quaternion;return function(e,f,g){return a=(g||0)/2,b=Math.sin(a),d.set((f[0]||0)*b,(f[1]||0)*b,(f[2]||0)*b,Math.cos(a)),c=t.Quaternion.prototype.multiplyQuaternions(e,d),t.Quaternion.prototype.normalize(c)}}()},t.RotationMatrix=function(a,b,c,d,e,f,g,h,i){var k;this.elements=new Float32Array(9),this.identity=function(){return this.set(1,0,0,0,1,0,0,0,1),this},this.set=function(a,b,c,d,e,f,g,h,i){this.elements[0]=a||1,this.elements[1]=b||0,this.elements[2]=c||0,this.elements[3]=d||0,this.elements[4]=e||1,this.elements[5]=f||0,this.elements[6]=g||0,this.elements[7]=h||0,this.elements[8]=i||1},this.copy=function(a){this.elements[0]=a.elements[0],this.elements[1]=a.elements[1],this.elements[2]=a.elements[2],this.elements[3]=a.elements[3],this.elements[4]=a.elements[4],this.elements[5]=a.elements[5],this.elements[6]=a.elements[6],this.elements[7]=a.elements[7],this.elements[8]=a.elements[8]},this.setFromEuler=function(){var a,b,c,d,e,f,g,h,i;return function(k){return k=k||{},c=(k.alpha||0)*j,a=(k.beta||0)*j,b=(k.gamma||0)*j,d=Math.cos(a),e=Math.cos(b),f=Math.cos(c),g=Math.sin(a),h=Math.sin(b),i=Math.sin(c),this.set(f*e-i*g*h,-d*i,e*i*g+f*h,e*i+f*g*h,f*d,i*h-f*e*g,-d*h,g,d*e),this.normalize(),this}}(),this.setFromQuaternion=function(){var a,b,c,d;return function(e){return a=e.w*e.w,b=e.x*e.x,c=e.y*e.y,d=e.z*e.z,this.set(a+b-c-d,2*(e.x*e.y-e.w*e.z),2*(e.x*e.z+e.w*e.y),2*(e.x*e.y+e.w*e.z),a-b+c-d,2*(e.y*e.z-e.w*e.x),2*(e.x*e.z-e.w*e.y),2*(e.y*e.z+e.w*e.x),a-b-c+d),this}}(),this.multiply=function(a){return k=t.RotationMatrix.prototype.multiplyMatrices(this,a),this.copy(k),this},this.rotateX=function(a){return k=t.RotationMatrix.prototype.rotateByAxisAngle(this,[1,0,0],a),this.copy(k),this},this.rotateY=function(a){return k=t.RotationMatrix.prototype.rotateByAxisAngle(this,[0,1,0],a),this.copy(k),this},this.rotateZ=function(a){return k=t.RotationMatrix.prototype.rotateByAxisAngle(this,[0,0,1],a),this.copy(k),this},this.normalize=function(){return t.RotationMatrix.prototype.normalize(this)},this.set(a,b,c,d,e,f,g,h,i)},t.RotationMatrix.prototype={constructor:t.RotationMatrix,multiplyMatrices:function(){var a,b,c=new t.RotationMatrix;return function(d,e){return a=d.elements,b=e.elements,c.set(a[0]*b[0]+a[1]*b[3]+a[2]*b[6],a[0]*b[1]+a[1]*b[4]+a[2]*b[7],a[0]*b[2]+a[1]*b[5]+a[2]*b[8],a[3]*b[0]+a[4]*b[3]+a[5]*b[6],a[3]*b[1]+a[4]*b[4]+a[5]*b[7],a[3]*b[2]+a[4]*b[5]+a[5]*b[8],a[6]*b[0]+a[7]*b[3]+a[8]*b[6],a[6]*b[1]+a[7]*b[4]+a[8]*b[7],a[6]*b[2]+a[7]*b[5]+a[8]*b[8]),c}}(),normalize:function(a){var b=a.elements,c=b[0]*b[4]*b[8]-b[0]*b[5]*b[7]-b[1]*b[3]*b[8]+b[1]*b[5]*b[6]+b[2]*b[3]*b[7]-b[2]*b[4]*b[6];return b[0]/=c,b[1]/=c,b[2]/=c,b[3]/=c,b[4]/=c,b[5]/=c,b[6]/=c,b[7]/=c,b[8]/=c,a.elements=b,a},rotateByAxisAngle:function(){var a,b,c=new t.RotationMatrix,d=new t.RotationMatrix,e=!1;return function(f,g,h){return d.identity(),e=!1,a=Math.sin(h),b=Math.cos(h),1===g[0]&&0===g[1]&&0===g[2]?(e=!0,d.elements[4]=b,d.elements[5]=-a,d.elements[7]=a,d.elements[8]=b):1===g[1]&&0===g[0]&&0===g[2]?(e=!0,d.elements[0]=b,d.elements[2]=a,d.elements[6]=-a,d.elements[8]=b):1===g[2]&&0===g[0]&&0===g[1]&&(e=!0,d.elements[0]=b,d.elements[1]=-a,d.elements[3]=a,d.elements[4]=b),e?(c=t.RotationMatrix.prototype.multiplyMatrices(f,d),c=t.RotationMatrix.prototype.normalize(c)):c=f,c}}()},t.Euler=function(a,b,c){this.set=function(a,b,c){this.alpha=a||0,this.beta=b||0,this.gamma=c||0},this.copy=function(a){this.alpha=a.alpha,this.beta=a.beta,this.gamma=a.gamma},this.setFromRotationMatrix=function(){var a,b,c,d;return function(e){a=e.elements,a[8]>0?(b=Math.atan2(-a[1],a[4]),c=Math.asin(a[7]),d=Math.atan2(-a[6],a[8])):a[8]<0?(b=Math.atan2(a[1],-a[4]),c=-Math.asin(a[7]),c+=c>=0?-g:g,d=Math.atan2(a[6],-a[8])):a[6]>0?(b=Math.atan2(-a[1],a[4]),c=Math.asin(a[7]),d=-h):a[6]<0?(b=Math.atan2(a[1],-a[4]),c=-Math.asin(a[7]),c+=c>=0?-g:g,d=-h):(b=Math.atan2(a[3],a[0]),c=a[7]>0?h:-h,d=0),0>b&&(b+=i),b*=k,c*=k,d*=k,this.set(b,c,d)}}(),this.setFromQuaternion=function(){var a,b,c;return function(d){var e=d.w*d.w,f=d.x*d.x,j=d.y*d.y,l=d.z*d.z,m=e+f+j+l,n=d.w*d.x+d.y*d.z,o=1e-6;if(n>(.5-o)*m)a=2*Math.atan2(d.y,d.w),b=h,c=0;else if((-.5+o)*m>n)a=-2*Math.atan2(d.y,d.w),b=-h,c=0;else{var p=e-f+j-l,q=2*(d.w*d.z-d.x*d.y),r=e-f-j+l,s=2*(d.w*d.y-d.x*d.z);r>0?(a=Math.atan2(q,p),b=Math.asin(2*n/m),c=Math.atan2(s,r)):(a=Math.atan2(-q,-p),b=-Math.asin(2*n/m),b+=0>b?g:-g,c=Math.atan2(-s,-r))}0>a&&(a+=i),a*=k,b*=k,c*=k,this.set(a,b,c)}}(),this.rotateX=function(a){return t.Euler.prototype.rotateByAxisAngle(this,[1,0,0],a),this},this.rotateY=function(a){return t.Euler.prototype.rotateByAxisAngle(this,[0,1,0],a),this},this.rotateZ=function(a){return t.Euler.prototype.rotateByAxisAngle(this,[0,0,1],a),this},this.set(a,b,c)},t.Euler.prototype={constructor:t.Euler,rotateByAxisAngle:function(){var a=new t.RotationMatrix;return function(b,c,d){return a.setFromEuler(b),a=t.RotationMatrix.prototype.rotateByAxisAngle(a,c,d),b.setFromRotationMatrix(a),b}}()},t.DeviceOrientation=function(b){this.options=b||{};var c=0,d=200,e=0,f=10;if(this.alphaOffsetScreen=0,this.alphaOffsetDevice=void 0,"game"===this.options.type){var g=function(b){return null!==b.alpha&&(this.alphaOffsetDevice=new t.Euler(b.alpha,0,0),this.alphaOffsetDevice.rotateZ(-o),++e>=f)?void a.removeEventListener("deviceorientation",g,!1):void(++c>=d&&a.removeEventListener("deviceorientation",g,!1))}.bind(this);a.addEventListener("deviceorientation",g,!1)}else if("world"===this.options.type){var h=function(b){return b.absolute!==!0&&void 0!==b.webkitCompassAccuracy&&null!==b.webkitCompassAccuracy&&+b.webkitCompassAccuracy>=0&&+b.webkitCompassAccuracy<50&&(this.alphaOffsetDevice=new t.Euler(b.webkitCompassHeading,0,0),this.alphaOffsetDevice.rotateZ(o),this.alphaOffsetScreen=o,++e>=f)?void a.removeEventListener("deviceorientation",h,!1):void(++c>=d&&a.removeEventListener("deviceorientation",h,!1))}.bind(this);a.addEventListener("deviceorientation",h,!1)}},t.DeviceOrientation.prototype={constructor:t.DeviceOrientation,start:function(b){b&&"[object Function]"==Object.prototype.toString.call(b)&&l.orientation.callbacks.push(b),m||(n?a.screen.orientation.addEventListener("change",d,!1):a.addEventListener("orientationchange",d,!1)),l.orientation.active||(a.addEventListener("deviceorientation",e,!1),l.orientation.active=!0)},stop:function(){l.orientation.active&&(a.removeEventListener("deviceorientation",e,!1),l.orientation.active=!1)},listen:function(a){this.start(a)},getFixedFrameQuaternion:function(){var a=new t.Euler,b=new t.RotationMatrix,c=new t.Quaternion;return function(){var d=l.orientation.data||{alpha:0,beta:0,gamma:0},e=d.alpha;return this.alphaOffsetDevice&&(b.setFromEuler(this.alphaOffsetDevice),b.rotateZ(-this.alphaOffsetScreen),a.setFromRotationMatrix(b),a.alpha<0&&(a.alpha+=360),a.alpha%=360,e-=a.alpha),a.set(e,d.beta,d.gamma),c.setFromEuler(a),c}}(),getScreenAdjustedQuaternion:function(){var a;return function(){return a=this.getFixedFrameQuaternion(),a.rotateZ(-o),a}}(),getFixedFrameMatrix:function(){var a=new t.Euler,b=new t.RotationMatrix;return function(){var c=l.orientation.data||{alpha:0,beta:0,gamma:0},d=c.alpha;return this.alphaOffsetDevice&&(b.setFromEuler(this.alphaOffsetDevice),b.rotateZ(-this.alphaOffsetScreen),a.setFromRotationMatrix(b),a.alpha<0&&(a.alpha+=360),a.alpha%=360,d-=a.alpha),a.set(d,c.beta,c.gamma),b.setFromEuler(a),b}}(),getScreenAdjustedMatrix:function(){var a;return function(){return a=this.getFixedFrameMatrix(),a.rotateZ(-o),a}}(),getFixedFrameEuler:function(){var a,b=new t.Euler;return function(){return a=this.getFixedFrameMatrix(),b.setFromRotationMatrix(a),b}}(),getScreenAdjustedEuler:function(){var a,b=new t.Euler;return function(){return a=this.getScreenAdjustedMatrix(),b.setFromRotationMatrix(a),b}}(),isAbsolute:function(){return l.orientation.data&&l.orientation.data.absolute===!0?!0:!1},getLastRawEventData:function(){return l.orientation.data||{}},ALPHA:"alpha",BETA:"beta",GAMMA:"gamma"},t.DeviceMotion=function(a){this.options=a||{}},t.DeviceMotion.prototype={constructor:t.DeviceMotion,start:function(b){b&&"[object Function]"==Object.prototype.toString.call(b)&&l.motion.callbacks.push(b),m||(n?a.screen.orientation.addEventListener("change",d,!1):a.addEventListener("orientationchange",d,!1)),l.motion.active||(a.addEventListener("devicemotion",f,!1),l.motion.active=!0)},stop:function(){l.motion.active&&(a.removeEventListener("devicemotion",f,!1),l.motion.active=!1)},listen:function(a){this.start(a)},getScreenAdjustedAcceleration:function(){var a=l.motion.data&&l.motion.data.acceleration?l.motion.data.acceleration:{x:0,y:0,z:0},b={};switch(o){case p:b.x=-a.y,b.y=a.x;break;case q:b.x=-a.x,b.y=-a.y;break;case r:case s:b.x=a.y,b.y=-a.x;break;default:b.x=a.x,b.y=a.y}return b.z=a.z,b},getScreenAdjustedAccelerationIncludingGravity:function(){var a=l.motion.data&&l.motion.data.accelerationIncludingGravity?l.motion.data.accelerationIncludingGravity:{x:0,y:0,z:0},b={};switch(o){case p:b.x=-a.y,b.y=a.x;break;case q:b.x=-a.x,b.y=-a.y;break;case r:case s:b.x=a.y,b.y=-a.x;break;default:b.x=a.x,b.y=a.y}return b.z=a.z,b},getScreenAdjustedRotationRate:function(){var a=l.motion.data&&l.motion.data.rotationRate?l.motion.data.rotationRate:{alpha:0,beta:0,gamma:0},b={};switch(o){case p:b.beta=-a.gamma,b.gamma=a.beta;break;case q:b.beta=-a.beta,b.gamma=-a.gamma;break;case r:case s:b.beta=a.gamma,b.gamma=-a.beta;break;default:b.beta=a.beta,b.gamma=a.gamma}return b.alpha=a.alpha,b},getLastRawEventData:function(){return l.motion.data||{}}},a.FULLTILT=t}}(window);
-        /* jshint ignore:end */
-        /* beautify ignore:end */
-
-        // Get quick shortcut to img-wrapper element
-        var $i = $element.find(".plr-img-wrapper");
-
-        var SCALE = 1.25;
-
-        $i.css({
-            position: "relative",
-            left: "initial",
-            bottom: "initial",
-            right: 0,
-            top: 0,
-            transform: "scale(" + SCALE + ")"
-        });
-
-        var deviceOrientation;
-        new FULLTILT.getDeviceOrientation({
-                'type': 'world'
-            }).then(function(controller) {
-                deviceOrientation = controller;
-            })
-            .catch(function(message) {
-                console.error(message);
-            });
-
-        var manual = false;
-        var mouse_pos = {
-            x: 0,
-            y: 0
-        };
-
-        var max_offset;
-
-        function calc_max_offset() {
-            max_offset = {
-                x: $i.find("div").width() * (SCALE - 1),
-                y: $i.find("div").height() * (SCALE - 1),
-            };
-        }
-        calc_max_offset();
-        window.addEventListener("resize", calc_max_offset);
-
-        /* the magical main loop */
-        (function parallax() {
-            // if all else fails, new pos will be 0 offset
-            var percent_offset = {
-                x: 0,
-                y: 0
-            };
-
-            // If no accelerometer or manual override
-            if (manual || !deviceOrientation) {
-                var px_from_center = {
-                    x: mouse_pos.x - $element.offset().left - $element.width() / 2,
-                    y: mouse_pos.y - $element.offset().top - $element.height() / 2
-                };
-
-                percent_offset = {
-                    x: clamp(trunc(px_from_center.x / $element.width(), 5), -0.5, 0.5),
-                    y: clamp(trunc(px_from_center.y / $element.height(), 5), -0.5, 0.5)
-                };
-            }
-
-            if (deviceOrientation && !manual) {
-                var rotation = deviceOrientation.getScreenAdjustedEuler();
-
-                // Switch to manual control if missing accelerometer
-                if (!rotation.alpha || !rotation.beta || !rotation.gamma) {
-                    manual = true;
-
-                    // initialize mouse event handler
-                    window.addEventListener("mousemove", function(e) {
-                        mouse_pos.x = e.pageX;
-                        mouse_pos.y = e.pageY;
-                    });
-                }
-
-                // Calculate new offset such that it gradually moves into place
-
-                percent_offset = {
-                    x: clamp(trunc(-(rotation.gamma) / 180, 5), -0.5, 0.5),
-                    y: clamp(trunc(-(rotation.beta - 90) / 180 * 2, 5), -0.5, 0.5) // why * 2? It just *feels* better
-                };
-            }
-
-            // get previous position
-            var old_offset = {
-                right: parseFloat($i.css("right")),
-                top: parseFloat($i.css("top"))
-            };
-
-            var new_offset = {
-                right: trunc(max_offset.x * percent_offset.x, 2),
-                top: trunc(max_offset.y * percent_offset.y, 2)
-            };
-
-            $i.css({
-                top: trunc(old_offset.top + (new_offset.top - old_offset.top) / 10, 2) + "px",
-                right: trunc(old_offset.right - (new_offset.right + old_offset.right) / 10, 2) + "px"
-            });
-
-            // Execute function on each browser animation frame
-            requestAnimationFrame(parallax);
-        })();
-    }
-
-    /*----------  Scroll To Expand  ----------*/
-
-    function scroll_to_expand($element) {
-        $element.css({
-            "padding-bottom": 0,
-            "padding-top": 10 + "px",
-            "overflow": "hidden"
-        });
-
-        var initial_h,
-            default_h,
-            start_y;
-
-        // Recalculate Height when the screen size changes
-        function onresize() {
-            $element.css({ "height": "initial" });
-
-            default_h =
-                get_total_height($element.find("h1")) +
-                get_total_height($element.find(".plr-sponsor")) +
-                parseFloat($element.find(".topic").css("height"));
-            initial_h = get_total_height($element);
-
-            start_y = 2 * window.innerHeight / 4;
-        }
-        window.addEventListener("resize", onresize);
-        onresize();
-
-
-        // Main Loop
-        function expand() {
-            var top = $element.get(0).getBoundingClientRect().top;
-
-            if (top < start_y) {
-                var new_h = start_y - (top - default_h);
-
-                // Don't keep expanding silly!
-                if (new_h > initial_h) {
-                    new_h = initial_h;
-                }
-                $element.css({ "height": new_h + "px" });
-            } else {
-                $element.css({ "height": default_h + "px" });
-            }
-
-            requestAnimationFrame(expand);
-        }
-        expand();
-    }
-
-    /*----------  Tap To Expand  ----------*/
-
     function tap_to_expand($element, time) {
         $element.css({
             "overflow": "hidden"
@@ -300,7 +349,9 @@
         var sponsor_text_initial = $element.find(".plr-sponsor").first().html();
         $element.find(".plr-sponsor").html("<em>Tap</em> to learn more! <br> " + sponsor_text_initial);
 
-        $element.find("h1").unwrap().css({ cursor: "pointer" });
+        $element.find("h1").unwrap().css({
+            cursor: "pointer"
+        });
 
         var initial_h,
             default_h,
@@ -330,8 +381,12 @@
                 parseFloat($element.css("padding-bottom")) +
                 parseFloat($element.css("padding-top"));
 
-            if (!been_clicked) $element.css({ "height": default_h + "px" });
-            else $element.css({ "height": initial_h + "px" });
+            if (!been_clicked) $element.css({
+                "height": default_h + "px"
+            });
+            else $element.css({
+                "height": initial_h + "px"
+            });
         }
 
 
@@ -347,45 +402,55 @@
 
         $element.find("h1").click(function() {
             if (!been_clicked) {
-                $element.css({ "height": initial_h + "px" });
+                $element.css({
+                    "height": initial_h + "px"
+                });
                 been_clicked = true;
             } else {
-                $element.css({ "height": default_h + "px" });
+                $element.css({
+                    "height": default_h + "px"
+                });
                 been_clicked = false;
             }
         });
     }
 
 
-
-
-
-
-
-
-
-
     /*==========================================
     =            Template "Classes"            =
     ==========================================*/
 
-    /*----------  Carousel  ----------*/
+    function Blog(props) {
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: templates.blog,
+            onRender: function($element) {
+                if (props.onRender) props.onRender($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
 
     var total_carousels = 0;
 
     function Carousel(props) {
         /*
-        
-        props = {
-            location: jQuery selector
-            ads: array of unit objects
-
-            onRender: array of onRender function corresponding to the index in ads
             
-            hero: whether to display the items as "heroes"
-        }
+            props = {
+                location: jQuery selector
+                ads: array of unit objects
+
+                onRender: array of onRender function corresponding to the index in ads
+                
+                hero: whether to display the items as "heroes"
+            }
     
-        */
+            */
 
 
         if (props.ads.length === 0) return;
@@ -485,7 +550,9 @@
         /*----------  Insert the Carousel Items  ----------*/
 
         var faliures = 0,
-            incfaliure = function() { faliures++; };
+            incfaliure = function() {
+                faliures++;
+            };
 
         for (var j in props.ads) {
             q().push(["insertPreview", {
@@ -494,7 +561,7 @@
                 location: interpolate_str(".plr-crsl--{0} .plr-slot--{1}", [total_carousels, j]),
                 infoText: "",
                 infoButtonText: "",
-                template: carousel_item,
+                template: templates.carousel_item,
                 onRender: ((props.onRender && props.onRender[j]) ? props.onRender[j] : null),
                 onFill: function(data) {},
                 onError: incfaliure
@@ -505,8 +572,6 @@
         if (faliures == props.ads.length) $carousel.remove();
         else total_carousels++;
     }
-
-    /*----------  Collection  ----------*/
 
     var total_collections = 0;
 
@@ -646,7 +711,9 @@
         /*----------  Insert the Collection Items  ----------*/
 
         var faliures = 0,
-            incfaliure = function() { faliures++; };
+            incfaliure = function() {
+                faliures++;
+            };
 
         for (var i = 0; i < props.ads.length; i++) {
             var location = ".plr-collection--" + total_collections + " .plr-collection-anchor";
@@ -658,7 +725,7 @@
                 location: location,
                 infoText: "",
                 infoButtonText: "",
-                template: collection_item,
+                template: templates.collection_item,
                 onRender: ((props.onRender && props.onRender[i]) ? props.onRender[i] : null),
                 onFill: function(data) {},
                 onError: faliures
@@ -672,85 +739,44 @@
         } else total_collections++;
     }
 
-    /*----------  Vertical Stack  ----------*/
-
-    function VerticalStack(props) {
-        /*
-        props = {
-            location: jQuery Selector | where to put the ad
-            ad: Creative ID           | which creative
-            onRender: function        | onRender function
-            display: {                | Options related to how it looks
-                thumb:    "circle"    |
-                       OR "square"    |     What the thumb should look like
-                       OR "none"      |
-                summary: bool         |     Show / Hide the summary
-            }
-        }
-    
-        */
+    function Hero(props) {
         q().push(["insertPreview", {
             label: "Landing Page",
             unit: props.ad,
             location: props.location,
             infoText: "",
             infoButtonText: "",
-            template: verticalStack,
+            template: templates.hero,
             onRender: function($element) {
-                /* THUMB OPTIONS */
-                var img = $element.find(".plr-img-wrapper").first();
-
-                // circle by default
-                switch (props.display.thumb) {
-                    case "rectangle":
-                        img.find("div").first().css({ "border-radius": "0" });
-                        img.css({ "width": "100%", "padding-bottom": "50%" });
-                        break;
-                    case "square":
-                        img.find("div").first().css({ "border-radius": "0" });
-                        break;
-                    case "none":
-                        img.remove();
-                        break;
-                    default: // Circle by default
-                        break;
-                }
-
-                /* SUMMARY OPTIONS */
-                if (props.display.summary === false) {
-                    $element.find("p").first().remove();
-                }
-
-                if (typeof props.onRender !== "undefined") props.onRender();
+                if (props.onRender) props.onRender($element);
             },
             onFill: function(data) {},
             onError: function(error) {}
         }]);
     }
-    /*----------  Horizontal Stack  ----------*/
 
     function HorizontalStack(props) {
         /*
-        props = {
-            location: jQuery Selector | where to put the ad
-            ad: Creative ID           | which creative
-            onRender: function        | onRender function
-            display: {                | Options related to how it looks
-                thumb:    "circle"    |
-                       OR "square"    |     What the thumb should look like
-                       OR "none"      |
-                summary: bool         |     Show / Hide the summary
+            props = {
+                location: jQuery Selector | where to put the ad
+                ad: Creative ID           | which creative
+                onRender: function        | onRender function
+                display: {                | Options related to how it looks
+                    thumb:    "circle"    |
+                           OR "square"    |     What the thumb should look like
+                           OR "none"      |
+                    summary: bool         |     Show / Hide the summary
+                }
             }
-        }
     
-        */
+            */
         q().push(["insertPreview", {
             label: "Landing Page",
             unit: props.ad,
             location: props.location,
             infoText: "",
             infoButtonText: "",
-            template: horizontalStack,
+            template: templates.hstack,
             onRender: function($element) {
                 /* THUMB OPTIONS */
                 var img = $element.find(".plr-img-wrapper").first();
@@ -758,11 +784,18 @@
                 // circle by default
                 switch (props.display.thumb) {
                     case "rectangle":
-                        img.find("div").first().css({ "border-radius": "0" });
-                        img.css({ "width": "50%", "padding-bottom": "50%" });
+                        img.find("div").first().css({
+                            "border-radius": "0"
+                        });
+                        img.css({
+                            "width": "50%",
+                            "padding-bottom": "50%"
+                        });
                         break;
                     case "square":
-                        img.find("div").first().css({ "border-radius": "0" });
+                        img.find("div").first().css({
+                            "border-radius": "0"
+                        });
                         break;
                     case "none":
                         img.remove();
@@ -782,23 +815,279 @@
             onError: function(error) {}
         }]);
     }
-    /*----------  Twitter Carousel  ----------*/
+
+    function Infographic(props) {
+        q().push(["insertPreview", {
+            label: "Landing Page",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: templates.infographic,
+            onRender: function($element) {
+                if (props.onRender) props.onRender($element);
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+    function ThreeSixty_Pano(props) {
+        /*
+            
+        props = {
+            location:  jquery selector
+            unit:      unit object
+        }
+            
+        */
+
+        q().push(["insertPreview", {
+            label: "360 Pano",
+            unit: props.unit,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: templates.threesixty,
+            onRender: function($element) {
+                $element.css({
+                    height: "300px",
+                    overflow: "auto"
+                });
+
+                /*----------  Inject Dependencies  ----------*/
+
+                // fulltilt
+                var fulltilt_js = document.createElement('script');
+                fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
+                document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
+
+                // pannellum
+                var pnlm_js = document.createElement('script');
+                pnlm_js.src = "https://cdn.pannellum.org/2.2/pannellum.js";
+                document.getElementsByTagName('head')[0].appendChild(pnlm_js);
+
+                var pnlm_css = document.createElement('link');
+                pnlm_css.href = "https://cdn.pannellum.org/2.2/pannellum.css";
+                pnlm_css.rel = "stylesheet";
+                document.getElementsByTagName('head')[0].appendChild(pnlm_css);
+
+                /*----------  Magic Loop  ----------*/
+                function threesixty() {
+                    // short circuit until the dependencies load
+                    if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
+                        requestAnimationFrame(threesixty);
+                        return;
+                    }
+
+                    // Instantiate panellum 
+                    var img_url = $element.find(".pnlm-img-url").text();
+                    var img_preview_url = $element.find(".preview-img-url").text();
+
+                    var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
+                        "type": "equirectangular",
+                        "panorama": img_url,
+                        "preview": img_preview_url,
+                        "author": "if you see me, something went wrong",
+                        "autoLoad": false
+                    });
+
+                    var title_text = $element.find(".title").text();
+                    $element.find(".pnlm-load-button p").first()
+                        .text(title_text)
+                        .css({
+                            "padding": "10px"
+                        });
+
+                    var sponsor_name = $element.find(".sponsor-name").text();
+                    $element.find(".pnlm-author-box").text("Presented by " + sponsor_name);
+
+                    if (typeof props.onRender === "function") props.onRender($element);
+
+                    /* DeviceMotion Magic */
+                    var manual = false;
+
+                    var deviceOrientation;
+
+                    new FULLTILT.getDeviceOrientation({
+                            'type': 'world'
+                        }).then(function(controller) {
+                            deviceOrientation = controller;
+                        })
+                        .catch(function(message) {
+                            console.error(message);
+                        });
+
+                    (function getDeviceOrientationData() {
+                        if (deviceOrientation) {
+                            var e = deviceOrientation.getScreenAdjustedEuler();
+
+                            // Switch to manual control if missing accelerometer
+                            if (!e.alpha || !e.beta || !e.gamma) manual = true;
+
+                            var view = {
+                                x: -e.alpha - e.gamma,
+                                y: e.beta - 90
+                            };
+
+                            if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
+                                pnlm.setYaw(view.x);
+                                pnlm.setPitch(view.y);
+                                pnlm.setUpdate();
+                            }
+                        }
+
+                        // Execute function on each browser animation frame
+                        if (!manual) requestAnimationFrame(getDeviceOrientationData);
+                    })();
+                }
+                threesixty();
+
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
+    /*--------  threesixty_huffpo  --------*/
+
+    function ThreeSixty_Pano_huffpo(props) {
+        /*
+            
+        props = {
+            location:  jquery selector
+            ad:      unit object
+
+            onRender: function
+        }
+            
+        */
+
+        q().push(["insertPreview", {
+            label: "360 Pano",
+            unit: props.ad,
+            location: props.location,
+            infoText: "",
+            infoButtonText: "",
+            template: templates.threesixty_huffpo,
+            onRender: function($element) {
+                $element.css({
+                    overflow: "auto"
+                });
+
+                /*----------  Inject Dependencies  ----------*/
+
+                // fulltilt
+                var fulltilt_js = document.createElement('script');
+                fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
+                document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
+
+                // pannellum
+                var pnlm_js = document.createElement('script');
+                pnlm_js.src = "https://cdn.pannellum.org/2.2/pannellum.js";
+                document.getElementsByTagName('head')[0].appendChild(pnlm_js);
+
+                var pnlm_css = document.createElement('link');
+                pnlm_css.href = "https://cdn.pannellum.org/2.2/pannellum.css";
+                pnlm_css.rel = "stylesheet";
+                document.getElementsByTagName('head')[0].appendChild(pnlm_css);
+
+                /*----------  Magic Loop  ----------*/
+                function threesixty() {
+                    // short circuit until the dependencies load
+                    if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
+                        requestAnimationFrame(threesixty);
+                        return;
+                    }
+
+                    // Instantiate panellum 
+                    var img_url = $element.find(".pnlm-img-url").text();
+                    var img_preview_url = $element.find(".preview-img-url").text();
+
+                    var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
+                        "type": "equirectangular",
+                        "panorama": img_url,
+                        "preview": img_preview_url,
+                        "autoLoad": false
+                    });
+
+                    var title_text = $element.find(".title").text();
+                    $element.find(".pnlm-load-button p").first().text(title_text);
+
+                    $element.find(".pnlm-load-button").click(function() {
+                        $element.find(".plr-pnlm-wrapper").css({
+                            width: "300px",
+                            height: "244px",
+                            overflow: "visible",
+                        });
+                        $element.find(".plr-learn-more").css({
+                            display: "block"
+                        });
+                    });
+
+                    // execute custom onRender stuff
+                    if (typeof props.onRender === "function") props.onRender($element);
+
+                    /* DeviceMotion Magic */
+                    var manual = false;
+
+                    var deviceOrientation;
+
+                    new FULLTILT.getDeviceOrientation({
+                            'type': 'world'
+                        }).then(function(controller) {
+                            deviceOrientation = controller;
+                        })
+                        .catch(function(message) {
+                            console.error(message);
+                        });
+
+                    (function getDeviceOrientationData() {
+                        if (deviceOrientation) {
+                            var e = deviceOrientation.getScreenAdjustedEuler();
+
+                            // Switch to manual control if missing accelerometer
+                            if (!e.alpha || !e.beta || !e.gamma) manual = true;
+
+                            var view = {
+                                x: -e.alpha - e.gamma,
+                                y: e.beta - 90
+                            };
+
+                            if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
+                                pnlm.setYaw(view.x);
+                                pnlm.setPitch(view.y);
+                                pnlm.setUpdate();
+                            }
+                        }
+
+                        // Execute function on each browser animation frame
+                        if (!manual) requestAnimationFrame(getDeviceOrientationData);
+                    })();
+                }
+                threesixty();
+            },
+            onFill: function(data) {},
+            onError: function(error) {}
+        }]);
+    }
+
 
     var total_twitter_carousels = 0;
 
     function TwitterCarousel(props) {
         /*
-        
-        props = {
-            location: jQuery selector
-            campaign_collection_unit: collection unit object
+            
+            props = {
+                location: jQuery selector
+                campaign_collection_unit: collection unit object
 
-            onRender: function to run on render
+                onRender: function to run on render
 
-            show_sponsor: true/false to show "Sposnored By XYZ"
-        }
+                show_sponsor: true/false to show "Sposnored By XYZ"
+            }
     
-        */
+            */
 
         /*----------  Inject Carousel Base CSS *ONCE*  ----------*/
         var card_width = 240;
@@ -862,7 +1151,9 @@
 
         var previews_array = [];
         for (var i = 1; i <= props.num_tweets; i++) {
-            previews_array.push({ name: "plr-tweet--" + i });
+            previews_array.push({
+                name: "plr-tweet--" + i
+            });
         }
 
         q().push(["insertPreviewCollection", {
@@ -872,7 +1163,7 @@
             previews: previews_array,
             infoText: "",
             infoButtonText: "",
-            template: twtr_crsl,
+            template: templates.twitter_carousel,
             onRender: function($element) {
                 if (props.show_sponsor === false) {
                     $element.find("h2").remove();
@@ -890,207 +1181,75 @@
         total_twitter_carousels++;
     }
 
-    /*----------  360  ----------*/
-
-    function ThreeSixty_Pano(props) {
+    function VerticalStack(props) {
         /*
-        
-        props = {
-            location:  jquery selector
-            unit:      unit object
-        }
-        
-        */
-
-        q().push(["insertPreview", {
-            label: "360 Pano",
-            unit: props.unit,
-            location: props.location,
-            infoText: "",
-            infoButtonText: "",
-            template: pano360,
-            onRender: function($element) {
-                $element.css({
-                    height: "300px",
-                    overflow: "auto"
-                });
-
-                /*----------  Inject Dependencies  ----------*/
-
-                // fulltilt
-                var fulltilt_js = document.createElement('script');
-                fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
-                document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
-
-                // pannellum
-                var pnlm_js = document.createElement('script');
-                pnlm_js.src = "https://cdn.pannellum.org/2.2/pannellum.js";
-                document.getElementsByTagName('head')[0].appendChild(pnlm_js);
-
-                var pnlm_css = document.createElement('link');
-                pnlm_css.href = "https://cdn.pannellum.org/2.2/pannellum.css";
-                pnlm_css.rel = "stylesheet";
-                document.getElementsByTagName('head')[0].appendChild(pnlm_css);
-
-                /*----------  Magic Loop  ----------*/
-                function threesixty() {
-                    // short circuit until the dependencies load
-                    if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
-                        requestAnimationFrame(threesixty);
-                        return;
-                    }
-
-                    // Instantiate panellum 
-                    var img_url = $element.find(".pnlm-img-url").text();
-                    var img_preview_url = $element.find(".preview-img-url").text();
-
-                    var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
-                        "type": "equirectangular",
-                        "panorama": img_url,
-                        "preview": img_preview_url,
-                        "author": "if you see me, something went wrong",
-                        "autoLoad": false
-                    });
-
-                    var title_text = $element.find(".title").text();
-                    $element.find(".pnlm-load-button p").first()
-                        .text(title_text)
-                        .css({
-                            "padding": "10px"
-                        });
-
-                    var sponsor_name = $element.find(".sponsor-name").text();
-                    $element.find(".pnlm-author-box").text("Presented by " + sponsor_name);
-
-                    /* DeviceMotion Magic */
-                    var manual = false;
-
-                    var deviceOrientation;
-
-                    new FULLTILT.getDeviceOrientation({
-                            'type': 'world'
-                        }).then(function(controller) {
-                            deviceOrientation = controller;
-                        })
-                        .catch(function(message) {
-                            console.error(message);
-                        });
-
-                    (function getDeviceOrientationData() {
-                        if (deviceOrientation) {
-                            var e = deviceOrientation.getScreenAdjustedEuler();
-
-                            // Switch to manual control if missing accelerometer
-                            if (!e.alpha || !e.beta || !e.gamma) manual = true;
-
-                            var view = {
-                                x: -e.alpha - e.gamma,
-                                y: e.beta - 90
-                            };
-
-                            if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
-                                pnlm.setYaw(view.x);
-                                pnlm.setPitch(view.y);
-                                pnlm.setUpdate();
-                            }
-                        }
-
-                        // Execute function on each browser animation frame
-                        if (!manual) requestAnimationFrame(getDeviceOrientationData);
-                    })();
+            props = {
+                location: jQuery Selector | where to put the ad
+                ad: Creative ID           | which creative
+                onRender: function        | onRender function
+                display: {                | Options related to how it looks
+                    thumb:    "circle"    |
+                           OR "square"    |     What the thumb should look like
+                           OR "none"      |
+                    summary: bool         |     Show / Hide the summary
                 }
-                threesixty();
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-    }
-
-    /*----------  Hero  ----------*/
-
-    function Hero(props) {
+            }
+    
+        */
         q().push(["insertPreview", {
             label: "Landing Page",
             unit: props.ad,
             location: props.location,
             infoText: "",
             infoButtonText: "",
-            template: imageHero,
+            template: templates.vstack,
             onRender: function($element) {
-                if (props.onRender) props.onRender($element);
+                /* THUMB OPTIONS */
+                var img = $element.find(".plr-img-wrapper").first();
+
+                // circle by default
+                switch (props.display.thumb) {
+                    case "rectangle":
+                        img.find("div").first().css({
+                            "border-radius": "0"
+                        });
+                        img.css({
+                            "width": "100%",
+                            "padding-bottom": "50%"
+                        });
+                        break;
+                    case "square":
+                        img.find("div").first().css({
+                            "border-radius": "0"
+                        });
+                        break;
+                    case "none":
+                        img.remove();
+                        break;
+                    default: // Circle by default
+                        break;
+                }
+
+                /* SUMMARY OPTIONS */
+                if (props.display.summary === false) {
+                    $element.find("p").first().remove();
+                }
+
+                if (typeof props.onRender !== "undefined") props.onRender();
             },
             onFill: function(data) {},
             onError: function(error) {}
         }]);
     }
-
-    function Blog(props) {
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: props.ad,
-            location: props.location,
-            infoText: "",
-            infoButtonText: "",
-            template: inbetween_article,
-            onRender: function($element) {
-                if (props.onRender) props.onRender($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-    }
-
-    function Infographic(props) {
-        q().push(["insertPreview", {
-            label: "Landing Page",
-            unit: props.ad,
-            location: props.location,
-            infoText: "",
-            infoButtonText: "",
-            template: infographic,
-            onRender: function($element) {
-                if (props.onRender) props.onRender($element);
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /*=======================================
     =            Insert Previews            =
     =======================================*/
 
-    /*==========  default  ==========*/
+    /*-------  load all  -------*/
 
-    if (location.hash === '') {
+    if (location.hash === "") {
         console.log("Load - All");
 
 
@@ -1099,7 +1258,7 @@
         q().push(function() {
             new VerticalStack({
                 location: ".article:eq(0) p:eq(2)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 display: {
                     thumb: "circle",
                     /* OR "square" OR "none" OR "rectangle" */
@@ -1111,7 +1270,7 @@
         q().push(function() {
             new HorizontalStack({
                 location: ".article:eq(0) p:eq(7)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 display: {
                     thumb: "rectangle",
                     /* OR "square" OR "none" OR "rectangle" */
@@ -1124,7 +1283,7 @@
         q().push(function() {
             new Hero({
                 location: ".article:eq(0) p:eq(12)",
-                ad: standard_ad
+                ad: ads.standard_ad
             });
         });
         /*----------  Carousel 1  ----------*/
@@ -1133,12 +1292,12 @@
             new Carousel({
                 location: ".article:eq(0) p:eq(13)",
                 ads: [
-                    standard_ad,
-                    c2,
-                    c3,
-                    c4,
-                    c5,
-                    c6
+                    ads.standard_ad,
+                    ads.c2,
+                    ads.c3,
+                    ads.c4,
+                    ads.c5,
+                    ads.c6
                 ]
             });
         });
@@ -1148,7 +1307,7 @@
         q().push(function() {
             new Blog({
                 location: ".article:last",
-                ad: standard_ad
+                ad: ads.standard_ad
             });
         });
 
@@ -1157,7 +1316,7 @@
         q().push(function() {
             new Hero({
                 location: ".article:last p:eq(3)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     ken_burns_effect($element);
                 }
@@ -1169,7 +1328,7 @@
         q().push(function() {
             new Blog({
                 location: ".article:last p:eq(10)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     scroll_to_expand($element);
                 }
@@ -1181,7 +1340,7 @@
         q().push(function() {
             new Blog({
                 location: ".article:last p:eq(15)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     tap_to_expand($element, 1);
                 }
@@ -1193,7 +1352,7 @@
         q().push(function() {
             new Infographic({
                 location: ".article:last p:eq(18)",
-                ad: inofgraphic_ad,
+                ad: ads.inofgraphic_ad,
                 onRender: function($element) {
                     tap_to_expand($element, 2);
                 }
@@ -1207,141 +1366,24 @@
                 location: ".bottom-anchor",
                 title: "Indy racing like you’ve never seen it before!",
                 ads: [
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad
                 ],
                 display: "hero" /* OR bigThumb OR noThumb */
             });
         });
     }
+    /*-------  #blog  -------*/
 
-
-
-    /*==========  #vstack  ==========*/
-    if (location.hash == "#vstack") {
-        console.log("Load - Vertical Stack");
-        //rectangle
-        q().push(function() {
-            new VerticalStack({
-                location: ".article:eq(0) p:eq(2)",
-                ad: standard_ad,
-                display: {
-                    thumb: "rectangle",
-                    summary: true
-                }
-            });
-        });
-        //circle
-        q().push(function() {
-            new VerticalStack({
-                location: ".article:eq(0) p:eq(8)",
-                ad: standard_ad,
-                display: {
-                    thumb: "circle",
-                    summary: true
-                }
-            });
-        });
-        //square
-        q().push(function() {
-            new VerticalStack({
-                location: ".article:eq(0) p:eq(13)",
-                ad: standard_ad,
-                display: {
-                    thumb: "square",
-                    summary: true
-                }
-            });
-        });
-        //none
-        q().push(function() {
-            new VerticalStack({
-                location: ".article:eq(0) p:eq(16)",
-                ad: standard_ad,
-                display: {
-                    thumb: "none",
-                    summary: true
-                }
-            });
-        });
-    }
-    /*==========  #hstack  ==========*/
-    if (location.hash == "#hstack") {
-        console.log("Load - Horizontal Stack");
-        //square
-        q().push(function() {
-            new HorizontalStack({
-                location: ".article:eq(0) p:eq(3)",
-                ad: standard_ad,
-                display: {
-                    thumb: "square",
-                    summary: true
-                }
-            });
-        });
-        //circle
-        q().push(function() {
-            new HorizontalStack({
-                location: ".article:eq(0) p:eq(8)",
-                ad: standard_ad,
-                display: {
-                    thumb: "circle",
-                    summary: true
-                }
-            });
-        });
-
-        //none
-        q().push(function() {
-            new HorizontalStack({
-                location: ".article:eq(0) p:eq(16)",
-                ad: standard_ad,
-                display: {
-                    thumb: "none",
-                    summary: true
-                }
-            });
-        });
-    }
-
-    /*==========  #hero  ==========*/
-    if (location.hash == "#hero") {
-        console.log("Load - Hero");
-
-        q().push(function() {
-            new Hero({
-                location: ".article:eq(0) p:eq(2)",
-                ad: standard_ad
-            });
-        });
-    }
-    /*==========  #carousel  ==========*/
-    if (location.hash == "#carousel") {
-        console.log("Load - Carousel");
-        q().push(function() {
-            new Carousel({
-                location: ".article:eq(0) p:eq(8)",
-                ads: [
-                    standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
-                ]
-            });
-        });
-    }
-    /*==========  #blog  ==========*/
-    if (location.hash == "#blog") {
+    if (location.hash === "#blog") {
         console.log("Load - Blog");
 
         //without image
         q().push(function() {
             new Blog({
                 location: ".article:eq(0) p:eq(2)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     $element.find(".plr-img-wrapper").remove();
                 }
@@ -1352,12 +1394,31 @@
         q().push(function() {
             new Blog({
                 location: ".article:last",
-                ad: standard_ad
+                ad: ads.standard_ad
             });
         });
     }
-    /*==========  #collection  ==========*/
-    if (location.hash == "#collection") {
+    /*-------  #carousel  -------*/
+
+    if (location.hash === "#carousel") {
+        console.log("Load - Carousel");
+        q().push(function() {
+            new Carousel({
+                location: ".article:eq(0) p:eq(8)",
+                ads: [
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad
+                ]
+            });
+        });
+    }
+    /*-------  #collection  -------*/
+
+    if (location.hash === "#collection") {
         console.log("Load - Collection");
 
         q().push(function() {
@@ -1365,9 +1426,9 @@
                 location: ".bottom-anchor",
                 title: "Indy racing like you’ve never seen it before!",
                 ads: [
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad
                 ],
                 display: "bigThumb" /* OR bigThumb OR noThumb */
             });
@@ -1377,37 +1438,24 @@
                 location: ".article:last",
                 title: "Indy racing like you’ve never seen it before!",
                 ads: [
-                    standard_ad,
-                    standard_ad,
-                    standard_ad
+                    ads.standard_ad,
+                    ads.standard_ad,
+                    ads.standard_ad
                 ],
                 display: "hero" /* OR bigThumb OR noThumb */
             });
         });
     }
-    /*==========  #interactive  ==========*/
-    if (location.hash == "#interactive") {
-        console.log("Load - Interactive");
+    /*-------  #expandable  -------*/
 
-        q().push(function() {
-            new Hero({
-                location: ".article p:eq(3)",
-                ad: standard_ad,
-                onRender: function($element) {
-                    ken_burns_effect($element);
-                },
-            });
-        });
-    }
-    /*==========  #expandable  ==========*/
-    if (location.hash == "#expandable") {
+    if (location.hash === "#expandable") {
         console.log("Load - Expandable");
 
         //scroll-to-expand
         q().push(function() {
             new Blog({
                 location: ".article p:eq(2)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     scroll_to_expand($element);
                 }
@@ -1418,7 +1466,7 @@
         q().push(function() {
             new Blog({
                 location: ".article p:eq(5)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     tap_to_expand($element, 1);
                 }
@@ -1429,21 +1477,82 @@
         q().push(function() {
             new Infographic({
                 location: ".article p:eq(8)",
-                ad: inofgraphic_ad,
+                ad: ads.inofgraphic_ad,
                 onRender: function($element) {
                     tap_to_expand($element, 2);
                 }
             });
         });
     }
-    /*==========  #video  ==========*/
-    if (location.hash == "#video") {
-        console.log("Load - Video");
+    /*-------  #hero  -------*/
 
+    if (location.hash === "#hero") {
+        console.log("Load - Hero");
+
+        q().push(function() {
+            new Hero({
+                location: ".article:eq(0) p:eq(2)",
+                ad: ads.standard_ad
+            });
+        });
     }
+    /*-------  #hstack  -------*/
 
-    /*==========  #lab  ==========*/
-    if (location.hash == "#lab") {
+    if (location.hash === "#hstack") {
+        console.log("Load - Horizontal Stack");
+        //square
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(3)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "square",
+                    summary: true
+                }
+            });
+        });
+        //circle
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(8)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "circle",
+                    summary: true
+                }
+            });
+        });
+
+        //none
+        q().push(function() {
+            new HorizontalStack({
+                location: ".article:eq(0) p:eq(16)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "none",
+                    summary: true
+                }
+            });
+        });
+    }
+    /*-------  #interactive  -------*/
+
+    if (location.hash === "#interactive") {
+        console.log("Load - Interactive");
+
+        q().push(function() {
+            new Hero({
+                location: ".article p:eq(3)",
+                ad: ads.standard_ad,
+                onRender: function($element) {
+                    ken_burns_effect($element);
+                },
+            });
+        });
+    }
+    /*-------  #lab  -------*/
+
+    if (location.hash === "#lab") {
         console.log("Load - Dexter's Lab");
 
         /*----------  Tweets Standard  ----------*/
@@ -1451,10 +1560,7 @@
         q().push(function() {
             new TwitterCarousel({
                 location: ".article:eq(0) p:eq(3)",
-                campaign_collection_unit: {
-                    "server": "mvdirect",
-                    "id": "collection_a478cfee2ce749c78c9d020ce0cce377"
-                },
+                campaign_collection_unit: ads.tweets,
                 num_tweets: 12,
                 show_sponsor: true
             });
@@ -1465,10 +1571,7 @@
         q().push(function() {
             new TwitterCarousel({
                 location: ".article:eq(0) p:eq(6)",
-                campaign_collection_unit: {
-                    "server": "mvdirect",
-                    "id": "collection_30d7536d97b54f37b2800ab8869fcc38"
-                },
+                campaign_collection_unit: ads.tweets_text_only,
                 num_tweets: 12,
                 show_sponsor: true
             });
@@ -1478,20 +1581,34 @@
         q().push(function() {
             new ThreeSixty_Pano({
                 location: ".article:first p:eq(10)",
-                unit: panorama_ad
+                unit: ads.panorama_ad
             });
         });
-
     }
 
-    /*==========  #pratik  ==========*/
-    if (location.hash == "#pratik") {
+    // RYOT
+
+    if (location.hash === "#ryot") {
+        q().push(function() {
+            new ThreeSixty_Pano_huffpo({
+                "location": ".article:first p:eq(10)",
+                "ad": {
+                    "server": "mvdirect",
+                    "id": "2913cfc8aabb4d20a1d052c07badb450"
+                }
+            });
+        });
+    }
+
+    /*-------  #pratik  -------*/
+
+    if (location.hash === "#pratik") {
         console.log("Load - helloPratik");
 
         q().push(function() {
             new VerticalStack({
                 location: ".article:eq(0) p:eq(2)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 display: {
                     thumb: "rectangle",
                     summary: true
@@ -1502,562 +1619,763 @@
         q().push(function() {
             new Hero({
                 location: ".article:eq(0) p:eq(8)",
-                ad: standard_ad
+                ad: ads.standard_ad
             });
 
             new Hero({
                 location: ".article:eq(0) p:eq(13)",
-                ad: standard_ad,
+                ad: ads.standard_ad,
                 onRender: function($element) {
                     ken_burns_effect($element);
                 }
             });
         });
     }
+    /*-------  #vstack  -------*/
 
+    if (location.hash === "#vstack") {
+        console.log("Load - Vertical Stack");
+        //rectangle
+        q().push(function() {
+            new VerticalStack({
+                location: ".article:eq(0) p:eq(2)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "rectangle",
+                    summary: true
+                }
+            });
+        });
+        //circle
+        q().push(function() {
+            new VerticalStack({
+                location: ".article:eq(0) p:eq(8)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "circle",
+                    summary: true
+                }
+            });
+        });
+        //square
+        q().push(function() {
+            new VerticalStack({
+                location: ".article:eq(0) p:eq(13)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "square",
+                    summary: true
+                }
+            });
+        });
+        //none
+        q().push(function() {
+            new VerticalStack({
+                location: ".article:eq(0) p:eq(16)",
+                ad: ads.standard_ad,
+                display: {
+                    thumb: "none",
+                    summary: true
+                }
+            });
+        });
+    }
 
+    /*=================================
+    =            InjectCSS            =
+    =================================*/
 
+    /*--------  from threesixty.scss  --------*/
 
-
-
-
-
-
-
-
-
+    q().push(["injectCSS", ["",
+        ".plr-360-huffpo {",
+        "  position: relative;",
+        "  width: 300px;",
+        "  height: 250px;",
+        "  margin: auto;",
+        "  border-top: 3px solid #2e7061;",
+        "  border-bottom: 3px solid #2e7061; }",
+        "  @media (max-width: 450px) {",
+        "    .plr-360-huffpo {",
+        "      margin-left: -10px; } }",
+        "  .plr-360-huffpo .plr-pnlm-wrapper {",
+        "    overflow: visible;",
+        "    width: 300px;",
+        "    height: 200px; }",
+        "  .plr-360-huffpo .pnlm-load-button {",
+        "    top: initial;",
+        "    bottom: -47px;",
+        "    left: initial;",
+        "    width: 300px;",
+        "    height: 50px;",
+        "    margin: initial;",
+        "    text-align: center;",
+        "    color: black;",
+        "    border-radius: 0;",
+        "    background-color: white; }",
+        "    .plr-360-huffpo .pnlm-load-button:hover {",
+        "      background-color: white; }",
+        "    .plr-360-huffpo .pnlm-load-button p {",
+        "      font-family: arial;",
+        "      font-size: 26px;",
+        "      font-weight: 600;",
+        "      padding: 0;",
+        "      color: #2e7061; }",
+        "  .plr-360-huffpo .plr-learn-more {",
+        "    line-height: 30px;",
+        "    position: absolute;",
+        "    right: 5px;",
+        "    bottom: 5px;",
+        "    display: none;",
+        "    height: 30px;",
+        "    margin: 0;",
+        "    padding: 0 10px;",
+        "    background-color: rgba(1, 117, 102, 0.7); }",
+        "    .plr-360-huffpo .plr-learn-more a {",
+        "      text-decoration: none;",
+        "      color: white; }",
+        "",
+        ""
+    ].join("\n"), "head"]);
 
     /*=================================
     =            Templates            =
     =================================*/
 
     /* jshint ignore:start */
-    function templates() {
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-fullw">
-          <a href="{{link}}" rel="nofollow">
-            <div class="plr-img-wrapper">
-              <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
-            </div>
-            <div class="plr-contents" style="">
-              <h1>{{title}}</h1>
-              <p>{{summary}}</p>
-            </div>
-            <div class="plr-sponsored">Sponsor Content</div>
-          </a>
-        </div>
-
-        */
-
-        imageHero = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, options, functionType = "function",
-                escapeExpression = this.escapeExpression,
-                helperMissing = helpers.helperMissing;
-            buffer += "<div class=\"plr-fullw\">\n  <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\" rel=\"nofollow\">\n    <div class=\"plr-img-wrapper\">\n      <div style=\"background: url('";
-            options = { hash: { 'width': (1500), 'height': (1000) }, data: data };
-            buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "') no-repeat center center;\"></div>\n    </div>\n    <div class=\"plr-contents\" style=\"\">\n      <h1>";
-            if (stack2 = helpers.title) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.title;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</h1>\n      <p>";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</p>\n    </div>\n    <div class=\"plr-sponsored\">Sponsor Content</div>\n  </a>\n</div>";
-            return buffer;
-        };
-
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-            <div class="plr-halfw">
-                <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
-                    <div class="plr-img-wrapper">
-                        <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
-                    </div>
-                    <div class="plr-sponsored-disclosure">sponsor content</div>
-                    <h2>{{title}}</h2>
-                    <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
-                </a>
-            </div>
-
-        */
-
-        verticalStack = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, functionType = "function",
-                escapeExpression = this.escapeExpression;
-            buffer += "<div class=\"plr-halfw\">\n            <a href=\"";
-            if (stack1 = helpers.link) {
-                stack1 = stack1.call(depth0, {
-                    hash: {},
-                    data: data
-                });
-            } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\" style=\"border-bottom: none;box-shadow: none;\">\n                <div class=\"plr-img-wrapper\">\n                    <div style=\"background: url('";
-            if (stack1 = helpers.getThumbHref) {
-                stack1 = stack1.call(depth0, {
-                    hash: {},
-                    data: data
-                });
-            } else {
-                stack1 = depth0.getThumbHref;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "') no-repeat center center;\"></div>\n                </div>\n                <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n                <h2>";
-            if (stack1 = helpers.title) {
-                stack1 = stack1.call(depth0, {
-                    hash: {},
-                    data: data
-                });
-            } else {
-                stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</h2>\n                <p style=\"color: #666666;margin-bottom: 0;\">";
-            if (stack1 = helpers.summary) {
-                stack1 = stack1.call(depth0, {
-                    hash: {},
-                    data: data
-                });
-            } else {
-                stack1 = depth0.summary;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</p>\n            </a>\n        </div>";
-            return buffer;
-        };
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-hstack">
-            <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
-                <div class="plr-sponsored-disclosure">sponsor content</div>
-                <h2>{{title}}</h2>
-                <div class="plr-img-wrapper">
-                    <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
-                </div>
-
-                <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
-            </a>
-        </div>
-
-        */
-
-        horizontalStack = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, options, functionType = "function",
-                escapeExpression = this.escapeExpression,
-                helperMissing = helpers.helperMissing;
-            buffer += "        <div class=\"plr-hstack\">\n                        <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\" style=\"border-bottom: none;box-shadow: none;\">\n                                                      <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n                            <h2>";
-            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</h2>\n                            <div class=\"plr-img-wrapper\">\n                                <div style=\"background: url('";
-            options = { hash: { 'width': (1500), 'height': (1000) }, data: data };
-            buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "') no-repeat center center;\"></div>\n                            </div>\n\n                            <p style=\"color: #666666;margin-bottom: 0;\">";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</p>\n                        </a>\n                    </div>";
-            return buffer;
-        };
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-btwn-art">
-            <div class="topic">sponsored</div>
-            <a href="{{link}}"><h1>{{title}}</h1></a>
-            <div class="plr-sponsor">Presented by <b>{{sponsor.name}}</b></div>
-            <div class="plr-img-wrapper">
-                <div style="background: url('{{getThumbHref}}') no-repeat center center;"></div>
-            </div>
-            <p>{{summary}}</p>
-            <a href="{{link}}" style="text-decoration: underline;">
-                <p>Continue Reading...</p>
-            </a>
-        </div>
-
-        */
-
-        inbetween_article = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, functionType = "function",
-                escapeExpression = this.escapeExpression;
-            buffer += "<div class=\"plr-btwn-art\">\n  <div class=\"topic\">sponsored</div>\n  <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\"><h1>";
-            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</h1></a>\n    <div class=\"plr-sponsor\">Presented by <b>" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</b></div>\n    <div class=\"plr-img-wrapper\">\n        <div style=\"background: url('";
-            if (stack2 = helpers.getThumbHref) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.getThumbHref;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "') no-repeat center center;\"></div>\n    </div>\n    <p>";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</p>\n    <a href=\"";
-            if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.link;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "\" style=\"text-decoration: underline;\">\n        <p>Continue Reading...</p>\n    </a>\n</div>";
-            return buffer;
-        };
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-collection">
-            <a href="{{link}}">
-                <div class="plr-img-wrapper">
-                    <div style="background: url('{{getThumbHref}}') no-repeat center center;"></div>
-                </div>
-                <h2>{{title}}</h2>
-            </a>
-            <p>{{summary}}</p>
-          <div class="sponsor-logo-href" style="display:none;">{{sponsor.logo.href}}</div>
-        </div>
-
-        */
-
-        collection_item = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, functionType = "function",
-                escapeExpression = this.escapeExpression;
-            buffer += "<div class=\"plr-collection\">\n    <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
-            if (stack1 = helpers.getThumbHref) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.getThumbHref;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "') no-repeat center center;\"></div>\n        </div>\n        <h2>";
-            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</h2>\n    </a>\n    <p>";
-            if (stack1 = helpers.summary) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.summary;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</p>\n    <div class=\"sponsor-logo-href\" style=\"display:none;\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n</div>";
-            return buffer;
-        };
-
-
-
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-crsl-item">
-            <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
-                <div class="plr-img-wrapper">
-                    <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
-                </div>
-                <div class="plr-sponsored-disclosure">sponsor content</div>
-                <h2>{{title}}</h2>
-                <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
-            </a>
-        </div>
-
-        */
-
-        carousel_item = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, options, functionType = "function",
-                escapeExpression = this.escapeExpression,
-                helperMissing = helpers.helperMissing;
-            buffer += "<div class=\"plr-crsl-item\">\n    <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\" style=\"border-bottom: none;box-shadow: none;\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
-            options = { hash: { 'width': (1500), 'height': (1000) }, data: data };
-            buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "') no-repeat center center;\"></div>\n        </div>\n        <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n        <h2>";
-            if (stack2 = helpers.title) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.title;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</h2>\n        <p style=\"color: #666666;margin-bottom: 0;\">";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</p>\n    </a>\n</div>";
-            return buffer;
-        };
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-twtr-crsl">
-            <h1>#StuporTuesday</h1>
-            <div class="plr-twtr-crsl-outer">
-                <div class="plr-twtr-crsl-inner">
-                    {{#each creatives}}
-                    <div class="plr-twtr-crsl-slot plr-tweet--{{@index}}">
-                        <blockquote class="twitter-tweet" data-lang="en">
-                            <a href="{{link}}"></a>
-                        </blockquote>
-                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-                    </div>
-                    <div class="plr-sponsor-name" style="display:none">{{sponsor.name}}</div>
-                    {{/each}}
-                </div>
-            </div>
-            <h2>Sponsored By Our Sponsors</h2>
-        </div>
-
-        */
-
-        twtr_crsl = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, functionType = "function",
-                escapeExpression = this.escapeExpression,
-                self = this;
-
-            function program1(depth0, data) {
+    function populate_templates() {
+        templates = {
+            threesixty_huffpo: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
                 var buffer = "",
-                    stack1, stack2;
-                buffer += "\n            <div class=\"plr-twtr-crsl-slot plr-tweet--" + escapeExpression(((stack1 = ((stack1 = data), stack1 == null || stack1 === false ? stack1 : stack1.index)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "\">\n                <blockquote class=\"twitter-tweet\" data-lang=\"en\">\n                    <a href=\"";
-                if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
+                    stack1, stack2, functionType = "function",
+                    escapeExpression = this.escapeExpression;
+
+
+                buffer += "<div class=\"plr-360-huffpo\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" +
+                    escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</div>\n        <div class=\"sponsor-logo\">" +
+                    escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</div>\n        <div class=\"link\">";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
                     stack2 = depth0.link;
                     stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
                 }
-                buffer += escapeExpression(stack2) + "\"></a>\n                </blockquote>\n                <script async src=\"//platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>\n            </div>\n            <div class=\"plr-sponsor-name\" style=\"display:none\">" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n            ";
+                buffer += escapeExpression(stack2) +
+                    "</div>\n        <div class=\"title\">";
+                if (stack2 = helpers.title) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.title;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</div>\n        <div class=\"summary\">";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</div>\n        <div class=\"pnlm-img-url\">" +
+                    escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1.panorama_img_url)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</div>\n        <div class=\"preview-img-url\">";
+                if (stack2 = helpers.getThumbHref) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.getThumbHref;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</div>\n    </div>\n    <p class=\"plr-learn-more\">\n        <a href=\"";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.link;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "\">Learn More</a>\n    </p>\n</div>";
                 return buffer;
-            }
-            buffer += "<div class=\"plr-twtr-crsl\">\n    <h1>#StuporTuesday</h1>\n    <div class=\"plr-twtr-crsl-outer\">\n        <div class=\"plr-twtr-crsl-inner\">\n            ";
-            stack1 = helpers.each.call(depth0, depth0.creatives, { hash: {}, inverse: self.noop, fn: self.program(1, program1, data), data: data });
-            if (stack1 || stack1 === 0) { buffer += stack1; }
-            buffer += "\n        </div>\n    </div>\n    <h2>Sponsored By Our Sponsors</h2>\n</div>";
-            return buffer;
-        };
+            },
+            blog: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, functionType = "function",
+                    escapeExpression = this.escapeExpression;
 
 
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-btwn-art">
-            <div class="topic">sponsored</div>
-            <a href="{{link}}"><h1>{{title}}</h1></a>
-            <div class="plr-sponsor">Presented by <b>{{sponsor.name}}</b></div>
-            <img src="{{getThumbHref width=425}}" style="width:100%">
-            <p>{{summary}}</p>
-            <a href="{{link}}" style="text-decoration: underline;">
-                <p>Learn More...</p>
-            </a>
-        </div>
-
-        */
-
-        infographic = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, options, functionType = "function",
-                escapeExpression = this.escapeExpression,
-                helperMissing = helpers.helperMissing;
-            buffer += "<div class=\"plr-btwn-art\">\n    <div class=\"topic\">sponsored</div>\n    <a href=\"";
-            if (stack1 = helpers.link) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.link;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "\"><h1>";
-            if (stack1 = helpers.title) { stack1 = stack1.call(depth0, { hash: {}, data: data }); } else {
-                stack1 = depth0.title;
-                stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
-            }
-            buffer += escapeExpression(stack1) + "</h1></a>\n    <div class=\"plr-sponsor\">Presented by <b>" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</b></div>\n    <img src=\"";
-            options = { hash: { 'width': (425) }, data: data };
-            buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) + "\" style=\"width:100%\">\n    <p>";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</p>\n    <a href=\"";
-            if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.link;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "\" style=\"text-decoration: underline;\">\n        <p>Learn More...</p>\n    </a>\n</div>";
-            return buffer;
-        };
-
-
-
-
-        /*
-
-           This function represents a pre-compiled Handlebars template. Pre-compiled
-           templates are not pretty, but they provide a very significant performance
-           boost, especially on mobile devices. For more information, see
-           http://handlebarsjs.com/precompilation.html.
-
-           Note that this code has been generated from the following markup:
-
-        <div class="plr-360">
-            <div class="plr-pnlm-wrapper"></div>
-            <div class="plr-ad-info" style="display:none;">
-                <div class="sponsor-name">{{sponsor.name}}</div>
-                <div class="sponsor-logo">{{sponsor.logo.href}}</div>
-                <div class="link">{{link}}</div>
-                <div class="title">{{title}}</div>
-                <div class="summary">{{summary}}</div>
-                <div class="pnlm-img-url">{{custom.panorama_img_url}}</div>
-                <div class="preview-img-url">{{getThumbHref}}</div>
-            </div>
-        </div>
-
-        */
-
-        pano360 = function(Handlebars, depth0, helpers, partials, data) {
-            this.compilerInfo = [4, '>= 1.0.0'];
-            helpers = this.merge(helpers, Handlebars.helpers);
-            data = data || {};
-            var buffer = "",
-                stack1, stack2, functionType = "function",
-                escapeExpression = this.escapeExpression;
+                buffer += "<div class=\"plr-btwn-art\">\n    <div class=\"topic\">sponsored</div>\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\"><h1>";
+                if (stack1 = helpers.title) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.title;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "</h1></a>\n    <div class=\"plr-sponsor\">Presented by <b>" +
+                    escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</b></div>\n    <div class=\"plr-img-wrapper\">\n        <div style=\"background: url('";
+                if (stack2 = helpers.getThumbHref) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.getThumbHref;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "') no-repeat center center;\"></div>\n    </div>\n    <p>";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    <a href=\"";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.link;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "\" style=\"text-decoration: underline;\">\n        <p>Continue Reading...</p>\n    </a>\n</div>";
+                return buffer;
+            },
+            carousel_item: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, options, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    helperMissing = helpers.helperMissing;
 
 
-            buffer += "<div class=\"plr-360\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"sponsor-logo\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"link\">";
-            if (stack2 = helpers.link) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.link;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</div>\n        <div class=\"title\">";
-            if (stack2 = helpers.title) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.title;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</div>\n        <div class=\"summary\">";
-            if (stack2 = helpers.summary) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.summary;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</div>\n        <div class=\"pnlm-img-url\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1.panorama_img_url)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"preview-img-url\">";
-            if (stack2 = helpers.getThumbHref) { stack2 = stack2.call(depth0, { hash: {}, data: data }); } else {
-                stack2 = depth0.getThumbHref;
-                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-            }
-            buffer += escapeExpression(stack2) + "</div>\n    </div>\n</div>";
-            return buffer;
+                buffer += "<div class=\"plr-crsl-item\">\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\" style=\"border-bottom: none;box-shadow: none;\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
+                options = {
+                    hash: {
+                        'width': (1500),
+                        'height': (1000)
+                    },
+                    data: data
+                };
+                buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+                    "') no-repeat center center;\"></div>\n        </div>\n        <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n        <h2>";
+                if (stack2 = helpers.title) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.title;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</h2>\n        <p style=\"color: #666666;margin-bottom: 0;\">";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    </a>\n</div>";
+                return buffer;
+            },
+            collection_item: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, functionType = "function",
+                    escapeExpression = this.escapeExpression;
+
+
+                buffer += "<div class=\"plr-collection\">\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
+                if (stack1 = helpers.getThumbHref) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.getThumbHref;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "') no-repeat center center;\"></div>\n        </div>\n        <h2>";
+                if (stack1 = helpers.title) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.title;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "</h2>\n    </a>\n    <p>";
+                if (stack1 = helpers.summary) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.summary;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "</p>\n  <div class=\"sponsor-logo-href\" style=\"display:none;\">" +
+                    escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</div>\n</div>";
+                return buffer;
+            },
+            hero: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, options, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    helperMissing = helpers.helperMissing;
+
+
+                buffer += "<div class=\"plr-fullw\">\n  <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\" rel=\"nofollow\">\n    <div class=\"plr-img-wrapper\">\n      <div style=\"background: url('";
+                options = {
+                    hash: {
+                        'width': (1500),
+                        'height': (1000)
+                    },
+                    data: data
+                };
+                buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+                    "') no-repeat center center;\"></div>\n    </div>\n    <div class=\"plr-contents\" style=\"\">\n      <h1>";
+                if (stack2 = helpers.title) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.title;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</h1>\n      <p>";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    </div>\n    <div class=\"plr-sponsored\">Sponsor Content</div>\n  </a>\n</div>";
+                return buffer;
+            },
+            hstack: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, options, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    helperMissing = helpers.helperMissing;
+
+
+                buffer += "<div class=\"plr-hstack\">\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\" style=\"border-bottom: none;box-shadow: none;\">\n        <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n        <h2>";
+                if (stack1 = helpers.title) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.title;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "</h2>\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
+                options = {
+                    hash: {
+                        'width': (1500),
+                        'height': (1000)
+                    },
+                    data: data
+                };
+                buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+                    "') no-repeat center center;\"></div>\n        </div>\n\n        <p style=\"color: #666666;margin-bottom: 0;\">";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    </a>\n</div>";
+                return buffer;
+            },
+            infographic: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, options, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    helperMissing = helpers.helperMissing;
+
+
+                buffer += "<div class=\"plr-btwn-art\">\n    <div class=\"topic\">sponsored</div>\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\"><h1>";
+                if (stack1 = helpers.title) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.title;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "</h1></a>\n    <div class=\"plr-sponsor\">Presented by <b>" +
+                    escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                    "</b></div>\n    <img src=\"";
+                options = {
+                    hash: {
+                        'width': (425)
+                    },
+                    data: data
+                };
+                buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+                    "\" style=\"width:100%\">\n    <p>";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    <a href=\"";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.link;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "\" style=\"text-decoration: underline;\">\n        <p>Learn More...</p>\n    </a>\n</div>";
+                return buffer;
+            },
+            /*
+
+   This function represents a pre-compiled Handlebars template. Pre-compiled
+   templates are not pretty, but they provide a very significant performance
+   boost, especially on mobile devices. For more information, see
+   http://handlebarsjs.com/precompilation.html.
+
+   Note that this code has been generated from the following markup:
+
+<div class="plr-360">
+    <div class="plr-pnlm-wrapper"></div>
+    <div class="plr-ad-info" style="display:none;">
+        <div class="sponsor-name">{{sponsor.name}}</div>
+        <div class="sponsor-logo">{{sponsor.logo.href}}</div>
+        <div class="link">{{link}}</div>
+        <div class="title">{{title}}</div>
+        <div class="summary">{{summary}}</div>
+        <div class="pnlm-img-url">{{custom.panorama_img_url}}</div>
+        <div class="preview-img-url">{{getThumbHref}}</div>
+    </div>
+    <p class='plr-learn-more' style='
+        display: none;
+        margin: 0;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 10px;
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.3);
+    '>
+        <a href={{link}}>Learn More</a>
+    </p>
+</div>
+
+*/
+
+            threesixty: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, functionType = "function",
+                    escapeExpression = this.escapeExpression;
+                buffer += "<div class=\"plr-360\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"sponsor-logo\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"link\">";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.link;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"title\">";
+                if (stack2 = helpers.title) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.title;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"summary\">";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"pnlm-img-url\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1.panorama_img_url)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"preview-img-url\">";
+                if (stack2 = helpers.getThumbHref) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.getThumbHref;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) + "</div>\n    </div>\n    <p class='plr-learn-more'>\n        <a style='text-decoration:none;' href=\"";
+                if (stack2 = helpers.link) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.link;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) + "\">Learn More</a>\n    </p>\n</div>";
+                return buffer;
+            },
+            twitter_carousel: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    self = this;
+
+                function program1(depth0, data) {
+
+                    var buffer = "",
+                        stack1, stack2;
+                    buffer += "\n            <div class=\"plr-twtr-crsl-slot plr-tweet--" +
+                        escapeExpression(((stack1 = ((stack1 = data), stack1 == null || stack1 === false ? stack1 : stack1.index)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                        "\">\n                <blockquote class=\"twitter-tweet\" data-lang=\"en\">\n                    <a href=\"";
+                    if (stack2 = helpers.link) {
+                        stack2 = stack2.call(depth0, {
+                            hash: {},
+                            data: data
+                        });
+                    } else {
+                        stack2 = depth0.link;
+                        stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                    }
+                    buffer += escapeExpression(stack2) +
+                        "\"></a>\n                </blockquote>\n                <script async src=\"//platform.twitter.com/widgets.js\" charset=\"utf-8\"></script>\n            </div>\n            <div class=\"plr-sponsor-name\" style=\"display:none\">" +
+                        escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                        "</div>\n            ";
+                    return buffer;
+                }
+
+                buffer += "<div class=\"plr-twtr-crsl\">\n    <h1>#StuporTuesday</h1>\n    <div class=\"plr-twtr-crsl-outer\">\n        <div class=\"plr-twtr-crsl-inner\">\n            ";
+                stack1 = helpers.each.call(depth0, depth0.creatives, {
+                    hash: {},
+                    inverse: self.noop,
+                    fn: self.program(1, program1, data),
+                    data: data
+                });
+                if (stack1 || stack1 === 0) {
+                    buffer += stack1;
+                }
+                buffer += "\n        </div>\n    </div>\n    <h2>Sponsored By Our Sponsors</h2>\n</div>";
+                return buffer;
+            },
+            vstack: function(Handlebars, depth0, helpers, partials, data) {
+                this.compilerInfo = [4, '>= 1.0.0'];
+                helpers = this.merge(helpers, Handlebars.helpers);
+                data = data || {};
+                var buffer = "",
+                    stack1, stack2, options, functionType = "function",
+                    escapeExpression = this.escapeExpression,
+                    helperMissing = helpers.helperMissing;
+
+
+                buffer += "<div class=\"plr-halfw\">\n    <a href=\"";
+                if (stack1 = helpers.link) {
+                    stack1 = stack1.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack1 = depth0.link;
+                    stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+                }
+                buffer += escapeExpression(stack1) +
+                    "\" style=\"border-bottom: none;box-shadow: none;\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
+                options = {
+                    hash: {
+                        'width': (1500),
+                        'height': (1000)
+                    },
+                    data: data
+                };
+                buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+                    "') no-repeat center center;\"></div>\n        </div>\n        <div class=\"plr-sponsored-disclosure\">sponsor content</div>\n        <h2>";
+                if (stack2 = helpers.title) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.title;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</h2>\n        <p style=\"color: #666666;margin-bottom: 0;\">";
+                if (stack2 = helpers.summary) {
+                    stack2 = stack2.call(depth0, {
+                        hash: {},
+                        data: data
+                    });
+                } else {
+                    stack2 = depth0.summary;
+                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+                }
+                buffer += escapeExpression(stack2) +
+                    "</p>\n    </a>\n</div>";
+                return buffer;
+            },
         }
-
-
-
-
-
-
-
-
     }
     /* jshint ignore:end */
 })();
