@@ -949,129 +949,6 @@
         }]);
     }
 
-    /*--------  threesixty_huffpo  --------*/
-
-    function ThreeSixty_Pano_huffpo(props) {
-        /*
-            
-        props = {
-            location:  jquery selector
-            ad:      unit object
-
-            onRender: function
-        }
-            
-        */
-
-        q().push(["insertPreview", {
-            label: "360 Pano",
-            unit: props.ad,
-            location: props.location,
-            infoText: "",
-            infoButtonText: "",
-            template: templates.threesixty_huffpo,
-            onRender: function($element) {
-                $element.css({
-                    overflow: "auto"
-                });
-
-                /*----------  Inject Dependencies  ----------*/
-
-                // fulltilt
-                var fulltilt_js = document.createElement('script');
-                fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
-                document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
-
-                // pannellum
-                var pnlm_js = document.createElement('script');
-                pnlm_js.src = "https://cdn.pannellum.org/2.2/pannellum.js";
-                document.getElementsByTagName('head')[0].appendChild(pnlm_js);
-
-                var pnlm_css = document.createElement('link');
-                pnlm_css.href = "https://cdn.pannellum.org/2.2/pannellum.css";
-                pnlm_css.rel = "stylesheet";
-                document.getElementsByTagName('head')[0].appendChild(pnlm_css);
-
-                /*----------  Magic Loop  ----------*/
-                function threesixty() {
-                    // short circuit until the dependencies load
-                    if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
-                        requestAnimationFrame(threesixty);
-                        return;
-                    }
-
-                    // Instantiate panellum 
-                    var img_url = $element.find(".pnlm-img-url").text();
-                    var img_preview_url = $element.find(".preview-img-url").text();
-
-                    var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
-                        "type": "equirectangular",
-                        "panorama": img_url,
-                        "preview": img_preview_url,
-                        "autoLoad": false
-                    });
-
-                    var title_text = $element.find(".title").text();
-                    $element.find(".pnlm-load-button p").first().text(title_text);
-
-                    $element.find(".pnlm-load-button").click(function() {
-                        $element.find(".plr-pnlm-wrapper").css({
-                            width: "300px",
-                            height: "244px",
-                            overflow: "visible",
-                        });
-                        $element.find(".plr-learn-more").css({
-                            display: "block"
-                        });
-                    });
-
-                    // execute custom onRender stuff
-                    if (typeof props.onRender === "function") props.onRender($element);
-
-                    /* DeviceMotion Magic */
-                    var manual = false;
-
-                    var deviceOrientation;
-
-                    new FULLTILT.getDeviceOrientation({
-                            'type': 'world'
-                        }).then(function(controller) {
-                            deviceOrientation = controller;
-                        })
-                        .catch(function(message) {
-                            console.error(message);
-                        });
-
-                    (function getDeviceOrientationData() {
-                        if (deviceOrientation) {
-                            var e = deviceOrientation.getScreenAdjustedEuler();
-
-                            // Switch to manual control if missing accelerometer
-                            if (!e.alpha || !e.beta || !e.gamma) manual = true;
-
-                            var view = {
-                                x: -e.alpha - e.gamma,
-                                y: e.beta - 90
-                            };
-
-                            if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
-                                pnlm.setYaw(view.x);
-                                pnlm.setPitch(view.y);
-                                pnlm.setUpdate();
-                            }
-                        }
-
-                        // Execute function on each browser animation frame
-                        if (!manual) requestAnimationFrame(getDeviceOrientationData);
-                    })();
-                }
-                threesixty();
-            },
-            onFill: function(data) {},
-            onError: function(error) {}
-        }]);
-    }
-
 
     var total_twitter_carousels = 0;
 
@@ -1589,14 +1466,296 @@
     // RYOT
 
     if (location.hash === "#ryot") {
-        q().push(function() {
-            new ThreeSixty_Pano_huffpo({
-                "location": ".article:first p:eq(10)",
-                "ad": {
-                    "server": "mvdirect",
-                    "id": "2913cfc8aabb4d20a1d052c07badb450"
-                }
-            });
+        /* jshint ignore: start*/
+        templates.threesixty_huffpo = function(Handlebars, depth0, helpers, partials, data) {
+            this.compilerInfo = [4, '>= 1.0.0'];
+            helpers = this.merge(helpers, Handlebars.helpers);
+            data = data || {};
+            var buffer = "",
+                stack1, stack2, functionType = "function",
+                escapeExpression = this.escapeExpression;
+
+
+            buffer += "<div class=\"plr-360-huffpo\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" +
+                escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                "</div>\n        <div class=\"sponsor-logo\">" +
+                escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                "</div>\n        <div class=\"link\">";
+            if (stack2 = helpers.link) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.link;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "</div>\n        <div class=\"title\">";
+            if (stack2 = helpers.title) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.title;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "</div>\n        <div class=\"summary\">";
+            if (stack2 = helpers.summary) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.summary;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "</div>\n        <div class=\"pnlm-img-url\">" +
+                escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1.panorama_img_url)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+                "</div>\n        <div class=\"preview-img-url\">";
+            if (stack2 = helpers.getThumbHref) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.getThumbHref;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "</div>\n    </div>\n    <h2>";
+            if (stack2 = helpers.title) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.title;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "</h2>\n    <p class=\"plr-learn-more\">\n        <a href=\"";
+            if (stack2 = helpers.link) {
+                stack2 = stack2.call(depth0, {
+                    hash: {},
+                    data: data
+                });
+            } else {
+                stack2 = depth0.link;
+                stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+            }
+            buffer += escapeExpression(stack2) +
+                "\">Learn More</a>\n    </p>\n</div>";
+            return buffer;
+        }
+
+        /* jshint ignore: end*/
+
+        /*--------  threesixty_huffpo  --------*/
+
+        function ThreeSixty_Pano_huffpo(props) {
+            /*
+                
+            props = {
+                location:  jquery selector
+                ad:      unit object
+
+                onRender: function
+            }
+                
+            */
+
+            q().push(["insertPreview", {
+                label: "360 Pano",
+                unit: props.ad,
+                location: props.location,
+                infoText: "",
+                infoButtonText: "",
+                template: templates.threesixty_huffpo,
+                onRender: function($element) {
+                    $element.css({
+                        overflow: "auto"
+                    });
+
+                    /*----------  Inject Dependencies  ----------*/
+
+                    // fulltilt
+                    var fulltilt_js = document.createElement('script');
+                    fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
+                    document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
+
+                    // pannellum
+                    var pnlm_js = document.createElement('script');
+                    pnlm_js.src = "https://cdn.pannellum.org/2.2/pannellum.js";
+                    document.getElementsByTagName('head')[0].appendChild(pnlm_js);
+
+                    var pnlm_css = document.createElement('link');
+                    pnlm_css.href = "https://cdn.pannellum.org/2.2/pannellum.css";
+                    pnlm_css.rel = "stylesheet";
+                    document.getElementsByTagName('head')[0].appendChild(pnlm_css);
+
+                    /*----------  Magic Loop  ----------*/
+                    function threesixty() {
+                        // short circuit until the dependencies load
+                        if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
+                            requestAnimationFrame(threesixty);
+                            return;
+                        }
+
+                        // Instantiate panellum 
+                        var img_url = $element.find(".pnlm-img-url").text();
+                        var img_preview_url = $element.find(".preview-img-url").text();
+
+                        var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
+                            "type": "equirectangular",
+                            "panorama": img_url,
+                            "preview": img_preview_url,
+                            "autoLoad": false
+                        });
+
+                        var title_text = $element.find(".title").text();
+                        $element.find(".pnlm-load-button p").first().text("Click to load 360 Panorama");
+
+                        $element.find(".pnlm-load-button").click(function() {
+                            $element.find("h2").remove();
+                            $element.find(".plr-learn-more").css({
+                                display: "block"
+                            });
+                        });
+
+                        // execute custom onRender stuff
+                        if (typeof props.onRender === "function") props.onRender($element);
+
+                        /* DeviceMotion Magic */
+                        var manual = false;
+
+                        var deviceOrientation;
+
+                        new FULLTILT.getDeviceOrientation({
+                                'type': 'world'
+                            }).then(function(controller) {
+                                deviceOrientation = controller;
+                            })
+                            .catch(function(message) {
+                                console.error(message);
+                            });
+
+                        (function getDeviceOrientationData() {
+                            if (deviceOrientation) {
+                                var e = deviceOrientation.getScreenAdjustedEuler();
+
+                                // Switch to manual control if missing accelerometer
+                                if (!e.alpha || !e.beta || !e.gamma) manual = true;
+
+                                var view = {
+                                    x: -e.alpha - e.gamma,
+                                    y: e.beta - 90
+                                };
+
+                                if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
+                                    pnlm.setYaw(view.x);
+                                    pnlm.setPitch(view.y);
+                                    pnlm.setUpdate();
+                                }
+                            }
+
+                            // Execute function on each browser animation frame
+                            if (!manual) requestAnimationFrame(getDeviceOrientationData);
+                        })();
+                    }
+                    threesixty();
+                },
+                onFill: function(data) {},
+                onError: function(error) {}
+            }]);
+        }
+
+
+        /*==================================
+        =            Inject CSS            =
+        ==================================*/
+
+
+        /*--------  from threesixty.scss  --------*/
+
+        q().push(["injectCSS", ["",
+            ".plr-360-huffpo {",
+            "  position: relative;",
+            "  width: 100%;",
+            "  max-width: 500px;",
+            "  height: 250px;",
+            "  margin: auto;",
+            "  border-top: 3px solid #2e7061;",
+            "  border-bottom: 3px solid #2e7061; }",
+            "  @media (max-width: 320px) {",
+            "    .plr-360-huffpo {",
+            "      width: 300px;",
+            "      margin: -10px; } }",
+            "  .plr-360-huffpo .plr-pnlm-wrapper {",
+            "    overflow: visible; }",
+            "  .plr-360-huffpo h2 {",
+            "    font-family: Arial;",
+            "    font-weight: bold;",
+            "    position: absolute;",
+            "    bottom: 0;",
+            "    left: 0;",
+            "    width: 100%;",
+            "    margin: 0;",
+            "    padding: 5px 0;",
+            "    text-align: center;",
+            "    text-transform: none;",
+            "    color: #2e7061;",
+            "    background: white; }",
+            "  .plr-360-huffpo .pnlm-load-button {",
+            "    width: 100%;",
+            "    height: 100%;",
+            "    right: 0;",
+            "    top: 0;",
+            "    left: initial;",
+            "    background-color: transparent;",
+            "    border-radius: 0;",
+            "    margin: 0; }",
+            "    .plr-360-huffpo .pnlm-load-button:hover {",
+            "      background-color: transparent; }",
+            "    .plr-360-huffpo .pnlm-load-button p {",
+            "      display: block;",
+            "      margin: 0;",
+            "      position: absolute;",
+            "      right: 10px;",
+            "      top: 10px;",
+            "      background-color: rgba(46, 112, 97, 0.6);",
+            "      padding: 0 10px; }",
+            "  .plr-360-huffpo .plr-learn-more {",
+            "    line-height: 30px;",
+            "    position: absolute;",
+            "    right: 5px;",
+            "    bottom: 5px;",
+            "    display: none;",
+            "    height: 30px;",
+            "    margin: 0;",
+            "    padding: 0 10px;",
+            "    background-color: rgba(1, 117, 102, 0.7); }",
+            "    .plr-360-huffpo .plr-learn-more a {",
+            "      text-decoration: none;",
+            "      color: white; }",
+            "",
+            ""
+        ].join("\n"), "head"]);
+
+        /*=======================================
+        =            Insert Previews            =
+        =======================================*/
+
+
+        new ThreeSixty_Pano_huffpo({
+            "location": ".article:first p:eq(10)",
+            "ad": {
+                "server": "mvdirect",
+                "id": "2913cfc8aabb4d20a1d052c07badb450"
+            }
         });
     }
 
@@ -1680,63 +1839,6 @@
             });
         });
     }
-
-    /*=================================
-    =            InjectCSS            =
-    =================================*/
-
-    /*--------  from threesixty.scss  --------*/
-
-    q().push(["injectCSS", ["",
-        ".plr-360-huffpo {",
-        "  position: relative;",
-        "  width: 300px;",
-        "  height: 250px;",
-        "  margin: auto;",
-        "  border-top: 3px solid #2e7061;",
-        "  border-bottom: 3px solid #2e7061; }",
-        "  @media (max-width: 450px) {",
-        "    .plr-360-huffpo {",
-        "      margin-left: -10px; } }",
-        "  .plr-360-huffpo .plr-pnlm-wrapper {",
-        "    overflow: visible;",
-        "    width: 300px;",
-        "    height: 200px; }",
-        "  .plr-360-huffpo .pnlm-load-button {",
-        "    top: initial;",
-        "    bottom: -47px;",
-        "    left: initial;",
-        "    width: 300px;",
-        "    height: 50px;",
-        "    margin: initial;",
-        "    text-align: center;",
-        "    color: black;",
-        "    border-radius: 0;",
-        "    background-color: white; }",
-        "    .plr-360-huffpo .pnlm-load-button:hover {",
-        "      background-color: white; }",
-        "    .plr-360-huffpo .pnlm-load-button p {",
-        "      font-family: arial;",
-        "      font-size: 26px;",
-        "      font-weight: 600;",
-        "      padding: 0;",
-        "      color: #2e7061; }",
-        "  .plr-360-huffpo .plr-learn-more {",
-        "    line-height: 30px;",
-        "    position: absolute;",
-        "    right: 5px;",
-        "    bottom: 5px;",
-        "    display: none;",
-        "    height: 30px;",
-        "    margin: 0;",
-        "    padding: 0 10px;",
-        "    background-color: rgba(1, 117, 102, 0.7); }",
-        "    .plr-360-huffpo .plr-learn-more a {",
-        "      text-decoration: none;",
-        "      color: white; }",
-        "",
-        ""
-    ].join("\n"), "head"]);
 
     /*=================================
     =            Templates            =
@@ -2175,104 +2277,6 @@
                 }
                 buffer += escapeExpression(stack2) +
                     "\" style=\"text-decoration: underline;\">\n        <p>Learn More...</p>\n    </a>\n</div>";
-                return buffer;
-            },
-            /*
-
-   This function represents a pre-compiled Handlebars template. Pre-compiled
-   templates are not pretty, but they provide a very significant performance
-   boost, especially on mobile devices. For more information, see
-   http://handlebarsjs.com/precompilation.html.
-
-   Note that this code has been generated from the following markup:
-
-<div class="plr-360">
-    <div class="plr-pnlm-wrapper"></div>
-    <div class="plr-ad-info" style="display:none;">
-        <div class="sponsor-name">{{sponsor.name}}</div>
-        <div class="sponsor-logo">{{sponsor.logo.href}}</div>
-        <div class="link">{{link}}</div>
-        <div class="title">{{title}}</div>
-        <div class="summary">{{summary}}</div>
-        <div class="pnlm-img-url">{{custom.panorama_img_url}}</div>
-        <div class="preview-img-url">{{getThumbHref}}</div>
-    </div>
-    <p class='plr-learn-more' style='
-        display: none;
-        margin: 0;
-        height: 30px;
-        line-height: 30px;
-        padding: 0 10px;
-        position: absolute;
-        right: 5px;
-        bottom: 5px;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.3);
-    '>
-        <a href={{link}}>Learn More</a>
-    </p>
-</div>
-
-*/
-
-            threesixty: function(Handlebars, depth0, helpers, partials, data) {
-                this.compilerInfo = [4, '>= 1.0.0'];
-                helpers = this.merge(helpers, Handlebars.helpers);
-                data = data || {};
-                var buffer = "",
-                    stack1, stack2, functionType = "function",
-                    escapeExpression = this.escapeExpression;
-                buffer += "<div class=\"plr-360\">\n    <div class=\"plr-pnlm-wrapper\"></div>\n    <div class=\"plr-ad-info\" style=\"display:none;\">\n        <div class=\"sponsor-name\">" + escapeExpression(((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.name)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"sponsor-logo\">" + escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"link\">";
-                if (stack2 = helpers.link) {
-                    stack2 = stack2.call(depth0, {
-                        hash: {},
-                        data: data
-                    });
-                } else {
-                    stack2 = depth0.link;
-                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-                }
-                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"title\">";
-                if (stack2 = helpers.title) {
-                    stack2 = stack2.call(depth0, {
-                        hash: {},
-                        data: data
-                    });
-                } else {
-                    stack2 = depth0.title;
-                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-                }
-                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"summary\">";
-                if (stack2 = helpers.summary) {
-                    stack2 = stack2.call(depth0, {
-                        hash: {},
-                        data: data
-                    });
-                } else {
-                    stack2 = depth0.summary;
-                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-                }
-                buffer += escapeExpression(stack2) + "</div>\n        <div class=\"pnlm-img-url\">" + escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1.panorama_img_url)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) + "</div>\n        <div class=\"preview-img-url\">";
-                if (stack2 = helpers.getThumbHref) {
-                    stack2 = stack2.call(depth0, {
-                        hash: {},
-                        data: data
-                    });
-                } else {
-                    stack2 = depth0.getThumbHref;
-                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-                }
-                buffer += escapeExpression(stack2) + "</div>\n    </div>\n    <p class='plr-learn-more'>\n        <a style='text-decoration:none;' href=\"";
-                if (stack2 = helpers.link) {
-                    stack2 = stack2.call(depth0, {
-                        hash: {},
-                        data: data
-                    });
-                } else {
-                    stack2 = depth0.link;
-                    stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
-                }
-                buffer += escapeExpression(stack2) + "\">Learn More</a>\n    </p>\n</div>";
                 return buffer;
             },
             twitter_carousel: function(Handlebars, depth0, helpers, partials, data) {
