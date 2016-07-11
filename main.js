@@ -1682,6 +1682,9 @@
         /*--------  from threesixty.scss  --------*/
 
         q().push(["injectCSS", ["",
+            ".pnlm-load-box { height: 100px !important;}",
+            ".pnlm-lmsg { display: none; }",
+
             ".plr-360-huffpo {",
             "  position: relative;",
             "  width: 100%;",
