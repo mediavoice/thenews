@@ -1,4 +1,4 @@
-/* Built on Tue Aug 09 2016 10:26:22 GMT-0400 (EDT). */
+/* Built on Wed Aug 10 2016 10:43:15 GMT-0400 (EDT). */
 (function() {
   var templates;
   populate_templates();
@@ -1139,17 +1139,6 @@ props = {
     },
 
     threesixty_huffpo_autoload: function(props) {
-      /*
-    
-props = {
-    location:  jquery selector
-    ad:      unit object
-
-    onRender: function
-}
-    
-*/
-
       q().push(["insertPreview", {
         label: "360 Pano",
         unit: props.ad,
@@ -1158,14 +1147,7 @@ props = {
         infoButtonText: "",
         template: props.template,
         onRender: function($element) {
-          // $element.css({ overflow: "auto" });
-
           /*----------  Inject Dependencies  ----------*/
-
-          // fulltilt
-          var fulltilt_js = document.createElement('script');
-          fulltilt_js.src = "https://static.polarcdn.com/vendor/fulltilt.min.js";
-          document.getElementsByTagName('head')[0].appendChild(fulltilt_js);
 
           // pannellum
           var pnlm_js = document.createElement('script');
@@ -1177,10 +1159,11 @@ props = {
           pnlm_css.rel = "stylesheet";
           document.getElementsByTagName('head')[0].appendChild(pnlm_css);
 
-          /*----------  Magic Loop  ----------*/
-          function threesixty() {
+          /*----------  Loop until dependencies load  ----------*/
+
+          (function threesixty() {
             // short circuit until the dependencies load
-            if (typeof pannellum === "undefined" || typeof FULLTILT === "undefined") {
+            if (typeof pannellum === "undefined") {
               requestAnimationFrame(threesixty);
               return;
             }
@@ -1189,63 +1172,19 @@ props = {
             var img_url = $element.find(".pnlm-img-url").text();
             var img_preview_url = $element.find(".preview-img-url").text();
 
-            var pnlm = pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
+            pannellum.viewer($element.find(".plr-pnlm-wrapper")[0], {
               "type": "equirectangular",
               "panorama": img_url,
               "preview": img_preview_url,
-              "autoLoad": true
-            });
-
-            var title_text = $element.find(".title").text();
-            $element.find(".pnlm-load-button p").first().text("Click to load 360 Panorama");
-
-            $element.find(".pnlm-load-button").click(function() {
-              $element.find(".plr-learn-more").css({
-                display: "block"
-              });
+              "autoLoad": true,
+              "autoRotate": true,
+              "autoRotateInactivityDelay": 1000,
+              "hfov": 80
             });
 
             // execute custom onRender stuff
             if (typeof props.onRender === "function") props.onRender($element);
-
-            /* DeviceMotion Magic */
-            var manual = false;
-
-            var deviceOrientation;
-
-            new FULLTILT.getDeviceOrientation({
-                'type': 'world'
-              }).then(function(controller) {
-                deviceOrientation = controller;
-              })
-              .catch(function(message) {
-                console.error(message);
-              });
-
-            (function getDeviceOrientationData() {
-              if (deviceOrientation) {
-                var e = deviceOrientation.getScreenAdjustedEuler();
-
-                // Switch to manual control if missing accelerometer
-                if (!e.alpha || !e.beta || !e.gamma) manual = true;
-
-                var view = {
-                  x: -e.alpha - e.gamma,
-                  y: e.beta - 90
-                };
-
-                if (pnlm.getRenderer() !== undefined && pnlm.getRenderer().isLoading() === false) {
-                  pnlm.setYaw(view.x);
-                  pnlm.setPitch(view.y);
-                  pnlm.setUpdate();
-                }
-              }
-
-              // Execute function on each browser animation frame
-              if (!manual) requestAnimationFrame(getDeviceOrientationData);
-            })();
-          }
-          threesixty();
+          })();
         },
         onFill: function(data) {},
         onError: function(error) {}
@@ -1946,45 +1885,60 @@ props = {
   q().push(["injectCSS", ["",
     ".plr-360-huffpo-autoload {",
     "  position: relative;",
-    "  width: 100%;",
     "  max-width: 300px;",
-    "  height: 230px;",
     "  margin: auto;",
-    "  padding-top: 15px;",
-    "  border-top: 3px solid #2e7061; }",
-    "  .plr-360-huffpo-autoload::before {",
-    "    font-weight: bold;",
-    "    position: absolute;",
-    "    top: -10px;",
-    "    left: 73px;",
-    "    display: block;",
-    "    padding: 0 10px;",
-    "    content: 'HUFFPOST RYOT';",
-    "    color: #2e7061;",
-    "    background-color: white; }",
+    "  padding-top: 10px;",
+    "  border-top: 1px solid #e5e5e5;",
+    "  border-bottom: 1px solid #e5e5e5; }",
     "  @media (max-width: 320px) {",
     "    .plr-360-huffpo-autoload {",
     "      width: 300px;",
     "      margin: -10px; } }",
+    "  .plr-360-huffpo-autoload a {",
+    "    text-decoration: none;",
+    "    color: initial; }",
+    "  .plr-360-huffpo-autoload .plr-pnlm-wrapper {",
+    "    width: 100%;",
+    "    height: 200px; }",
     "  .plr-360-huffpo-autoload .pnlm-load-box {",
     "    height: 100px !important; }",
     "  .plr-360-huffpo-autoload .pnlm-lmsg {",
     "    display: none; }",
     "  .plr-360-huffpo-autoload .plr-pnlm-wrapper {",
     "    overflow: visible; }",
-    "  .plr-360-huffpo-autoload h2 {",
-    "    font-family: Arial;",
-    "    font-weight: bold;",
-    "    position: absolute;",
-    "    bottom: -2px;",
-    "    left: 0;",
+    "  .plr-360-huffpo-autoload .title {",
+    "    font-family: \"ProximaNovaCond-Extrabld\", \"NotoKufiArabic-Bold\", \"Helvetica Neue\", \"Helvetica\", Roboto, Arial, sans-serif;",
+    "    font-size: 18px;",
+    "    font-weight: normal;",
+    "    position: relative;",
     "    width: 100%;",
     "    margin: 0;",
-    "    padding: 5px 0;",
-    "    text-align: center;",
+    "    padding-top: 5px;",
+    "    padding-bottom: 10px;",
     "    text-transform: none;",
     "    color: #2e7061;",
     "    background: white; }",
+    "    .plr-360-huffpo-autoload .title img {",
+    "      position: absolute;",
+    "      top: 50%;",
+    "      right: 0;",
+    "      float: right;",
+    "      width: 60px;",
+    "      height: 30px;",
+    "      transform: translateY(-50%); }",
+    "    .plr-360-huffpo-autoload .title .inner-title {",
+    "      display: block;",
+    "      width: 235px; }",
+    "    .plr-360-huffpo-autoload .title .cta {",
+    "      font-size: 14px;",
+    "      position: relative;",
+    "      top: 3px;",
+    "      left: -3px;",
+    "      padding: 2px 5px;",
+    "      text-transform: none;",
+    "      color: grey;",
+    "      border-radius: 3px;",
+    "      background-color: #f1f1f1; }",
     "  .plr-360-huffpo-autoload .pnlm-load-button {",
     "    top: 0;",
     "    right: 0;",
@@ -2014,9 +1968,6 @@ props = {
     "    margin: 0;",
     "    padding: 0 10px;",
     "    background-color: rgba(1, 117, 102, 0.7); }",
-    "    .plr-360-huffpo-autoload .plr-learn-more a {",
-    "      text-decoration: none;",
-    "      color: white; }",
     "",
     ""
   ].join("\n"), "head"]);
@@ -2526,6 +2477,7 @@ props = {
       },
       onRender: function($element) {
         // $element.find(".pnlm-load-button").click();
+        console.log("asd")
       },
       template: templates.threesixty_huffpo_autoload
     });
@@ -3587,7 +3539,14 @@ props = {
               <div class="preview-img-url">{{getThumbHref}}</div>
           </div>
           <a href="{{link}}">
-              <h2>{{title}}</h2>
+              <div class="title">
+                  <img src="{{sponsor.logo.href}}">
+                  <div class="inner-title">
+                      {{title}}
+                      <br>
+                      <span class="cta">View full experience</span>
+                  </div>
+              </div>
           </a>
       </div>
 
@@ -3627,7 +3586,9 @@ props = {
           stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
         }
         buffer += escapeExpression(stack2) +
-          "\">\n        <h2>";
+          "\">\n        <div class=\"title\">\n            <img src=\"" +
+          escapeExpression(((stack1 = ((stack1 = ((stack1 = depth0.sponsor), stack1 == null || stack1 === false ? stack1 : stack1.logo)), stack1 == null || stack1 === false ? stack1 : stack1.href)), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+          "\">\n            <div class=\"inner-title\">\n                ";
         if (stack2 = helpers.title) {
           stack2 = stack2.call(depth0, {
             hash: {},
@@ -3638,7 +3599,7 @@ props = {
           stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
         }
         buffer += escapeExpression(stack2) +
-          "</h2>\n    </a>\n</div>\n";
+          "\n                <br>\n                <span class=\"cta\">View full experience</span>\n            </div>\n        </div>\n    </a>\n</div>\n";
         return buffer;
       },
 
