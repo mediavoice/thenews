@@ -555,7 +555,7 @@
       // Actually add the container
       var $carousel;
       $carousel = $(props.location).before(interpolate_str(["",
-        "<div class=\"plr-outer-theme\">#FXThursday</div>",
+        "<div class=\"plr-outer-theme\">You Won’t Believe This</div>",
         "<div class=\"plr-crsl-outer plr-crsl--{0}\">",
         "    <div class=\"plr-crsl-inner\">",
         "        {1}", // slots are inserted programatically here
