@@ -1,4 +1,7 @@
 /* Built on Wed Aug 10 2016 10:43:15 GMT-0400 (EDT). */
+
+
+
 (function() {
   var templates;
   populate_templates();
@@ -502,12 +505,10 @@
       props = {
           location: jQuery selector
           ads: array of unit objects
-
           onRender: array of onRender function corresponding to the index in ads
           
           hero: whether to display the items as "heroes"
       }
-
       */
 
 
@@ -522,16 +523,15 @@
           "    overflow-x: scroll;",
           "    width: 100%;",
           "    padding: 10px 0;",
-          "    border-top: 1px solid #9a9a9a;",
-          "    border-bottom: 1px solid #9a9a9a;",
+          "    border-top: 2px solid #1879a9;",
+          "    border-bottom: 2px solid #1879a9;",
           "    -webkit-overflow-scrolling: touch;",
           "}",
           ".plr-crsl-slot {",
           "    position: relative;",
           "    display: table-cell;", // Table cell? Yep. Why? ¯\_(ツ)_/¯,
           "    width: 290px;", // Placeholder width..,
-          "    padding: 0 20px;",
-          "    border-right: 1px solid #808080;",
+          "    padding: 0 7px;",
           "}",
           ".plr-crsl-slot:last-child {",
           "    border-right: none;",
@@ -560,6 +560,7 @@
         "        {1}", // slots are inserted programatically here
         "    </div>",
         "</div>",
+        "<div class=\"plr-outer-sponsor\">Sponsored by FX</div>",
         ""
       ].join("\n"), [total_carousels, slots])).next();
 
@@ -681,7 +682,6 @@
           location: jQuery selector
           ads: array of unit objects
           onRender: array of onRender function corresponding to the index in ads
-
           display:    "hero"
                    OR "noThumb"
                    OR "bigThumb"
@@ -909,6 +909,8 @@
 
     },
 
+
+
     twitter_carousel: function(props) {
       var total_twitter_carousels = 0;
 
@@ -917,9 +919,7 @@
           props = {
               location: jQuery selector
               collection_ad: collection unit object
-
               onRender: function to run on render
-
               show_sponsor: true/false to show "Sposnored By XYZ"
           }
           
@@ -1024,7 +1024,6 @@
 props = {
     location:  jquery selector
     ad:      unit object
-
     onRender: function
 }
     
@@ -2040,6 +2039,276 @@ props = {
     ""
   ].join("\n"), "head"]);
 
+  /*--------  for layout: storyful  --------*/
+
+  q().push(["injectCSS", ["",
+    ".plr-crsl-outer {",
+    "    position: relative;",
+    "    overflow-x: scroll;",
+    "    width: 100%;",
+    "    padding: 10px 0;",
+    "    border-top: 2px solid #1879a9;",
+    "    border-bottom: 2px solid #1879a9;",
+    "    -webkit-overflow-scrolling: touch;",
+    "}",
+    ".plr-crsl-slot {",
+    "    position: relative;",
+    "    display: table-cell;", // Table cell? Yep. Why? ¯\_(ツ)_/¯,
+    "    width: 290px;", // Placeholder width..,
+    "    padding: 0 7px;",
+    "}",
+    ".plr-crsl-slot:last-child {",
+    "    border-right: none;",
+    "}",
+    ""
+  ].join("\n"), "head"]);
+
+
+  q().push(["injectCSS", ["",
+    ".plr-crsl-item_s {",
+    "  width: 100%;",
+    "  margin: 0;",
+    "  transition: .25s;",
+    "  text-align: left;",
+    "  border: 2px solid #d9d9d9;",
+    "  border-radius: 5px;",
+    "  padding: 15px;",
+    "}",
+    ".plr-crsl-item_s .plr-img-wrapper {",
+    "  position: relative;",
+    "  top: 0;",
+    "  left: 0;",
+    "  overflow: hidden;",
+    "  width: 60%;",
+    "  padding-bottom: 60%;",
+    "}",
+    ".plr-crsl-item_s .plr-img-wrapper > div:first-child {",
+    "  position: absolute;",
+    "  top: 0;",
+    "  right: 0;",
+    "  bottom: 0;",
+    "  left: 0;",
+    "  transition: .25s;",
+    "  background-size: cover !important;",
+    "}",
+    ".plr-crsl-item_s .plr-img-wrapper {",
+    "  width: 100%;",
+    "  margin: auto;",
+    "}",
+    ".plr-crsl-item_s p {",
+    "  display: none;",
+    "}",
+    ".plr-crsl-item_s h2 {",
+    "  font-family: Helvetica, Arial, sans-serif;",
+    "  font-size: 16px;",
+    "  text-transform: initial;",
+    "}",
+    ".plr-crsl-item_s a {",
+    "  text-decoration: initial;",
+    "}",
+    ".plr-crsl-item_s .plr-sponsored-disclosure {",
+    "  font-size: 12px;",
+    "  font-variant: small-caps;",
+    "  font-family: Arial, sans-serif;",
+    "  display: inline-block;",
+    "  margin-top: 12px;",
+    "  padding: 3px 10px;",
+    "  padding-top: 1px;",
+    "  color: white;",
+    "  border-radius: 3px;",
+    "  background-color: #fa7301;",
+    "}",
+    ".plr-crsl-item_s:hover h2 {",
+    "  color: #1877ab;",
+    "}",
+    "",
+    ".plr-outer-sponsor {",
+    "  text-align: right;",
+    "  padding-top: 10px;",
+    "  font-weight: 600;",
+    "}",
+    "",
+    ".plr-play {",
+    "    position: absolute;",
+    "    display: block;",
+    "    background: url('http://activu.com/wp-content/themes/activu/images/video-play-button.png') no-repeat;",
+    "    opacity: 0.5;",
+    "    width: 180px;",
+    "    height: 180px;",
+    "    left: 58px;",
+    "    top: 33px;",
+    "    background-size: 100%;",
+    "}",
+    "",
+    "@media only screen and (max-width:426px) {",
+    "  .plr-crsl-item_s {",
+    "    width: 100%;",
+    "  }",
+    "  .plr-crsl-item_s .plr-img-wrapper {",
+    "    position: relative;",
+    "    overflow: hidden;",
+    "    width: 75%;",
+    "    margin: auto;",
+    "    padding-bottom: 75%;",
+    "  }",
+    "}",
+    ""
+  ].join("\n"), "head"]);
+
+  //lightbox
+  q().push(["injectCSS", ["",
+    ".polar-deck-dialog {",
+    "}",
+    "",
+    ".polar-deck-content {",
+    "    border-top-left-radius: 1em;",
+    "    border-top-right-radius: 1em;",
+    "    border-bottom-left-radius: 1em;",
+    "    border-bottom-right-radius: 1em;",
+    "    font-family: \"Avenir Next\", \"Helvetica Neue\", Helvetica, Arial, sans-serif;",
+    "    border: none;",
+    "}",
+    ".polar-deck-sponsor-logo {",
+    "    max-height: 27px;",
+    "    display: inline-block;",
+    "    float: left;",
+    "    margin-top: 12px;",
+    "    margin-left: 18px;",
+    "    max-width: 100px;",
+    "    transform: translateX(-50%);",
+    "    ",
+    "}",
+    "",
+    "section.polar-deck-body {padding: 0;}",
+    "",
+    ".polar-deck-frame {",
+    "    padding: 0 !important;",
+    "}",
+    "",
+    "section.polar-deck-footer {",
+    "    padding: 10px;",
+    "    border: none;",
+    "}",
+    "",
+    "section.polar-deck-header {",
+    "    background-color: #1f1f1f;",
+    "    border-bottom: 1px solid #1f1f1f;",
+    "    border-top-left-radius: 0.5em;",
+    "    border-top-right-radius: 0.5em;",
+    "    position: relative;",
+    "    float: left;",
+    "    overflow: hidden",
+    "    width: 100%",
+    "}",
+    "",
+    ".polar-deck-sponsor-info {",
+    "    text-align: center;",
+    "}",
+    "",
+    "section.polar-deck-footer {",
+    "    background-color: #1f1f1f;",
+    "    border-top: 1px solid #1f1f1f;",
+    "    border-bottom-left-radius: 0.5em;",
+    "    border-bottom-right-radius: 0.5em;",
+    "}",
+    "",
+    "a.polar-learn-more-btn.polar-btn {",
+    "    background-color: #03a9f4;",
+    "    color:white !important;",
+    "}",
+    "",
+    ".polar-deck-share-btns li.email {",
+    "    -webkit-filter: invert(1);",
+    "}",
+    ".polar-deck-sponsored-by {",
+    "    color: #888888;",
+    "    width: 98%;",
+    "    top: 0;",
+    "    padding-top: 10px;",
+    "    text-align: left;",
+    "    display: inline-block;",
+    "    text-transform: uppercase;",
+    "    position: absolute;",
+    "    left: 10px;",
+    "    font-weight: 500;",
+    "    font-size: 10px;",
+    "    font-family: \"Avenir Next\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+    "}",
+    "",
+    ".polar-deck-close-btn {",
+    "    position: absolute;",
+    "    font-family: Candara, Calibri, sans-serif;",
+    "    line-height: 0px;",
+    "    font-size: 17px;",
+    "    border: none;",
+    "    text-transform: lowercase;",
+    "    width: 30px;",
+    "    height: 30px;",
+    "    text-align: center;",
+    "    color: #eaeaea;",
+    "    background: #E45559;",
+    "    right: 20px;",
+    "    top: 25%;",
+    "    text-align: center;",
+    "    font-weight: normal;",
+    "    transition: all .1s ease-out;",
+    "    letter-spacing: 1px;",
+    "}",
+    "",
+    ".polar-deck-close-btn:hover {",
+    "    color: #fff;",
+    "    background: #E45559;",
+    "}",
+    ""
+  ].join("\n"), "head"]);
+
+  q().push(["injectCSS", ["",
+    ".plr-crsl-item_st {",
+    "  width: 100%;",
+    "  margin: 0;",
+    "  transition: .25s;",
+    "  text-align: left;",
+    "  border: 2px solid #d9d9d9;",
+    "  border-radius: 5px;",
+    "  padding: 15px;",
+    "}",
+    "",
+    ".plr-crsl-item_st p {",
+    "  display: none;",
+    "}",
+    ".plr-crsl-item_st h2 {",
+    "  font-size: 16px;",
+    "  text-transform: initial;",
+    "}",
+    ".plr-crsl-item_st a {",
+    "  text-decoration: initial;",
+    "}",
+    "",
+    ".plr-crsl-item_st:hover h2 {",
+    "  color: #1877ab;",
+    "}",
+    "",
+    ".plr-outer-sponsor {",
+    "  text-align: right;",
+    "  padding-top: 10px;",
+    "  font-weight: 600;",
+    "}",
+    "",
+    "@media only screen and (max-width:426px) {",
+    "  .plr-crsl-item_st {",
+    "    width: 100%;",
+    "  }",
+    "  .plr-crsl-item_st .plr-img-wrapper {",
+    "    position: relative;",
+    "    overflow: hidden;",
+    "    width: 75%;",
+    "    margin: auto;",
+    "    padding-bottom: 75%;",
+    "  }",
+    "}",
+    ""
+  ].join("\n"), "head"]);
+
 
   /*=======================================
   =            Insert Previews            =
@@ -2430,6 +2699,58 @@ props = {
     });
   }
 
+  /*-------  on #storyful  -------*/
+
+  if (location.hash === "#storyful") {
+    Construct.carousel({
+      "label": "example",
+      "location": "#panel > div > div:nth-child(1) > p:nth-child(8)",
+      "ads": [{
+        "server": "mvdirect",
+        "id": "07d6dfb34e6f44628c491a0f05c2156f"
+      }, {
+        "server": "mvdirect",
+        "id": "c3032d4798ff47f3943a0d712456d5e5"
+      }, {
+        "server": "mvdirect",
+        "id": "404bdaa70134415784805bba92d1bf60"
+      }, {
+        "server": "mvdirect",
+        "id": "e50a7025792b4359b2a4d89086c72d3c"
+      }, {
+        "server": "mvdirect",
+        "id": "d979aa828a87461c9454be7293870f8c"
+      }],
+      "template": templates.carousel_s
+    });
+  }
+
+  /*-------  on #storyful-ytembed  -------*/
+
+  if (location.hash === "#storyful-ytembed") {
+    Construct.carousel({
+      "label": "example",
+      "location": "#panel > div > div:nth-child(1) > p:nth-child(7)",
+      "ads": [{
+        "server": "mvdirect",
+        "id": "31177e300011478db60839accb219f75"
+      }, {
+        "server": "mvdirect",
+        "id": "8c3bc6081c3542e3818c5535f7a7a15d"
+      }, {
+        "server": "mvdirect",
+        "id": "16749aa11348452882ccd3e4927113cd"
+      }, {
+        "server": "mvdirect",
+        "id": "80b5dfd594424128bd1fba50da24995a"
+      }, {
+        "server": "mvdirect",
+        "id": "d99f3615a65b4fe89080a1017eaefdc1"
+      }],
+      "template": templates.carousel_st
+    });
+  }
+
   /*-------  on #pratik  -------*/
 
   if (location.hash === "#pratik") {
@@ -2562,10 +2883,8 @@ props = {
       /*--------  vstack.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-halfw">
           <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
               <div class="plr-img-wrapper">
@@ -2576,7 +2895,6 @@ props = {
               <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
           </a>
       </div>
-
       */
 
       vstack: function(Handlebars, depth0, helpers, partials, data) {
@@ -2638,10 +2956,8 @@ props = {
       /*--------  hstack.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-hstack">
           <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
               <div class="plr-sponsored-disclosure">sponsor content</div>
@@ -2649,11 +2965,9 @@ props = {
               <div class="plr-img-wrapper">
                   <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
               </div>
-
               <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
           </a>
       </div>
-
       */
 
       hstack: function(Handlebars, depth0, helpers, partials, data) {
@@ -2715,10 +3029,8 @@ props = {
       /*--------  hero.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-fullw">
         <a href="{{link}}" rel="nofollow">
           <div class="plr-img-wrapper">
@@ -2731,7 +3043,6 @@ props = {
           <div class="plr-sponsored" data-sponsor-name="{{sponsor.name}}">Sponsor Content</div>
         </a>
       </div>
-
       */
 
       hero: function(Handlebars, depth0, helpers, partials, data) {
@@ -2795,10 +3106,8 @@ props = {
       /*--------  carousel.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-crsl-item">
           <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
               <div class="plr-img-wrapper">
@@ -2809,7 +3118,6 @@ props = {
               <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
           </a>
       </div>
-
       */
 
       carousel: function(Handlebars, depth0, helpers, partials, data) {
@@ -2871,10 +3179,8 @@ props = {
       /*--------  blog.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-btwn-art">
           <div class="topic">sponsored</div>
           <a href="{{link}}"><h1>{{title}}</h1></a>
@@ -2887,7 +3193,6 @@ props = {
               <p>Continue Reading...</p>
           </a>
       </div>
-
       */
 
       blog: function(Handlebars, depth0, helpers, partials, data) {
@@ -2963,10 +3268,8 @@ props = {
       /*--------  infographic.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-btwn-art">
           <div class="topic">sponsored</div>
           <a href="{{link}}"><h1>{{title}}</h1></a>
@@ -2977,7 +3280,6 @@ props = {
               <p>Learn More...</p>
           </a>
       </div>
-
       */
 
       infographic: function(Handlebars, depth0, helpers, partials, data) {
@@ -3051,10 +3353,8 @@ props = {
       /*--------  collection.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-collection-item">
           <a href="{{link}}">
               <div class="plr-img-wrapper">
@@ -3065,7 +3365,6 @@ props = {
           <p>{{summary}}</p>
         <div class="sponsor-logo-href" style="display:none;">{{sponsor.logo.href}}</div>
       </div>
-
       */
 
       collection: function(Handlebars, depth0, helpers, partials, data) {
@@ -3130,10 +3429,8 @@ props = {
       /*--------  hero_2.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-fullw">
         <a href="{{link}}" rel="nofollow">
           <div class="plr-img-wrapper">
@@ -3146,7 +3443,6 @@ props = {
           <div class="plr-sponsored" data-sponsor-name="{{sponsor.name}}">Sponsor Content</div>
         </a>
       </div>
-
       */
 
       hero_2: function(Handlebars, depth0, helpers, partials, data) {
@@ -3210,10 +3506,8 @@ props = {
       /*--------  hero_3.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-fullw">
         <a href="{{link}}" rel="nofollow">
           <div class="plr-img-wrapper">
@@ -3226,7 +3520,6 @@ props = {
           <div class="plr-sponsored" data-sponsor-name="{{sponsor.name}}">Sponsor Content</div>
         </a>
       </div>
-
       */
 
       hero_3: function(Handlebars, depth0, helpers, partials, data) {
@@ -3290,10 +3583,8 @@ props = {
       /*--------  hero_4.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-fullw">
         <a href="{{link}}" rel="nofollow">
           <div class="plr-img-wrapper">
@@ -3306,7 +3597,6 @@ props = {
           <div class="plr-sponsored" data-sponsor-name="{{sponsor.name}}">Sponsor Content</div>
         </a>
       </div>
-
       */
 
       hero_4: function(Handlebars, depth0, helpers, partials, data) {
@@ -3370,10 +3660,8 @@ props = {
       /*--------  twitter_carousel.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-twtr-crsl">
           <h1>#StuporTuesday</h1>
           <div class="plr-twtr-crsl-outer">
@@ -3391,7 +3679,6 @@ props = {
           </div>
           <h2>Sponsored By Our Sponsors</h2>
       </div>
-
       */
 
       twitter_carousel: function(Handlebars, depth0, helpers, partials, data) {
@@ -3443,10 +3730,8 @@ props = {
       /*--------  threesixty.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-360">
           <div class="plr-pnlm-wrapper"></div>
           <div class="plr-ad-info" style="display:none;">
@@ -3459,7 +3744,6 @@ props = {
               <div class="preview-img-url">{{getThumbHref}}</div>
           </div>
       </div>
-
       */
 
       threesixty: function(Handlebars, depth0, helpers, partials, data) {
@@ -3528,10 +3812,8 @@ props = {
       /*--------  threesixty_huffpo_autoload.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-360-huffpo-autoload">
           <div class="plr-pnlm-wrapper"></div>
           <div class="plr-ad-info" style="display:none;">
@@ -3549,8 +3831,6 @@ props = {
               </div>
           </a>
       </div>
-
-
       */
 
       threesixty_huffpo_autoload: function(Handlebars, depth0, helpers, partials, data) {
@@ -3606,10 +3886,8 @@ props = {
       /*--------  threesixty_huffpo_static.handlebars  --------*/
 
       /*
-
       Original template
       -----------------
-
       <div class="plr-threesixty-huffpo-static">
           <a href="{{link}}" style="border-bottom: none; box-shadow: none;" rel="nofollow">
               <span>
@@ -3623,7 +3901,6 @@ props = {
               </h2>
           </a>
       </div>
-
       */
 
       threesixty_huffpo_static: function(Handlebars, depth0, helpers, partials, data) {
@@ -3669,6 +3946,147 @@ props = {
         }
         buffer += escapeExpression(stack1) +
           "\n            <div class=\"plr-sponsored-disclosure\">HUFFPOST RYOT</div>\n        </h2>\n    </a>\n</div>";
+        return buffer;
+      },
+
+      /*--------  storyful.handlebars  --------*/
+
+      /*
+
+      Original template
+      -----------------
+
+      <div class="plr-crsl-item_st">
+          <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
+                  <iframe width="100%" height="100%" src="{{custom.yt-embed}}" frameborder="0" allowfullscreen></iframe>
+              <h2>{{title}}</h2>
+              <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
+          </a>
+      </div>
+
+
+      */
+
+      carousel_st: function(Handlebars, depth0, helpers, partials, data) {
+        this.compilerInfo = [4, '>= 1.0.0'];
+        helpers = this.merge(helpers, Handlebars.helpers);
+        data = data || {};
+        var buffer = "",
+          stack1, stack2, functionType = "function",
+          escapeExpression = this.escapeExpression;
+
+
+        buffer += "<div class=\"plr-crsl-item_st\">\n    <a href=\"";
+        if (stack1 = helpers.link) {
+          stack1 = stack1.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack1 = depth0.link;
+          stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+        }
+        buffer += escapeExpression(stack1) +
+          "\" style=\"border-bottom: none;box-shadow: none;\">\n            <iframe width=\"100%\" height=\"100%\" src=\"" +
+          escapeExpression(((stack1 = ((stack1 = depth0.custom), stack1 == null || stack1 === false ? stack1 : stack1['yt-embed'])), typeof stack1 === functionType ? stack1.apply(depth0) : stack1)) +
+          "\" frameborder=\"0\" allowfullscreen></iframe>\n        <h2>";
+        if (stack2 = helpers.title) {
+          stack2 = stack2.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack2 = depth0.title;
+          stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+        }
+        buffer += escapeExpression(stack2) +
+          "</h2>\n        <p style=\"color: #666666;margin-bottom: 0;\">";
+        if (stack2 = helpers.summary) {
+          stack2 = stack2.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack2 = depth0.summary;
+          stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+        }
+        buffer += escapeExpression(stack2) +
+          "</p>\n    </a>\n</div>\n";
+        return buffer;
+      },
+
+
+      /*
+
+      Original template 
+      -----------------
+
+      <div class="plr-crsl-item_s">
+          <a href="{{link}}" style="border-bottom: none;box-shadow: none;">
+              <div class="plr-img-wrapper">
+                  <div style="background: url('{{getThumbHref width=1500 height=1000}}') no-repeat center center;"></div>
+              </div>
+              <span class="plr-play"></span>
+              <h2>{{title}}</h2>
+              <p style="color: #666666;margin-bottom: 0;">{{summary}}</p>
+          </a>
+      </div>
+
+      */
+
+      carousel_s: function(Handlebars, depth0, helpers, partials, data) {
+        this.compilerInfo = [4, '>= 1.0.0'];
+        helpers = this.merge(helpers, Handlebars.helpers);
+        data = data || {};
+        var buffer = "",
+          stack1, stack2, options, functionType = "function",
+          escapeExpression = this.escapeExpression,
+          helperMissing = helpers.helperMissing;
+
+
+        buffer += "<div class=\"plr-crsl-item_s\">\n    <a href=\"";
+        if (stack1 = helpers.link) {
+          stack1 = stack1.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack1 = depth0.link;
+          stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1;
+        }
+        buffer += escapeExpression(stack1) +
+          "\" style=\"border-bottom: none;box-shadow: none;\">\n        <div class=\"plr-img-wrapper\">\n            <div style=\"background: url('";
+        options = {
+          hash: {
+            'width': (1500),
+            'height': (1000)
+          },
+          data: data
+        };
+        buffer += escapeExpression(((stack1 = helpers.getThumbHref || depth0.getThumbHref), stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "getThumbHref", options))) +
+          "') no-repeat center center;\"></div>\n        </div>\n        <span class=\"plr-play\"></span>\n        <h2>";
+        if (stack2 = helpers.title) {
+          stack2 = stack2.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack2 = depth0.title;
+          stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+        }
+        buffer += escapeExpression(stack2) +
+          "</h2>\n        <p style=\"color: #666666;margin-bottom: 0;\">";
+        if (stack2 = helpers.summary) {
+          stack2 = stack2.call(depth0, {
+            hash: {},
+            data: data
+          });
+        } else {
+          stack2 = depth0.summary;
+          stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2;
+        }
+        buffer += escapeExpression(stack2) +
+          "</p>\n    </a>\n</div>";
         return buffer;
       },
     }
