@@ -2303,7 +2303,7 @@ props = {
     "}",
     "",
     ".plr-outer-theme {",
-    "    font-size: 32px;",
+    "    font-size: 25px;",
     "    font-family: HelveticaNeue-Light, \"Helvetica Neue Light\", \"Helvetica Neue\", Helvetica, Arial, \"Lucida Grande\", sans-serif;",
     "    font-weight: bold;",
     "    padding-bottom: 10px;",
