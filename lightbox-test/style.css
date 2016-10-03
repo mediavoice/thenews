@@ -1,0 +1,340 @@
+/**
+ *
+ * NOTE THAT THIS FILE DOES NOT CONTAIN ALL OF THE CSS THAT MAKES THE 
+ * PLACEMENTS WORK! A LOT OF CONTAINER CODE IS MISSING, AND A LOT OF 
+ * CSS IS DYNAMICALLY GENERATED WITHIN THE JS.
+ *
+ */
+/*\
+|*|
+|*|  Vertical Stack
+|*|
+\*/
+.plr-halfw {
+  float: left;
+  width: 300px;
+  margin: 25px 25px 25px 0;
+  padding: 15px 0;
+  transition: .25s;
+  text-align: center;
+  border-top: 3px solid #1877ab;
+  border-bottom: 3px #1877ab solid; }
+  .plr-halfw .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 60%;
+    padding-bottom: 60%; }
+    .plr-halfw .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-halfw .plr-img-wrapper {
+    margin: auto; }
+    .plr-halfw .plr-img-wrapper div {
+      border-radius: 100%; }
+  .plr-halfw .plr-sponsored-disclosure {
+    font-size: 12px;
+    font-variant: small-caps;
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 5px;
+    padding-top: 0;
+    color: white;
+    background-color: #1877ab; }
+  .plr-halfw a {
+    text-decoration: initial; }
+  .plr-halfw h2 {
+    margin: 10px 0; }
+  .plr-halfw:hover h2 {
+    color: #1877ab; }
+  @media only screen and (max-width: 426px) {
+    .plr-halfw {
+      width: 100%; } }
+
+/*\
+|*|
+|*|  Horizontal Stack
+|*|
+\*/
+.plr-hstack {
+  float: left;
+  width: 400px;
+  margin: 25px 25px 25px 0;
+  padding: 10px 0;
+  transition: .25s;
+  text-align: center;
+  border-top: 3px solid #1877ab;
+  border-bottom: 3px #1877ab solid; }
+  .plr-hstack .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 50%;
+    padding-bottom: 50%; }
+    .plr-hstack .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-hstack .plr-img-wrapper {
+    float: left;
+    margin: 0px 10px 0px 0px; }
+    .plr-hstack .plr-img-wrapper div {
+      border-radius: 100%; }
+  .plr-hstack .plr-sponsored-disclosure {
+    font-size: 12px;
+    font-variant: small-caps;
+    display: inline-block;
+    margin-top: 5px;
+    padding: 3px 5px;
+    padding-top: 0;
+    color: white;
+    background-color: #1877ab; }
+  .plr-hstack a {
+    text-decoration: initial; }
+  .plr-hstack h2 {
+    margin: 10px 0; }
+  .plr-hstack:hover h2 {
+    color: #1877ab; }
+  .plr-hstack p {
+    text-align: left; }
+  @media only screen and (max-width: 426px) {
+    .plr-hstack {
+      width: 100%; }
+      .plr-hstack .plr-img-wrapper {
+        margin: 0px 10px 0px 0px; } }
+
+/*\
+|*|
+|*| Hero
+|*|
+\*/
+.plr-fullw {
+  position: relative;
+  overflow: hidden;
+  height: 225px;
+  margin-bottom: 14px; }
+  .plr-fullw .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    padding-bottom: 50%; }
+    .plr-fullw .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-fullw .plr-img-wrapper {
+    width: initial;
+    height: 100%; }
+  .plr-fullw .plr-contents {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    padding: 20px;
+    transition: .25s;
+    background-color: rgba(0, 0, 0, 0.4); }
+    .plr-fullw .plr-contents h1 {
+      font-size: 30px;
+      line-height: 35px;
+      margin: 0;
+      color: white; }
+    .plr-fullw .plr-contents p {
+      font-size: 15px;
+      color: white; }
+  .plr-fullw .plr-sponsored {
+    font-size: 10px;
+    line-height: 20px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 0 4px;
+    transition: .25s;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4); }
+  .plr-fullw:hover .plr-img-wrapper div {
+    opacity: .8; }
+  .plr-fullw:hover .plr-contents {
+    width: 62%; }
+  .plr-fullw:hover .plr-sponsored {
+    opacity: .8; }
+
+@media only screen and (max-width: 425px) {
+  .plr-fullw .plr-contents {
+    width: 100%; }
+    .plr-fullw .plr-contents h1 {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center; }
+    .plr-fullw .plr-contents p {
+      display: none; }
+  .plr-fullw .plr-sponsored {
+    top: inherit;
+    right: 10px;
+    bottom: 10px;
+    left: inherit; }
+  .plr-fullw:hover .plr-contents {
+    width: 100%; } }
+/*\
+|*|
+|*|  Carousel
+|*|
+\*/
+/*----------  Container Styling  ----------*/
+/*----------  Item Styling  ----------*/
+.plr-crsl-item {
+  width: 100%;
+  margin: 0;
+  padding: 15px 0;
+  transition: .25s;
+  text-align: center;
+  border: none; }
+  .plr-crsl-item .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 60%;
+    padding-bottom: 60%; }
+    .plr-crsl-item .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-crsl-item .plr-img-wrapper {
+    margin: auto; }
+  .plr-crsl-item p {
+    display: none; }
+  .plr-crsl-item h2 {
+    font-size: 16px;
+    text-transform: initial; }
+  .plr-crsl-item a {
+    text-decoration: initial; }
+  .plr-crsl-item .plr-sponsored-disclosure {
+    font-size: 12px;
+    font-variant: small-caps;
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 5px;
+    padding-top: 0;
+    color: white;
+    background-color: #1877ab; }
+  .plr-crsl-item:hover h2 {
+    color: #1877ab; }
+  @media only screen and (max-width: 426px) {
+    .plr-crsl-item {
+      width: 100%; }
+      .plr-crsl-item .plr-img-wrapper {
+        position: relative;
+        overflow: hidden;
+        width: 75%;
+        margin: auto;
+        padding-bottom: 75%; } }
+
+/*\
+|*|
+|*| Inbetween Article 
+|*| (and the expander)
+|*|
+\*/
+.plr-btwn-art {
+  overflow: auto;
+  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  background-color: #e3f2fd; }
+  .plr-btwn-art .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 40%;
+    padding-bottom: 30%; }
+    .plr-btwn-art .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-btwn-art .plr-sponsor {
+    margin-bottom: 10px; }
+  .plr-btwn-art .plr-img-wrapper {
+    float: left;
+    margin-right: 20px; }
+  .plr-btwn-art h1 {
+    margin: 0;
+    border-bottom: none !important; }
+  .plr-btwn-art a {
+    text-decoration: initial;
+    color: initial; }
+
+@media only screen and (max-width: 425px) {
+  .plr-btwn-art .plr-img-wrapper {
+    width: 100%;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 50%; } }
+/*\
+|*|
+|*| Collection
+|*|
+\*/
+.plr-collection {
+  overflow: auto;
+  padding: 10px 0;
+  border-bottom: 1px solid grey; }
+  .plr-collection .plr-img-wrapper {
+    position: relative;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 25%;
+    padding-bottom: 25%; }
+    .plr-collection .plr-img-wrapper div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transition: .25s;
+      background-size: cover !important; }
+  .plr-collection .plr-img-wrapper {
+    float: left;
+    margin-right: 20px; }
+  .plr-collection h2 {
+    margin: 0;
+    text-transform: inherit; }
+  .plr-collection p {
+    margin: 0;
+    margin-top: 5px; }
+  .plr-collection a {
+    text-decoration: initial; }
+  .plr-collection:hover a {
+    color: #1877ab; }
+
+/*# sourceMappingURL=style.css.map */
