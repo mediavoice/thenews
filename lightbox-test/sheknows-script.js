@@ -183,6 +183,8 @@
         "a.polar-learn-more-btn.polar-btn {",
         "    background-color: #03a9f4;",
         "    color:white !important;",
+        "    font-size: 12px;",
+        "    padding: 8px 15px;",
         "}",
         "",
         ".polar-deck-share-btns li.email {",
