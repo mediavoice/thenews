@@ -38,70 +38,85 @@
 
 
         q().push(["injectCSS", ["",
-".plr-promo-unit {",
-"    display: inline-block;",
-"    position: relative;",
-"}",
-"",
-".plr-promo-unit a {",
-"    color: initial;",
-"    text-decoration: initial;",
-"}",
+"@import 'https://fonts.googleapis.com/css?family=Roboto';",
 "",
 ".plr-rr {",
-"    position: relative;",
-"    width: 300px;",
-"    height: 250px;",
-"    background: #fff;",
-"    border-top: 3px solid #000;",
-"    display: inline-block;",
-"    overflow: hidden;",
+"  width: 300px;",
+"  height: 250px;",
+"  /*overflow: hidden;*/",
+"  position: relative;",
+"  margin: auto;",
+"  text-align: left;",
+"  border: 1px solid #c0c3c4;",
 "}",
 "",
-".plr-ad-unit {",
-"    position: absolute;",
-"    width: 274px;",
-"    left: 13px;",
-"    top: 13px;",
-"    bottom: 10px;",
-"    right: 13px;",
-"    margin: auto;",
+".plr-rr a {",
+"  color: initial;",
+"  text-decoration: initial;",
 "}",
 "",
-".plr-thumbnail {",
-"    position: relative;",
-"    width: 100%;",
-"    height: 150.013px;",
-"    background: #fff;",
+".plr-rr .plr-img-wrapper {",
+"  position: relative;",
+"  top: 0;",
+"  left: 0;",
+"  overflow: hidden;",
+"  width: 100%;",
+"  height: 100%;",
 "}",
 "",
-".plr-ad-content {",
-"    position: relative;",
-"    margin-top: 16px;",
-"    -webkit-font-smoothing: antiliased;",
+".plr-rr .plr-img-wrapper > div:first-child {",
+"  position: absolute;",
+"  top: 0;",
+"  right: 0;",
+"  bottom: 0;",
+"  left: 0;",
+"  transition: .25s;",
+"  background-size: cover !important;",
 "}",
 "",
-".plr-sponsored {",
-"    font-family: Brandon Text;",
-"    font-weight: bold;",
-"    text-transform: uppercase;",
-"    font-size: 10px;",
-"    line-height: 10px;",
-"    color: #f5823f;",
-"    letter-spacing: 0.08em;",
-"    -webkit-font-smoothing: antiliased;",
-"    -moz-font-smoothing: antiliased;",
+".plr-rr .plr-img-wrapper {",
+"  transition: .3s;",
 "}",
 "",
-".plr-title {",
-"    font-family: Brandon Text;",
-"    font-weight: bold;",
-"    font-size: 18px;",
-"    line-height: 20px;",
-"    margin-top: 4px;",
-"    color: #000;",
-"    -webkit-font-smoothing: antiliased;",
-"    -moz-font-smoothing: antiliased;",
+".plr-rr .plr-rr-logo {",
+"  position: relative;",
+"  float: right;",
+"  margin-right: 5px;",
+"  bottom: 35px;",
+"}",
+"",
+".plr-rr__content {",
+"  position: absolute;",
+"  bottom: 0;",
+"  left: 0;",
+"  width: 100%;",
+"  background-color: transparent;",
+"  font-family: 'Roboto', sans-serif;",
+"}",
+"",
+".plr-rr__content__title {",
+"  font-weight: normal;",
+"  font-size: 18px;",
+"  color: white;",
+"  padding: 10px;",
+"}",
+"",
+".plr-rr__content__banner {",
+"  font-family: 'Roboto', sans-serif;",
+"  display: inline-block;",
+"  font-size: 8px;",
+"  font-weight: bold;",
+"  line-height: 16px;",
+"  letter-spacing: 1.2px;",
+"  text-transform: uppercase;",
+"  position: absolute;",
+"  background-color: white;",
+"  border-radius: 3px;",
+"  padding: 3.2px 4.8px;",
+"  margin: 4px;",
+"  color: #666;",
+"  right: 0;",
+"  top: 0;",
 "}",
 ""].join("\n"), "head"]);
 
@@ -226,25 +241,23 @@
 
    Note that this code has been generated from the following markup:
 
-<div class="plr-promo-unit">
-  <a href="{{link}}">
-    <div class="plr-rr">
-      <div class="plr-ad-unit">
-              <div class="plr-thumbnail" style="background: url('{{getThumbHref}}') no-repeat center center;background-size:cover;">
-        </div>
-        <div class="plr-ad-content">
-          <div class="plr-sponsored">Sponsor Content</div>
-                  <div class="plr-title">{{title}}</div>
-        </div>
-      </div>
+<div class="plr-rr">
+  <a href="#polar-deck-link" rel="nofollow">
+    <div class="plr-img-wrapper">
+      <div style="background: url('{{getThumbHref}}') no-repeat center center;"></div>
     </div>
-
+    <div class="plr-rr__content__banner">Sponsored</div>
+    <div class="plr-rr__content">
+      
+      <div class="plr-rr__content__title">{{title}}</div>
+      
+    </div>
   </a>
 </div>
 
 */
 
-  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;  buffer += "<div class=\"plr-promo-unit\">\n  <a href=\"";  if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "\">\n    <div class=\"plr-rr\">\n      <div class=\"plr-ad-unit\">\n              <div class=\"plr-thumbnail\" style=\"background: url('";  if (stack1 = helpers.getThumbHref) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.getThumbHref; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "') no-repeat center center;background-size:cover;\">\n        </div>\n        <div class=\"plr-ad-content\">\n          <div class=\"plr-sponsored\">Sponsor Content</div>\n                  <div class=\"plr-title\">";  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "</div>\n        </div>\n      </div>\n    </div>\n\n  </a>\n</div>";  return buffer;  };
+  compiledTemplate0 = function (Handlebars,depth0,helpers,partials,data) {  this.compilerInfo = [4,'>= 1.0.0'];helpers = this.merge(helpers, Handlebars.helpers); data = data || {};  var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;  buffer += "<div class=\"plr-rr\">\n  <a href=\"#polar-deck-link\" rel=\"nofollow\">\n    <div class=\"plr-img-wrapper\">\n      <div style=\"background: url('";  if (stack1 = helpers.getThumbHref) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.getThumbHref; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "') no-repeat center center;\"></div>\n    </div>\n    <div class=\"plr-rr__content__banner\">Sponsored</div>\n    <div class=\"plr-rr__content\">\n      \n      <div class=\"plr-rr__content__title\">";  if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }  else { stack1 = depth0.title; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }  buffer += escapeExpression(stack1)    + "</div>\n      \n    </div>\n  </a>\n</div>";  return buffer;  };
 
     }
 
