@@ -2,7 +2,7 @@ var adCount = 0;
 var lastID = "";
 var albert = [];
 exec();
-var adInterval = setInterval(exec, 10000);
+var adInterval = setInterval(exec, 7500);
 
 function pullJSON() {
   console.log("Pulling JSON");
@@ -30,17 +30,18 @@ function pullJSON() {
           }
         }
       }
-
+      console.log(index);
       for (var i = 0; i < index; i++) {
+        console.log(output[i]);
         $.ajax({
           url: "http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/" + output[i],
           success: function(result) {
             albert.push(result);
+            console.log(result);
           },
-          error: function() { 
-          }
+          error: function() {}
         });
-      }2
+      }
     },
     error: function() {
       console.log("Error while requesting JSON");
@@ -50,10 +51,19 @@ function pullJSON() {
 
 function insertAds(output) {
   console.log("onion");
+  var b = [];
   console.log("ALBERT" + albert.length);
-  for (var i = 0; i < albert.length; i++) {
-    console.log(albert[i]);
-    console.log("Inserting Ads");
+  $.each(albert, function(index, event) {
+    var events = $.grep(b, function(e) {
+      return event.experience.destUrl == e.experience.destUrl;
+    });
+    if (events.length === 0) {
+      b.push(event);
+    }
+  });
+  console.log("MY PM " + albert.length);
+  console.log("MY " + b.length);
+  for (var i = 0; i < b.length; i++) {
     //if (!adThumbHrefs[i]) adThumbHrefs[i] = "http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081";
     var html_template = ["",
       "<div class=\"plr-ad\">",
@@ -72,6 +82,7 @@ function insertAds(output) {
     ].join("\n");
     $('.outer-container').prepend(html_template);
   }
+  albert = [];
   adCount++;
 }
 
@@ -81,6 +92,7 @@ function exec() {
     pullJSON();
     insertAds();
   } else {
+    console.log("stopping");
     stop();
   }
 }
