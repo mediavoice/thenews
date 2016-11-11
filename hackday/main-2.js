@@ -56,6 +56,8 @@ function insertAds(output) {
   console.log("ALBERT" + albert.length);
   $.each(albert, function(index, event) {
     var events = $.grep(b, function(e) {
+      console.log("comparing " + event.experience.destUrl + ". with " + e.experience.destUrl + ".");
+      console.log("pass????? " + event.experience.destUrl == e.experience.destUrl);
       return event.experience.destUrl == e.experience.destUrl;
     });
     if (events.length === 0) {
@@ -67,7 +69,7 @@ function insertAds(output) {
     try {
       var html_template = ["",
         "<div class=\"plr-ad\">",
-        "    <a href=\"" + albert[i].experience.destUrl + "\" rel=\"nofollow\">",
+        "    <a href=\"" + albert[i].experience.destUrl + "\" target=\"showPreview\" class=\"link\">",
         "        <div class=\"plr-img-wrapper\">",
         "            <div style=\"background: url('http://meraxes-cdn.polarmobile.com/" + albert[i].thumb.instances[0].href + "') no-repeat center center;\"></div>",
         "        </div>",
@@ -80,7 +82,7 @@ function insertAds(output) {
         "",
         ""
       ].join("\n");
-      $('.outer-container').prepend(html_template);
+      $('.outer-container').append(html_template);
     } catch (e) {
       console.log("Couldn't find thumbnail");
     }
@@ -91,6 +93,10 @@ function insertAds(output) {
 }
 
 function exec() {
+  var links = $('a.link').click(function() {
+    console.log("working");
+       $('iframe').css('opacity', '1');
+   });
   console.log("exec");
   if (adCount < 5) {
     pullJSON();
