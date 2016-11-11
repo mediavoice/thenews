@@ -37,12 +37,13 @@ function pullJSON() {
           url: "http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/" + output[i],
           success: function(result) {
             console.log(result);
+
             adTitles.push(result.experience.title);
-            if (result.primaryMedia.content.href)
+            if (result.primaryMedia.content.href != "undefined")
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.primaryMedia.content.href);
             else
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
-            if (result.experience.destUrl)
+            if (result.experience.destUrl != "undefined")
               adLinks.push(result.experience.destUrl);
             else
               adLinks.push("www.google.com");
