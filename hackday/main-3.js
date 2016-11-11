@@ -4,10 +4,10 @@ var adTitles = [];
 var adThumbHrefs = [];
 var adLinks = [];
 var lastID = "";
+var albert = [];
 
 function pullJSON() {
   console.log("Pulling JSON");
-  var output = [];
   // go through every ID in the JSON
   // grab info from meraxes: http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/ + ID 
 
@@ -15,7 +15,7 @@ function pullJSON() {
     url: "http://ds1.prod.polarmobile.com:1234/latest/",
     success: function(result) {
       var index = result.instance_ids.length;
-      output = result.instance_ids;
+      var output = result.instance_ids;
       if (lastID.length == 0) {
         lastID = output[0];
       } else {
@@ -32,23 +32,28 @@ function pullJSON() {
       }
 
       for (var i = 0; i < index; i++) {
-        console.log(i);
         $.ajax({
           url: "http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/" + output[i],
           success: function(result) {
             console.log(result);
-
-            adTitles.push(result.experience.title);
-            if (result.primaryMedia.content.href != "undefined")
-              adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.primaryMedia.content.href);
-            else
-              adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
-            if (result.experience.destUrl != "undefined")
-              adLinks.push(result.experience.destUrl);
-            else
-              adLinks.push("www.google.com");
+            albert.push(result);
+            console.log(albert);
+            // adTitles.push(result.experience.title);
+            // if (result.thumb.instances[0].href != "null") {
+            //   adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.thumb.instances[0].href);
+            // } else {
+            //   console.log("failed to fetch href");
+            //   adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
+            // }
+            // if (result.experience.destUrl != "undefined") {
+            //   adLinks.push(result.experience.destUrl);
+            // } else {
+            //   console.log("failed to fetch link");
+            //   adLinks.push("www.google.com");
+            // }
           },
-          error: function() { 
+          error: function() {
+            console.log("didnt get creative");
           }
         });
       }
@@ -59,19 +64,19 @@ function pullJSON() {
   });
 }
 
-function insertAds(output) {
+function insertAds() {
   console.log("onion");
-  for (var i = 0; i < adTitles.length; i++) {
+  for (var i = 0; i < 5; i++) {
     console.log("Inserting Ads");
     //if (!adThumbHrefs[i]) adThumbHrefs[i] = "http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081";
     var html_template = ["",
       "<div class=\"plr-ad\">",
-      "    <a href=\"" + adLinks[i] + "\" rel=\"nofollow\">",
+      "    <a href=\"" + albert[i].experience.destUrl + "\" rel=\"nofollow\">",
       "        <div class=\"plr-img-wrapper\">",
-      "            <div style=\"background: url('" + adThumbHrefs[i] + "') no-repeat center center;\"></div>",
+      "            <div style=\"background: url(" + albert[i].thumb.instances[0].href + ") no-repeat center center;\"></div>",
       "        </div>",
       "        <div class=\"plr-ad-content\">",
-      "            <div class=\"plr-ad-content-title\">" + adTitles[i] + "</div>",
+      "            <div class=\"plr-ad-content-title\">" + albert[i].experience.title + "</div>",
       "            <div class=\"plr-ad-content-banner\">Sponsored</div>",
       "        </div>",
       "    </a>",
@@ -82,7 +87,7 @@ function insertAds(output) {
     $('.outer-container').prepend(html_template);
   }
   adCount++;
-  adTitles = adThumbHrefs = [];
+
 
 
 }
