@@ -42,14 +42,15 @@ function pullJSON() {
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.primaryMedia.content.href);
             else
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
-            adLinks.push(result.experience.destUrl);
+            if (result.experience.destUrl)
+              adLinks.push(result.experience.destUrl);
+            else
+              adLinks.push("www.google.com");
           },
           error: function() { 
           }
         });
       }
-
-      console.log("LAST ID " + lastID);
     },
     error: function() {
       console.log("Error while requesting JSON");
