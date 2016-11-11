@@ -98,7 +98,7 @@ function exec() {
        $('iframe').css('opacity', '1');
    });
   console.log("exec");
-  if (adCount < 5) {
+  if (adCount < 999999) {
     pullJSON();
     insertAds();
   } else {
