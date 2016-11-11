@@ -20,7 +20,7 @@ function insertAds() {
 
 function exec() {
 	console.log("exec");
-	if (adCount < 3) {
+	if (adCount < 10) {
 		pullJSON();
 		insertAds();
 	} else {
@@ -30,4 +30,4 @@ function exec() {
 
 function stop() {
 	clearInterval(adInterval);
-}
+}ø
