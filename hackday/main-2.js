@@ -1,70 +1,96 @@
 var adCount = 0;
 var adInterval = setInterval(exec, 1000);
+var adTitles = [];
+var adThumbHrefs = [];
+var lastID = "";
 
 function pullJSON() {
-    console.log("Pulling JSON");
-    // go through every ID in the JSON
-    // grab info from meraxes: http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/ + ID 
-    
+  console.log("Pulling JSON");
+  var output = [];
+  // go through every ID in the JSON
+  // grab info from meraxes: http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/ + ID 
 
-    var api = $.ajax({
-      url: "http://ds1.prod.polarmobile.com:1234/latest/",
-      success: function(result) {
-        console.log(result);
-      },
-      error: function() {
-      	console.log("Error while requesting JSON");
+  var api = $.ajax({
+    url: "http://ds1.prod.polarmobile.com:1234/latest/",
+    success: function(result) {
+      var index = result.instance_ids.length;
+      output = result.instance_ids;
+      if (lastID.length == 0) {
+        lastID = output[0];
+      } else {
+        // find new creative ids
+        for (var i = 0; i < output.length; i++) {
+          console.log("finding the last ID");
+          if (output[i] == lastID) {
+            console.log("found ID!");
+            index = i;
+            lastID = output[0];
+            break;
+          }
+        }
       }
-    });
 
-    // $.ajax({
-    // url: 'http://ds1.prod.polarmobile.com:1234/latest/',
-    // dataType: 'JSONP',
-    // jsonpCallback: 'callback',
-    // type: 'GET',
-    // success: function (data) {
-    //     console.log("success");
-    // }
+      for (var i = 0; i < index; i++) {
+        $.ajax({
+          url: "http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/" + output[i],
+          success: function(result) {
+            adTitles.push(result.sponsor.name);
+            if (result.primaryMedia.content.href)
+              adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.primaryMedia.content.href);
+            else
+              adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
+          },
+          error: function() { 
+          }
+        });
+      }
 
+      console.log("LAST ID " + lastID);
+    },
+    error: function() {
+      console.log("Error while requesting JSON");
+    }
+  });
 }
 
-function insertAds() {
-    var thumbnails = [];
-    thumbnails.push('http://shushi168.com/data/out/193/37281782-random-image.png');
-    thumbnails.push('http://globalgamejam.org/sites/default/files/styles/game_sidebar__normal/public/game/featured_image/promo_5.png?itok=9dymM8JD');
-    thumbnails.push('https://pbs.twimg.com/profile_images/619270171035856896/8Eu522G0.jpg');
-    var randomIndex = Math.floor(Math.random() * 3);
+function insertAds(output) {
+  for (var i = 0; i < adTitles.length; i++) {
     console.log("Inserting Ads");
+    //if (!adThumbHrefs[i]) adThumbHrefs[i] = "http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081";
     var html_template = ["",
-        "<div class=\"plr-ad\">",
-        "    <a href=\"{{link}}\" rel=\"nofollow\">",
-        "        <div class=\"plr-img-wrapper\">",
-        "            <div style=\"background: url('" + thumbnails[randomIndex] + "') no-repeat center center;\"></div>",
-        "        </div>",
-        "        <div class=\"plr-ad-content\">",
-        "            <div class=\"plr-ad-content-title\">These 8 Real-Life Dads Are Secretly Superheroes</div>",
-        "            <div class=\"plr-ad-content-banner\">Sponsored</div>",
-        "        </div>",
-        "    </a>",
-        "</div>",
-        "",
-        ""
+      "<div class=\"plr-ad\">",
+      "    <a href=\"{{link}}\" rel=\"nofollow\">",
+      "        <div class=\"plr-img-wrapper\">",
+      "            <div style=\"background: url('" + adThumbHrefs[i] + "') no-repeat center center;\"></div>",
+      "        </div>",
+      "        <div class=\"plr-ad-content\">",
+      "            <div class=\"plr-ad-content-title\">" + adTitles[i] + "</div>",
+      "            <div class=\"plr-ad-content-banner\">Sponsored</div>",
+      "        </div>",
+      "    </a>",
+      "</div>",
+      "",
+      ""
     ].join("\n");
     $('.outer-container').prepend(html_template);
     adCount++;
-    console.log(adCount);
+  }
+
+  adTitles = adThumbHrefs = [];
+
+
 }
 
 function exec() {
-    console.log("exec");
-    if (adCount < 3) {
-        pullJSON();
-        insertAds();
-    } else {
-        stop();
-    }
+  console.log("exec");
+  if (adCount < 1) {
+    pullJSON();
+    insertAds();
+  } else {
+    stop();
+  }
 }
 
 function stop() {
-    clearInterval(adInterval);
+  clearInterval(adInterval);
 }
