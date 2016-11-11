@@ -1,0 +1,73 @@
+@keyframes move_block {
+	0%   {opacity: 0; width: 0;}
+	100% {opacity: 1; width: 300px;}
+}
+
+.plr-ad {
+	width: 300px;
+	height: 250px;
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+	margin: 5px;
+	text-align: left;
+	border: 1px solid #808080;
+	animation-name: move_block;
+	animation-duration: .4s;
+}
+.plr-ad a {
+	color: initial;
+	text-decoration: initial
+}
+.plr-ad .plr-img-wrapper {
+	position: relative;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	width: 100%;
+	height: 100%
+}
+.plr-ad .plr-img-wrapper > div:first-child {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	transition: .25s;
+	background-size: cover !important
+}
+.plr-ad .plr-img-wrapper {
+	transition: .3s
+}
+.plr-ad .plr-ad-logo {
+	position: relative;
+	float: right;
+	margin-right: 5px;
+	bottom: 35px
+}
+.plr-ad-content {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%
+}
+.plr-ad-content-title {
+	font-weight: normal;
+	font-family: Arial, sans-serif;
+	font-size: 15px;
+	padding: 10px 7px 5px;
+	color: #681712;
+	background-color: white
+}
+.plr-ad-content-banner {
+	font-family: 'Tahoma', sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 16px;
+	text-transform: uppercase;
+	letter-spacing: 0.3px;
+	position: relative;
+	padding: 0px 7px 5px;
+	color: #777777;
+	background-color: white
+}
