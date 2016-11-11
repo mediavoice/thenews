@@ -1,23 +1,12 @@
 var adCount = 0;
-var adInterval = setInterval(exec, 1000);
+var adInterval = setInterval(exec, 500);
 
 function pullJSON() {
     console.log("Pulling JSON");
     // go through every ID in the JSON
     // grab info from meraxes: http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/ + ID 
     
-
-    $.ajax({
-    url: 'http://ds1.prod.polarmobile.com:1234/latest/',
-    dataType: 'JSONP',
-    jsonpCallback: 'callback',
-    type: 'GET',
-    success: function (data) {
-        console.log("success");
-    }
-});
-
-}
+};
 
 function insertAds() {
     var thumbnails = [];
@@ -28,7 +17,7 @@ function insertAds() {
     console.log("Inserting Ads");
     var html_template = ["",
         "<div class=\"plr-ad\">",
-        "    <a href=\"{{link}}\" rel=\"nofollow\">",
+        "    <a href=\"http://www.wikipedia.org/\" target=\"showPreview\" class=\"link\">",
         "        <div class=\"plr-img-wrapper\">",
         "            <div style=\"background: url('" + thumbnails[randomIndex] + "') no-repeat center center;\"></div>",
         "        </div>",
@@ -47,6 +36,10 @@ function insertAds() {
 }
 
 function exec() {
+	var links = $('a.link').click(function() {
+   	console.log("working");
+       $('iframe').css('opacity', '1');
+   });
     console.log("exec");
     if (adCount < 10) {
         pullJSON();
