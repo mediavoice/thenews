@@ -50,6 +50,7 @@ function pullJSON() {
 }
 
 function insertAds(output) {
+  adCount++;
   console.log("onion");
   var b = [];
   console.log("ALBERT" + albert.length);
@@ -61,34 +62,37 @@ function insertAds(output) {
       b.push(event);
     }
   });
-  console.log("MY PM " + albert.length);
-  console.log("MY " + b.length);
   for (var i = 0; i < b.length; i++) {
     //if (!adThumbHrefs[i]) adThumbHrefs[i] = "http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081";
-    var html_template = ["",
-      "<div class=\"plr-ad\">",
-      "    <a href=\"" + albert[i].experience.destUrl + "\" rel=\"nofollow\">",
-      "        <div class=\"plr-img-wrapper\">",
-      "            <div style=\"background: url('http://meraxes-cdn.polarmobile.com/" + albert[i].thumb.instances[0].href + "') no-repeat center center;\"></div>",
-      "        </div>",
-      "        <div class=\"plr-ad-content\">",
-      "            <div class=\"plr-ad-content-title\">" + albert[i].experience.title + "</div>",
-      "            <div class=\"plr-ad-content-banner\">Sponsored</div>",
-      "        </div>",
-      "    </a>",
-      "</div>",
-      "",
-      ""
-    ].join("\n");
-    $('.outer-container').prepend(html_template);
+    try {
+      var html_template = ["",
+        "<div class=\"plr-ad\">",
+        "    <a href=\"" + albert[i].experience.destUrl + "\" rel=\"nofollow\">",
+        "        <div class=\"plr-img-wrapper\">",
+        "            <div style=\"background: url('http://meraxes-cdn.polarmobile.com/" + albert[i].thumb.instances[0].href + "') no-repeat center center;\"></div>",
+        "        </div>",
+        "        <div class=\"plr-ad-content\">",
+        "            <div class=\"plr-ad-content-title\">" + albert[i].experience.title + "</div>",
+        "            <div class=\"plr-ad-content-banner\">Sponsored</div>",
+        "        </div>",
+        "    </a>",
+        "</div>",
+        "",
+        ""
+      ].join("\n");
+      $('.outer-container').prepend(html_template);
+    } catch (e) {
+      console.log("Couldn't find thumbnail");
+    }
   }
+  console.log("empty albert");
   albert = [];
-  adCount++;
+  console.log("Ad Count " + adCount);
 }
 
 function exec() {
   console.log("exec");
-  if (adCount < 2) {
+  if (adCount < 5) {
     pullJSON();
     insertAds();
   } else {
