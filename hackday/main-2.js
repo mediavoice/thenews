@@ -2,6 +2,7 @@ var adCount = 0;
 var adInterval = setInterval(exec, 1000);
 var adTitles = [];
 var adThumbHrefs = [];
+var adLinks = [];
 var lastID = "";
 
 function pullJSON() {
@@ -31,14 +32,17 @@ function pullJSON() {
       }
 
       for (var i = 0; i < index; i++) {
+        console.log(i);
         $.ajax({
           url: "http://meraxes.polarmobile.com/nativeads/v1.4.0/json/creative/" + output[i],
           success: function(result) {
-            adTitles.push(result.sponsor.name);
+            console.log(result);
+            adTitles.push(result.experience.title);
             if (result.primaryMedia.content.href)
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/" + result.primaryMedia.content.href);
             else
               adThumbHrefs.push("http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081");
+            adLinks.push(result.experience.destUrl);
           },
           error: function() { 
           }
@@ -54,12 +58,13 @@ function pullJSON() {
 }
 
 function insertAds(output) {
+  console.log("onion");
   for (var i = 0; i < adTitles.length; i++) {
     console.log("Inserting Ads");
     //if (!adThumbHrefs[i]) adThumbHrefs[i] = "http://meraxes-cdn.polarmobile.com/image/v1.0.0/bin/57c704053e9221343df69081";
     var html_template = ["",
       "<div class=\"plr-ad\">",
-      "    <a href=\"{{link}}\" rel=\"nofollow\">",
+      "    <a href=\"" + adLinks[i] + "\" rel=\"nofollow\">",
       "        <div class=\"plr-img-wrapper\">",
       "            <div style=\"background: url('" + adThumbHrefs[i] + "') no-repeat center center;\"></div>",
       "        </div>",
@@ -73,9 +78,8 @@ function insertAds(output) {
       ""
     ].join("\n");
     $('.outer-container').prepend(html_template);
-    adCount++;
   }
-
+  adCount++;
   adTitles = adThumbHrefs = [];
 
 
@@ -83,7 +87,7 @@ function insertAds(output) {
 
 function exec() {
   console.log("exec");
-  if (adCount < 1) {
+  if (adCount < 2) {
     pullJSON();
     insertAds();
   } else {
