@@ -82,7 +82,11 @@ function insertAds(output) {
         "",
         ""
       ].join("\n");
-      $('.outer-container').append(html_template);
+      if (adCount == 1) {
+        $('.outer-container').append(html_template);
+      } else {
+        $('.outer-container').prepend(html_template);
+      }
     } catch (e) {
       console.log("Couldn't find thumbnail");
     }
