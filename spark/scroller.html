@@ -13,13 +13,10 @@
 <style>
   @import url('https://fonts.googleapis.com/css?family=Roboto');
 
-#imgbox{
-  height: 1000vh;
-}
-
 .plr-ad {
   margin-top: 355px;
   width: 360px;
+  height: 238px;
   position: absolute;
 }
 
@@ -37,8 +34,8 @@ input[type="radio"] {
 .radio-selectors {
   position: absolute;
   z-index: 100000;
-  top: 40%;
-  left: 40px;
+  top: 35%;
+  left: 20px;
   background: transparent;
   color: black;
 }
@@ -46,12 +43,10 @@ input[type="radio"] {
 .plr-ad-content {
   position: absolute;
   z-index: 1;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0);
   top: 0%;
   right: 0%;
-  width: 43%;
-  margin: 10px;
-  height: 93%;
+  width: 42%;
 }
 
 .plr-ad-title {
@@ -60,10 +55,6 @@ input[type="radio"] {
   letter-spacing: 3px;
   font-size: 28px;
   padding: 10px;
-}
-
-.radio-selectors{
-  top: 35%;
 }
 
 input[type="radio"] {
@@ -106,26 +97,18 @@ input[type='radio']:checked:after {
     font-size: 20px;
     font-weight: 800;
     letter-spacing: 2px;
-    padding: 0 10px;
     bottom: 0%;
-    width: 50%;
     position: absolute;
-    text-align: right;
+    text-align: center;
     right: 0%;
     text-shadow: 0.5px 0.5px 0.5px black; 
   }
 
 @media screen and (max-width: 425px){
   
-  #imgbox{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
   #img-variant{
     width: 360px !important;
-    height: auto;
+    height: 238px;
   }
   
   .plr-ad-disclosure{
@@ -135,6 +118,7 @@ input[type='radio']:checked:after {
   .plr-ad-title {
     font-size: 22px;
     line-height: 24px;
+    text-align: center;
   }
   
   input[type='radio']:after {
