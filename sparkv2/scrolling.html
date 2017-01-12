@@ -115,8 +115,12 @@ h2 {
 } */ 
 </style>
 <script>
-  var i = 0;
-
+  
+jQuery(document).on("mobileinit", function() {
+    jQuery.mobile.autoInitializePage = false;
+});
+   
+var i = 0;
 var currentScroll = 0;  
 $(document).scroll(function() {
     console.log($(window).scrollTop());
