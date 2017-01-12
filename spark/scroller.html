@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>the news</title>
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
+    <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
+    <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+#imgbox{
+  height: 10000vh;
+  width: 50%;
+
+}
+
+.plr-ad {
+  margin-top: 355px;
+  max-width: 590px;
+  max-height: 400px;
+  position: absolute;
+}
+
+#img-variant{
+  z-index: -1;
+  width: 100%;
+  height: auto;
+}
+
+input[type="radio"] {
+  display: block;
+  margin: 20px auto;
+}
+
+.radio-selectors {
+  position: absolute;
+  z-index: 100000;
+  top: 40%;
+  left: 40px;
+  background: transparent;
+  color: black;
+}
+
+.plr-ad-content {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(0,0,0,0.6);
+  top: 0%;
+  right: 0%;
+  width: 43%;
+  margin: 10px;
+  height: 93%;
+}
+
+.plr-ad-title {
+  color: white;
+  font-family: Roboto;
+  letter-spacing: 3px;
+  font-size: 28px;
+  padding: 10px;
+}
+
+.radio-selectors{
+  top: 35%;
+}
+
+input[type="radio"] {
+  display: block;
+  margin: 15px auto;
+}
+
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: black;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #2e7061;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+} 
+
+  .plr-ad-disclosure{
+    color: #2e7061;
+    text-transform: uppercase;
+    font-family: roboto;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 0 10px;
+    bottom: 0%;
+    width: 50%;
+    position: absolute;
+    text-align: right;
+    right: 0%;
+    text-shadow: 0.5px 0.5px 0.5px black; 
+  }
+
+@media screen and (max-width: 425px){
+  
+  #imgbox{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .plr-ad {
+    width: 100%;
+  }
+  
+  #img-variant{
+    width: 100%;
+    height: auto;
+  }
+  
+  .plr-ad-disclosure{
+    font-size: 14px;
+  }
+  
+  .plr-ad-title {
+    font-size: 22px;
+    line-height: 24px;
+  }
+  
+  input[type='radio']:after {
+    width: 12px;
+    height: 12px;
+    border-radius: 10px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: black;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 12px;
+    height: 12px;
+    border-radius: 10px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #2e7061;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+} 
+}
+</style>
+<script>
+var imgArray = ["http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg", "http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a9c81700002600e7bea3.png", "http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a9ea1700002600e7bea5.png"];
+
+var i = 0;
+
+$(document).ready(function() {
+  $('#img0').attr('checked','checked');
+});
+
+$(document).scroll(function() {
+    console.log($(window).scrollTop());
+
+ if($(window).scrollTop() >= 0 && $(window).scrollTop() < 150){
+    $("#img-variant").attr("src", imgArray[0]);
+    $("#img-variant").attr("background-color, #1DE9B6");
+    $('#img0').prop('checked',true);
+    }
+  
+    if($(window).scrollTop() > 150 && $(window).scrollTop() <300){
+    $("#img-variant").attr("src", imgArray[1]);
+    $("#img-variant").attr("background-color, #B388FF");  
+   $('#img1').prop('checked',true);
+    console.log("hi");
+    }
+  
+if($(window).scrollTop() > 300 && $(window).scrollTop() <450){
+    $("#img-variant").attr("src", imgArray[2]);
+ $(".plr-ad").attr("background-color, #FFD180");
+ $('#img2').prop('checked', true);
+}
+
+});
+
+$("#img0").click(function(){
+  $("#img-variant").attr("src", imgArray[0]);
+  console.log("wassup");
+});
+
+$("#img1").click(function(){
+  $("#img-variant").attr("src", imgArray[1]);
+});
+
+$("#img2").click(function(){
+  $("#img-variant").attr("src", imgArray[2]);
+});
+
+
+</script>
+</head>
+<body>
+<div class ="article">
+</div>
+<div id="imgbox">
+  <div class = "plr-ad">
+   <img id="img-variant" src ="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg">
+    <div class = "plr-ad-content">
+      <h2 class ="plr-ad-title"> 7 Real-Life Reasons Your Dog Is A Furry Superhero</h2>
+      <p class ="plr-ad-disclosure"> Presented by Glad </p>
+    </div>
+  <div class = "radio-selectors">
+    <input type="radio" name="img" id ="img0" value = "img0">
+    <input type="radio" name="img" id="img1" value="img1">
+    <input type="radio" name="img" id="img2" value="img1">
+  </div>
+</div>
+</div>
+<div class ="space">
+</div>
+</body>
+</html>
