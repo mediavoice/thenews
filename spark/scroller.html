@@ -67,9 +67,9 @@ input[type="radio"] {
 }
 
 input[type='radio']:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
     top: -2px;
     left: -1px;
     position: relative;
@@ -81,9 +81,9 @@ input[type='radio']:after {
 }
 
 input[type='radio']:checked:after {
-    width: 15px;
-    height: 15px;
-    border-radius: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
     top: -2px;
     left: -1px;
     position: relative;
@@ -118,7 +118,7 @@ input[type='radio']:checked:after {
     font-size: 13px;
     text-align: center;
     width: 50%;
-    padding-left: 20%;
+    padding-right: 20%;
   }
   
   .plr-ad-title {
@@ -126,7 +126,11 @@ input[type='radio']:checked:after {
     line-height: 22px;
     text-align: center;
   }
-  
+  input[type="radio"] {
+  display: block;
+  margin: 15px auto;
+}
+
   input[type='radio']:after {
     width: 12px;
     height: 12px;
@@ -210,7 +214,8 @@ $("#img2").click(function(){
 <div class ="article">
 </div>
 <div id="imgbox">
-  <div class = "plr-ad">
+  <a href= "/www.google.com">
+   <div class = "plr-ad">
    <img id="img-variant" src ="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg">
     <div class = "plr-ad-content">
       <h2 class ="plr-ad-title"> 7 Real-Life Reasons Your Dog Is A Furry Superhero</h2>
@@ -222,6 +227,7 @@ $("#img2").click(function(){
     <input type="radio" name="img" id="img2" value="img1">
   </div>
 </div>
+    </a>
 </div>
 <div class ="space">
 </div>
