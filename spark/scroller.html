@@ -14,7 +14,6 @@
   @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 .plr-ad {
-   margin-top: 355px;
   width: 360px;
   height: 238px;
   position: absolute;
@@ -187,20 +186,20 @@ var imgArray = [];
 $(document).scroll(function() {
     console.log($(window).scrollTop());
 
- if($(window).scrollTop() >= 0 && $(window).scrollTop() < 150){
+ if($(window).scrollTop() >= 200 && $(window).scrollTop() < 350){
     $("#img-variant").attr("src", baseUrl+imgArray[0].href);
     $("#img-variant").attr("background-color, #1DE9B6");
     $('#img0').prop('checked',true);
     }
   
-    if($(window).scrollTop() > 150 && $(window).scrollTop() <300){
+    if($(window).scrollTop() > 350 && $(window).scrollTop() < 500){
     $("#img-variant").attr("src", baseUrl+imgArray[1].href);
     $("#img-variant").attr("background-color, #B388FF");  
    $('#img1').prop('checked',true);
     console.log("hi");
     }
   
-if($(window).scrollTop() > 300 && $(window).scrollTop() <450){
+if($(window).scrollTop() > 500 && $(window).scrollTop() < 700){
     $("#img-variant").attr("src", baseUrl+imgArray[2].href);
  $(".plr-ad").attr("background-color, #FFD180");
  $('#img2').prop('checked', true);
@@ -231,10 +230,18 @@ $("#img2").click(function(){
 </div>
 <div id="imgbox">
     <h1>Jane Fonda Says Justin Trudeau Betrayed Climate Change Promises With Pipeline Approvals</h1>
-    <p>drawn from Prime Minister Justin Trudeau's recent approval of two oilsands pipeline projects.
+    <p>EDMONTON — As far as Jane Fonda is concerned, there's only one lesson to be drawn from Prime Minister Justin Trudeau's recent approval of two oilsands pipeline projects.
 
 "The lesson is we shouldn't be fooled by good-looking Liberals," the Hollywood icon said Wednesday in Edmonton, where she appeared to support indigenous leaders in their concerns over fossil fuel development.
 
+Fonda — as well as chiefs from Manitoba, Alberta and British Columbia — said environmentalists everywhere were impressed by Trudeau's appearance at international climate talks held in Paris in late 2015.
+
+"We all thought, well, cool guy," she said. "What a disappointment."
+ "The lesson is we shouldn't be fooled by good-looking Liberals," the Hollywood icon said Wednesday in Edmonton, where she appeared to support indigenous leaders in their concerns over fossil fuel development.
+
+Fonda — as well as chiefs from Manitoba, Alberta and British Columbia — said environmentalists everywhere were impressed by Trudeau's appearance at international climate talks held in Paris in late 2015.
+
+"We all thought, well, cool guy," she said. "What a disappointment."
     </p>
   <a href= "/www.google.com">
    <div class = "plr-ad">
@@ -252,6 +259,15 @@ $("#img2").click(function(){
     </a>
 </div>
 <div class ="space">
+    "He talked so beautifully of needing to meet the requirements of the climate treaty and to respect and hold to the treaties with indigenous people. Such a heroic stance he took there, and yet he has betrayed every one of the things he committed to in Paris."
+
+Grand Chief Derek Nepinak, with the Assembly of Manitoba Chiefs, said he felt the same letdown.
+
+"He talked about the need to listen to indigenous people. I believed him."
+
+Last year, Trudeau approved Kinder Morgan's plans to triple the capacity of the Trans Mountain line between Edmonton and Burnaby, B.C., and also gave the nod to replacing Enbridge's Line 3 between Edmonton and Superior, Wis. But he pushed ahead with a national carbon price and rejected Enbridge's proposed Northern Gateway pipeline.
+
+The compromise did not please Grand Chief Stewart Phillip of the Union of British Columbia Indian Chiefs.
 </div>
 </body>
 </html>
