@@ -41,6 +41,7 @@ input[type="radio"] {
 }
 .space {
     height: 1000000px;
+    margin-top: 270px;
     }
     
 .plr-ad-content {
@@ -187,20 +188,20 @@ $(document).scroll(function() {
     console.log($(window).scrollTop());
 
  if($(window).scrollTop() >= 0 && $(window).scrollTop() < 150){
-    $("#img-variant").attr("src", imgArray[0]);
+    $("#img-variant").attr("src", baseUrl+imgArray[0].href);
     $("#img-variant").attr("background-color, #1DE9B6");
     $('#img0').prop('checked',true);
     }
   
     if($(window).scrollTop() > 150 && $(window).scrollTop() <300){
-    $("#img-variant").attr("src", imgArray[1]);
+    $("#img-variant").attr("src", baseUrl+imgArray[1].href);
     $("#img-variant").attr("background-color, #B388FF");  
    $('#img1').prop('checked',true);
     console.log("hi");
     }
   
 if($(window).scrollTop() > 300 && $(window).scrollTop() <450){
-    $("#img-variant").attr("src", imgArray[2]);
+    $("#img-variant").attr("src", baseUrl+imgArray[2].href);
  $(".plr-ad").attr("background-color, #FFD180");
  $('#img2').prop('checked', true);
 }
@@ -209,16 +210,16 @@ if($(window).scrollTop() > 300 && $(window).scrollTop() <450){
 
  
 $("#img0").click(function(){
-  $("#img-variant").attr("src", imgArray[0]);
+  $("#img-variant").attr("src", baseUrl+imgArray[0].href);
   console.log("wassup");
 });
 
 $("#img1").click(function(){
-  $("#img-variant").attr("src", imgArray[1]);
+  $("#img-variant").attr("src", baseUrl+imgArray[1].href);
 });
 
 $("#img2").click(function(){
-  $("#img-variant").attr("src", imgArray[2]);
+  $("#img-variant").attr("src", baseUrl+imgArray[2].href);
 });
 
 });
@@ -229,6 +230,7 @@ $("#img2").click(function(){
 <div class ="article">
 </div>
 <div id="imgbox">
+    <h1>Jane Fonda Says Justin Trudeau Betrayed Climate Change Promises With Pipeline Approvals</h1>
   <a href= "/www.google.com">
    <div class = "plr-ad">
    <img id="img-variant" src ="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg">
