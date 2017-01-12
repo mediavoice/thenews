@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
     <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -126,6 +127,7 @@ input[type='radio']:checked:after {
     line-height: 22px;
     text-align: center;
   }
+    
   input[type="radio"] {
   display: block;
   margin: 15px auto;
@@ -161,13 +163,31 @@ input[type='radio']:checked:after {
 }
 </style>
 <script>
-var imgArray = ["http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg", "http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a9c81700002600e7bea3.png", "http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a9ea1700002600e7bea5.png"];
 
-var i = 0;
+$(document).ready(function(){
+console.log("stuff is loading");
 
-$(document).ready(function() {
-  $('#img0').attr('checked','checked');
-});
+var baseUrl = "meraxes-staging.polarmobile.com";
+var apiUrl = "/nativeads/v1.4.0/json/creative/5b5cca0e2afb4425b0c2a3641bff063e?mvbust";
+var imgArray = [];
+    
+// $.ajax({
+//   url: baseUrl + apiUrl
+//   context: document.body
+// }).done(function(response) {
+//     imgArray = response.thumb.instances;
+// });
+    
+  axios.get(baseUrl + apiUrl)
+  .then(function (response) {
+    console.log(response);
+    imgArray = response.thumb.instances;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+ 
+ $('#img0').attr('checked','checked');
 
 $(document).scroll(function() {
     console.log($(window).scrollTop());
@@ -193,7 +213,7 @@ if($(window).scrollTop() > 300 && $(window).scrollTop() <450){
 
 });
 
- $(document).ready(function(){
+ 
 $("#img0").click(function(){
   $("#img-variant").attr("src", imgArray[0]);
   console.log("wassup");
@@ -206,6 +226,7 @@ $("#img1").click(function(){
 $("#img2").click(function(){
   $("#img-variant").attr("src", imgArray[2]);
 });
+
 });
 
 </script>
