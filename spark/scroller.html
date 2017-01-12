@@ -170,18 +170,11 @@ console.log("stuff is loading");
 var baseUrl = "http://meraxes-staging.polarmobile.com";
 var apiUrl = "/nativeads/v1.4.0/json/creative/5b5cca0e2afb4425b0c2a3641bff063e?mvbust";
 var imgArray = [];
-    
-// $.ajax({
-//   url: baseUrl + apiUrl
-//   context: document.body
-// }).done(function(response) {
-//     imgArray = response.thumb.instances;
-// });
-    
+   
   axios.get(baseUrl + apiUrl)
   .then(function (response) {
     console.log(response);
-    imgArray = response.thumb.instances;
+    imgArray = response.data.thumb.instances;
   })
   .catch(function (error) {
     console.log(error);
