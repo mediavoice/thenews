@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <title>the news</title>
+    <meta http-equiv="cleartype" content="on">
+    <meta name="MobileOptimized" content="320">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
+    <link rel="icon" href="http://www.faviconshut.com/pics/3/3251-news-newspaper-icon-favicon.png">
+    <script src="//code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script>
+      $(document).ready(function(){       
+            var scroll_pos = 0;
+            $(document).scroll(function() { 
+  console.log("we be scrolling");
+  scroll_pos = $(this).scrollTop();
+  if (scroll_pos < 200){
+     $(".plr-wrapper").css("background-color","rgba(0,0,0,0.5)");
+  }
+  else if (scroll_pos > 200 && scroll_pos< 400) {
+        $(".plr-wrapper").css("background-color","red");
+  } else if (scroll_pos >400 && scroll_pos< 600) {
+$(".plr-wrapper").css("background-color","blue");
+  } else {
+    $(".plr-wrapper").css("background-color","black");
+  }
+});
+});
+    </script>
+   <style>
+   .plr-wrapper{
+  height:1500px;
+  width:100px;
+  background-color:rgba(0,0,0,0.5);
+}
+
+   </style>
+</head>
+
+<body>
+<div class="plr-wrapper">
+</div>
+
+</body>
+</html>
+
