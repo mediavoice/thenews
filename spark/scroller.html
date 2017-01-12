@@ -175,6 +175,7 @@ var imgArray = [];
   .then(function (response) {
     console.log(response);
     imgArray = response.data.thumb.instances;
+    console.log("imgArray:", imgArray);
   })
   .catch(function (error) {
     console.log(error);
