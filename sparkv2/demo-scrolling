@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+   
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.plr-title{
+  position: absolute;
+  font-family: roboto;
+  text-shadow: 2px 2px 2px black;
+  font-size: 18px;
+  line-height: 28px;
+  width: 320px;
+  padding-left: 20px;
+  text-align: center;
+  height: 100%;
+}
+
+.plr-ad-disclosure {
+  position: relative;
+  padding-top: 0;
+  height: 10px;
+  margin: 30% auto;
+  text-align: center;
+  font-size: 14px;
+  height: 80px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+   p {
+  color: #dad6d6;
+}
+
+
+.plr-ad {
+  margin-top: 230px;
+  overflow: hidden !important;
+  width: 360px;
+  height: 235px;
+  z-index: 100;
+}
+
+.plr-image{
+  z-index: -100;
+  width: 360px
+  height: 235px;
+  position: relative;
+}
+
+.scrollup{
+     top: 0px;
+    -webkit-animation: floatBubble 0.5s 1  normal ease-out;
+    animation: floatBubble 0.5s  1  normal ease-out;
+    animation-fill-mode: forwards; 
+}
+
+@-webkit-keyframes floatBubble {
+  0% {
+        top: -234px;
+    }
+    100% {
+        top: 0px;
+    }
+}
+
+h2 {
+  color: white;
+  z-index: 1000;
+}
+.scrolldown {
+  -webkit-animation: floatDown 0.5s 1  normal ease-out;
+    animation: floatDown 0.5s  1  normal ease-out;
+    animation-fill-mode: forwards; 
+}
+
+@-webkit-keyframes floatDown {
+    0% {
+        top: 0px;
+    }
+    100% {
+        top: -240px;
+    }
+}
+
+}
+
+/* @media screen and (max-width: 425px) {
+/*   .plr-ad {
+  overflow: hidden !important;
+  width: 320px;
+  height: 200px;
+  border: 2px solid black;
+  z-index: 100;
+} */
+
+/* .plr-image{
+  z-index: -100;
+  width: 320px;
+  height: 800px;
+  position: relative; */
+/* }
+
+  img {
+    width: 320px;
+    height: auto;
+  }
+
+} */ 
+</style>
+<script>
+  
+
+var currentScroll = 0;  
+$(document).scroll(function() {
+    console.log($(window).scrollTop());
+
+if($(window).scrollTop()  >= 30 && $(window).scrollTop() < 100) {    
+        
+  var nextScroll = $(this).scrollTop();
+      
+  
+      if (nextScroll < currentScroll){
+      console.log('Scroll up');
+       $(".plr-image").removeClass("scrolldown").addClass( "scrollup");
+      } 
+      
+      else {
+      console.log('Scroll down');
+       $(".plr-image").removeClass("scrollup").addClass( "scrolldown");
+      }
+         currentScroll = nextScroll; 
+    }
+});
+
+  
+</script>
+</head>
+<body>
+<div class = "plr-ad">
+  <div class ="plr-title">
+    <h2>7 Real-Life Reasons Your Dog Is A Furry Superhero</h2>
+    <div class ="plr-ad-disclosure">
+    <p>Presented by Glad </p>
+  </div>
+  </div>
+ <div class ="plr-image">
+  <img class="img-variant" src ="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a7ba180000230c30f853.jpeg" width = "360px">
+  <img class="img-variant" src ="http://img.huffingtonpost.com/asset/scalefit_630_noupscale/5834a9ea1700002600e7bea5.png" width = "360px">   
+</div>
+  </div>
+  </body>
+</html>
