@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="MobileOptimized" content="375">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, shrink-to-fit=no">
+    <title>Carousel 1</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css" />
+<!--     <link rel="stylesheet" type="text/css" href="style.css"> -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <style>
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+.slick-slide.slick-current.slick-active.slick-center > .crsl-wrapper {
+        /* padding: 0; */
+        /* border: 1px solid whitesmoke; */
+        border-top: 2px solid black;
+        border-bottom: 2px solid black;
+        -webkit-box-shadow: 0 0 5px 2px #fff;
+        -moz-box-shadow: 0 0 5px 2px #fff;
+        box-shadow: 0 0px 5px 2px black;
+    }
+    
+    .clsr-wrapper {
+        position: relative;
+    }
+    
+    .crsl-content {
+    	font-family: 'Raleway', sans-serif;
+        position: absolute;
+        width: 250px;
+        bottom: 0%;
+        height: 35%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .crsl-content h2 {
+        padding: 10px;
+        /* padding-top: 15px; */
+        color: white;
+        font-size: 16px;
+        letter-spacing: 1px;
+        font-weight: lighter;
+        margin: 0;
+        text-align: center;
+    }
+
+    .crsl-disclosure{
+    	background-color: #00c3c3;
+    	width: 100%;
+    	display: block;
+    }
+
+    .crsl-disclosure p{
+    
+    font-family: 'Raleway', sans-serif;
+    margin-top: 2px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 8px;
+    text-align: right;
+}
+    }
+}
+    </style>
+</head>
+<div class="center">
+    <div>
+        <div class="crsl-wrapper" style="background: url('http://placehold.it/250x150'); background-size: cover; background-position: center center; width:250px; height: 150px">
+            <div class="crsl-content">
+                <h2>Smart Watch for Fashion Girls</h2>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="crsl-wrapper" style="background: url('http://placehold.it/250x150'); background-size: cover; background-position: center center; width:250px; height: 150px">
+         <div class="crsl-content">
+                <h2>Smart Watch for Fashion Girls</h2>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="crsl-wrapper" style="background: url('http://placehold.it/250x150'); background-size: cover; background-position: center center; width:250px; height: 150px">
+         <div class="crsl-content">
+                <h2>Smart Watch for Fashion Girls</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="crsl-disclosure">
+<p>sponsored by Samsung </p>
+    </div>
+
+<body>
+    <script>
+    $(document).ready(function() {
+        $('.center').slick({
+            arrows: false,
+            centerMode: true,
+            centerPadding: '50px',
+            slidesToShow: 1,
+            infinte: true,
+            focusOnSelect: true,
+            // variableWidth: true,
+        });
+    });
+    </script>
+</body>
+
+</html>
